@@ -35,12 +35,10 @@
         seguent: $('btn-seguent'),
         tria: $('btn-tria'),
         reinicia: $('btn-reinicia'),
-        pista: $('pista'),
         dialeg: $('dialeg-tria'),
         graella: $('graella-problemes'),
         tanca: $('btn-tanca-tria'),
         esborra: $('btn-esborra-progres'),
-        instruccions: $('instruccions'),
     };
 
     // ============================================================
@@ -53,7 +51,7 @@
         } catch (e) {
             /* sense localStorage: es juga igual, però no es desa res */
         }
-        return { resolts: [], actual: 0, instruccionsVistes: false };
+        return { resolts: [], actual: 0 };
     }
     function desaProgres() {
         try {
@@ -259,7 +257,7 @@
             boto.textContent = 'Problema següent →';
             boto.addEventListener('click', () => carrega(actual + 1));
         } else {
-            boto.textContent = totsResolts ? 'Torna a mirar els problemes' : 'Tria un altre problema';
+            boto.textContent = totsResolts ? 'Torna a mirar els problemes' : 'Escull un altre problema';
             boto.addEventListener('click', obreTria);
         }
         const titol = totsResolts
@@ -596,14 +594,6 @@
         $('ex-be-1').prepend(parella([1, 0], [10, 5], '×2', 'resolt'));
         $('ex-be-2').prepend(parella([0, 1], [4, 20], '×5', 'resolt'));
         $('ex-malament').prepend(parella([1, 0], [10, 4], '✗', 'error'));
-
-        els.instruccions.open = !progres.instruccionsVistes;
-        els.instruccions.addEventListener('toggle', () => {
-            if (!els.instruccions.open && !progres.instruccionsVistes) {
-                progres.instruccionsVistes = true;
-                desaProgres();
-            }
-        });
     }
 
     els.anterior.addEventListener('click', () => carrega(actual - 1));
@@ -629,11 +619,6 @@
             pinta();
         }
     });
-
-    els.pista.textContent = matchMedia('(pointer: coarse)').matches
-        ? 'Arrossega cada targeta fins a un lloc buit, o toca-la i després toca el lloc. Toca una targeta del tauler per treure-la.'
-        : 'Arrossega cada targeta fins a un lloc buit, o clica-la i després clica el lloc. Clica una targeta del tauler per treure-la. ' +
-          'Amb el teclat: ves a un lloc (Tab o fletxes), escriu-hi el número i esborra amb ⌫.';
 
     pintaInstruccions();
     construeixGraella();
