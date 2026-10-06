@@ -176,6 +176,7 @@ h1 {
     box-shadow: 0 3px 10px rgba(0, 0, 0, 0.12);
 }
 .btn-sec {
+    white-space: nowrap;
     background: white;
     color: var(--primary-dark);
     border: 2px solid var(--border-heavy);
@@ -214,6 +215,305 @@ h1 {
 :focus-visible {
     outline: 3px solid var(--primary-dark);
     outline-offset: 2px;
+}
+
+/* ══════════════════════════════════════════════
+   INSTRUCCIONS (es despleguen)
+══════════════════════════════════════════════ */
+.instruccions {
+    width: 100%;
+    max-width: 760px;
+    margin: 8px 0 16px 0;
+    background: white;
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.04);
+}
+.instruccions > summary {
+    cursor: pointer;
+    padding: 12px 18px;
+    font-weight: bold;
+    color: var(--primary-dark);
+    list-style: none;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    min-height: 44px;
+}
+.instruccions > summary::-webkit-details-marker {
+    display: none;
+}
+.instruccions > summary::before {
+    content: '▸';
+    transition: transform 0.2s;
+}
+.instruccions[open] > summary::before {
+    transform: rotate(90deg);
+}
+.instr-cos {
+    padding: 0 18px 18px 18px;
+    line-height: 1.5;
+}
+.instr-regles {
+    margin: 0 0 14px 0;
+    padding-left: 1.2em;
+    font-size: 1.05em;
+}
+.instr-regles li + li {
+    margin-top: 4px;
+}
+.instr-fila {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    gap: 6px 22px;
+}
+.instr-fila figure {
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2px;
+}
+.instr-fila figcaption {
+    font-weight: bold;
+    color: var(--text-muted);
+    font-size: 0.9em;
+}
+.instr-fletxa-gran {
+    font-size: 1.8em;
+    color: var(--border-strong);
+}
+.instr-caixa {
+    margin-top: 16px;
+    padding: 12px 16px;
+    background: #f8fafc;
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+}
+.instr-caixa h3 {
+    margin: 0 0 10px 0;
+    font-size: 1em;
+    color: var(--primary-dark);
+    text-align: center;
+}
+.instr-caixa ul {
+    margin: 8px 0 0 0;
+    padding-left: 1.2em;
+}
+.instr-compte {
+    margin: 12px auto 0 auto;
+    padding: 6px 12px;
+    width: fit-content;
+    border: 2px solid var(--warning);
+    border-radius: 8px;
+    background: #fffbeb;
+    font-weight: bold;
+    color: #92400e;
+    text-align: center;
+}
+.instr-veredicte {
+    font-size: 0.9em;
+    text-align: center;
+    color: var(--text-main);
+}
+.instr-veredicte b {
+    font-size: 1.3em;
+    display: block;
+}
+.instr-veredicte.be b {
+    color: var(--success);
+}
+.instr-veredicte.malament b {
+    color: var(--danger);
+}
+
+/* ══════════════════════════════════════════════
+   ZONA DE JOC (capçalera, regla, lloc del tauler)
+══════════════════════════════════════════════ */
+.nav-problemes {
+    display: flex;
+    gap: 8px;
+}
+.ja-resolt {
+    display: inline-block;
+    margin-left: 6px;
+    padding: 1px 8px;
+    border-radius: 99px;
+    background: var(--success-light);
+    color: var(--success);
+    font-size: 0.8em;
+    vertical-align: middle;
+}
+.ja-resolt[hidden] {
+    display: none;
+}
+.regla {
+    margin: 18px 16px 0 16px;
+    text-align: center;
+    color: #475569;
+    font-weight: 600;
+    font-size: 1.05em;
+}
+#tauler-wrap {
+    display: flex;
+    justify-content: center;
+    padding: 14px 16px 6px 16px;
+}
+
+/* ══════════════════════════════════════════════
+   MISSATGE (error / encert / avís), sota la pila
+══════════════════════════════════════════════ */
+.missatge {
+    margin: 10px auto 4px auto;
+    padding: 10px 16px;
+    max-width: 520px;
+    width: calc(100% - 32px);
+    text-align: center;
+    border-radius: 10px;
+    font-weight: 600;
+    line-height: 1.4;
+    animation: fadeIn 0.3s;
+}
+.missatge:empty {
+    display: none;
+}
+.missatge ul {
+    list-style: none;
+    margin: 6px 0 0 0;
+    padding: 0;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 6px 14px;
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 1.05em;
+}
+.missatge .btn-principal {
+    margin-top: 12px;
+}
+.missatge.error {
+    color: #991b1b;
+    background: var(--danger-light);
+    border: 1px solid #fecaca;
+}
+.missatge.ok {
+    color: #065f46;
+    background: var(--success-light);
+    border: 1px solid #a7f3d0;
+}
+.missatge.info {
+    color: var(--primary-dark);
+    background: var(--primary-light);
+    border: 1px solid #c7d2fe;
+}
+
+.accions {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 10px;
+    padding: 12px 16px 20px 16px;
+}
+
+/* ══════════════════════════════════════════════
+   TRIA DE PROBLEMA (diàleg)
+══════════════════════════════════════════════ */
+.dialeg-tria {
+    border: none;
+    border-radius: 12px;
+    padding: 18px;
+    width: min(420px, calc(100vw - 32px));
+    box-shadow: 0 20px 50px rgba(15, 23, 42, 0.3);
+    color: var(--text-main);
+}
+.dialeg-tria::backdrop {
+    background: rgba(15, 23, 42, 0.45);
+}
+.dialeg-tria h2 {
+    margin: 0 0 4px 0;
+    font-size: 1.15em;
+    color: var(--primary-dark);
+}
+.dialeg-tria p {
+    margin: 0 0 12px 0;
+    color: var(--text-muted);
+    font-size: 0.9em;
+}
+.graella {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    gap: 8px;
+}
+.graella button {
+    position: relative;
+    font: inherit;
+    font-weight: bold;
+    min-height: 44px;
+    border-radius: 8px;
+    border: 2px solid var(--border-heavy);
+    background: white;
+    color: var(--text-main);
+    cursor: pointer;
+}
+.graella button.fet {
+    background: var(--success-light);
+    border-color: #6ee7b7;
+    color: #065f46;
+}
+.graella button.fet::after {
+    content: '✓';
+    position: absolute;
+    top: -2px;
+    right: 3px;
+    font-size: 0.75em;
+}
+.graella button.actual {
+    border-color: var(--primary);
+    box-shadow: 0 0 0 2px var(--primary);
+}
+@media (hover: hover) {
+    .graella button:hover {
+        border-color: var(--primary);
+    }
+}
+.dialeg-peu {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 10px;
+    margin-top: 16px;
+    flex-wrap: wrap;
+}
+.btn-text {
+    font: inherit;
+    font-size: 0.85em;
+    background: none;
+    border: none;
+    color: var(--text-muted);
+    text-decoration: underline;
+    cursor: pointer;
+    padding: 8px 0;
+}
+
+/* ---- Pantalles estretes ---- */
+@media (max-width: 480px) {
+    h1 {
+        font-size: 1.3em;
+    }
+    .header-info {
+        padding: 10px 12px;
+    }
+    .instr-cos {
+        padding: 0 12px 14px 12px;
+    }
+    .instr-fila.exemple {
+        flex-direction: column;
+    }
+    .instr-fila.exemple .instr-fletxa-gran {
+        transform: rotate(90deg);
+    }
 }
 
 /* ---- Peu ---- */

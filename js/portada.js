@@ -6,7 +6,10 @@
  * ============================================================================
  */
 (() => {
-    const PUZZLES = [{ clau: 'inaba.enllac-multiples', el: 'progres-enllac', total: 42 }];
+    const PUZZLES = [
+        { clau: 'inaba.enllac-multiples', el: 'progres-enllac', total: 42 },
+        { clau: 'inaba.laberint-angles', el: 'progres-laberint', total: 38 },
+    ];
     PUZZLES.forEach(({ clau, el, total }) => {
         try {
             const d = JSON.parse(localStorage.getItem(clau));

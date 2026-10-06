@@ -25,3 +25,5 @@ jobs:
           node-version: 22
       - name: Enllaç de múltiples
         run: node tests/enllac-multiples.test.js
+      - name: Laberint d'angles
+        run: node tests/laberint-angles.test.js
