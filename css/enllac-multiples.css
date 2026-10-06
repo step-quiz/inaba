@@ -1,0 +1,614 @@
+/*
+============================================================================
+FITXER: css/enllac-multiples.css
+ROL: Estils propis de l'«Enllaç de múltiples»: tauler, targetes, fletxes,
+     instruccions i tria de problema.
+DEPENDÈNCIES: css/comu.css (s'ha de carregar abans).
+============================================================================
+*/
+:root {
+    --primary: #4f46e5;
+    --primary-light: #eef2ff;
+    --primary-hover: #4338ca;
+    --primary-dark: #312e81;
+    --tinta: #334155; /* vores de les targetes i fletxes, com el llapis del paper */
+}
+
+/* ══════════════════════════════════════════════
+   INSTRUCCIONS (es despleguen)
+══════════════════════════════════════════════ */
+.instruccions {
+    width: 100%;
+    max-width: 760px;
+    margin: 8px 0 16px 0;
+    background: white;
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.04);
+}
+.instruccions > summary {
+    cursor: pointer;
+    padding: 12px 18px;
+    font-weight: bold;
+    color: var(--primary-dark);
+    list-style: none;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    min-height: 44px;
+}
+.instruccions > summary::-webkit-details-marker {
+    display: none;
+}
+.instruccions > summary::before {
+    content: '▸';
+    transition: transform 0.2s;
+}
+.instruccions[open] > summary::before {
+    transform: rotate(90deg);
+}
+.instr-cos {
+    padding: 0 18px 18px 18px;
+    line-height: 1.5;
+}
+.instr-regles {
+    margin: 0 0 14px 0;
+    padding-left: 1.2em;
+    font-size: 1.05em;
+}
+.instr-regles li + li {
+    margin-top: 4px;
+}
+.instr-fila {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    gap: 6px 22px;
+}
+.instr-fila figure {
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2px;
+}
+.instr-fila figcaption {
+    font-weight: bold;
+    color: var(--text-muted);
+    font-size: 0.9em;
+}
+.instr-fletxa-gran {
+    font-size: 1.8em;
+    color: var(--border-strong);
+}
+.instr-caixa {
+    margin-top: 16px;
+    padding: 12px 16px;
+    background: #f8fafc;
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+}
+.instr-caixa h3 {
+    margin: 0 0 10px 0;
+    font-size: 1em;
+    color: var(--primary-dark);
+    text-align: center;
+}
+.instr-caixa ul {
+    margin: 8px 0 0 0;
+    padding-left: 1.2em;
+}
+.instr-compte {
+    margin: 12px auto 0 auto;
+    padding: 6px 12px;
+    width: fit-content;
+    border: 2px solid var(--warning);
+    border-radius: 8px;
+    background: #fffbeb;
+    font-weight: bold;
+    color: #92400e;
+    text-align: center;
+}
+.instr-veredicte {
+    font-size: 0.9em;
+    text-align: center;
+    color: var(--text-main);
+}
+.instr-veredicte b {
+    font-size: 1.3em;
+    display: block;
+}
+.instr-veredicte.be b {
+    color: var(--success);
+}
+.instr-veredicte.malament b {
+    color: var(--danger);
+}
+.pila.mostra {
+    gap: 8px;
+}
+.pila.mostra .targeta {
+    width: 44px;
+    height: 58px;
+    font-size: 1.25em;
+    cursor: default;
+}
+
+/* ══════════════════════════════════════════════
+   ZONA DE JOC
+══════════════════════════════════════════════ */
+.nav-problemes {
+    display: flex;
+    gap: 8px;
+}
+.ja-resolt {
+    display: inline-block;
+    margin-left: 6px;
+    padding: 1px 8px;
+    border-radius: 99px;
+    background: var(--success-light);
+    color: var(--success);
+    font-size: 0.8em;
+    vertical-align: middle;
+}
+.ja-resolt[hidden] {
+    display: none;
+}
+.regla {
+    margin: 18px 16px 0 16px;
+    text-align: center;
+    color: #475569;
+    font-weight: 600;
+    font-size: 1.05em;
+}
+#tauler-wrap {
+    display: flex;
+    justify-content: center;
+    padding: 14px 16px 6px 16px;
+}
+.pila-wrap {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    padding: 6px 16px 4px 16px;
+}
+.pila-titol {
+    font-size: 0.8em;
+    font-weight: bold;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    color: var(--text-muted);
+}
+.pila {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 14px;
+    padding: 10px 16px;
+    border-radius: 14px;
+    border: 2px dashed transparent;
+}
+.pila.avisa {
+    animation: avisa 0.9s;
+}
+@keyframes avisa {
+    0%,
+    100% {
+        border-color: transparent;
+    }
+    30%,
+    70% {
+        border-color: var(--primary);
+        background: var(--primary-light);
+    }
+}
+
+/* ---- Una targeta (a la pila o al fantasma d'arrossegar) ---- */
+.targeta {
+    position: relative;
+    width: clamp(52px, 15vw, 64px);
+    height: clamp(68px, 19.5vw, 82px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: white;
+    color: var(--text-main);
+    border: 2.5px solid var(--tinta);
+    border-radius: 7px;
+    font-size: clamp(1.4em, 6vw, 1.75em);
+    font-weight: 800;
+    font-variant-numeric: tabular-nums;
+    box-shadow: 0 2px 0 rgba(15, 23, 42, 0.12);
+    cursor: grab;
+    user-select: none;
+    -webkit-user-select: none;
+    touch-action: none;
+    transition:
+        transform 0.15s,
+        box-shadow 0.15s,
+        background 0.15s,
+        opacity 0.2s;
+}
+.targeta:active {
+    cursor: grabbing;
+}
+.targeta.usada {
+    color: var(--border-strong);
+    border-color: var(--border-heavy);
+    background: #f8fafc;
+    cursor: default;
+    touch-action: auto;
+    box-shadow: none;
+}
+/* La marca ✓ de «ja feta servir», com al paper */
+.targeta.usada::after {
+    content: '✓';
+    position: absolute;
+    top: -0.8em;
+    right: -0.3em;
+    font-size: 1.05em;
+    font-weight: 900;
+    color: var(--success);
+}
+.targeta.seleccionada {
+    background: var(--primary);
+    border-color: var(--primary-dark);
+    color: white;
+    transform: translateY(-4px) scale(1.06);
+    box-shadow: 0 6px 16px rgba(79, 70, 229, 0.4);
+}
+.targeta.arrossegant {
+    opacity: 0.3;
+}
+@media (hover: hover) {
+    .pila .targeta:not(.usada):not(.seleccionada):hover {
+        border-color: var(--primary);
+        background: var(--primary-light);
+        transform: translateY(-2px);
+    }
+}
+.targeta.fantasma {
+    position: fixed;
+    z-index: 1000;
+    pointer-events: none;
+    transform: translate(-50%, -50%) rotate(-4deg) scale(1.08);
+    border-color: var(--primary);
+    color: var(--primary-dark);
+    box-shadow: 0 10px 24px rgba(15, 23, 42, 0.3);
+    transition: none;
+}
+
+/* ══════════════════════════════════════════════
+   EL TAULER: llocs (HTML) + fletxes (SVG)
+   Les mides són relatives a l'amplada del tauler (--amplada, en unitats de
+   tauler.js), perquè s'encongeixi sencer en una pantalla estreta.
+══════════════════════════════════════════════ */
+.tauler {
+    position: relative;
+    max-width: 100%;
+    container-type: inline-size;
+    flex-shrink: 0;
+}
+.fletxes {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    overflow: visible;
+    pointer-events: none;
+}
+.fletxa line {
+    stroke: var(--tinta);
+    stroke-width: 7;
+}
+.fletxa polygon {
+    fill: var(--tinta);
+}
+.fletxa .etiqueta {
+    display: none;
+}
+.fletxa.amb-etiqueta .etiqueta {
+    display: inline;
+}
+.etiqueta rect {
+    fill: white;
+    stroke: currentColor;
+    stroke-width: 2.5;
+}
+.etiqueta text {
+    fill: currentColor;
+    font-size: 20px;
+    font-weight: 800;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+.fletxa {
+    color: var(--tinta);
+}
+.fletxa.erronia,
+.tauler.error .fletxa {
+    color: var(--danger);
+}
+.fletxa.erronia line,
+.tauler.error .fletxa line {
+    stroke: var(--danger);
+}
+.fletxa.erronia polygon,
+.tauler.error .fletxa polygon {
+    fill: var(--danger);
+}
+.tauler.resolt .fletxa {
+    color: var(--success);
+}
+.tauler.resolt .fletxa line {
+    stroke: var(--success);
+}
+.tauler.resolt .fletxa polygon {
+    fill: var(--success);
+}
+
+.lloc {
+    position: absolute;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 7px;
+    font-size: calc(100cqw * 30 / var(--amplada));
+    font-weight: 800;
+    font-variant-numeric: tabular-nums;
+    user-select: none;
+    -webkit-user-select: none;
+    transition:
+        transform 0.15s,
+        background 0.15s,
+        border-color 0.15s;
+}
+.lloc.fix {
+    background: white;
+    border: 2.5px solid var(--tinta);
+    color: var(--text-main);
+    box-shadow: 0 2px 0 rgba(15, 23, 42, 0.12);
+}
+.lloc.buit {
+    border: 2.5px dashed var(--border-strong);
+    background: rgba(255, 255, 255, 0.7);
+    cursor: pointer;
+}
+.lloc.ple {
+    background: white;
+    border: 2.5px solid var(--primary);
+    color: var(--primary-dark);
+    box-shadow: 0 2px 0 rgba(79, 70, 229, 0.25);
+    cursor: grab;
+    touch-action: none;
+}
+.lloc.escrivint {
+    border: 2.5px dashed var(--primary);
+    background: var(--primary-light);
+    color: var(--border-strong);
+}
+/* Mentre hi ha una targeta triada o arrossegant-se, els llocs on es pot deixar */
+.amb-seleccio .lloc.buit {
+    border-color: var(--primary);
+    background: var(--primary-light);
+    animation: batec 1.2s ease-in-out infinite;
+}
+.lloc.sobre {
+    border-style: solid;
+    border-color: var(--primary);
+    background: #c7d2fe;
+    transform: scale(1.08);
+    animation: none;
+}
+.lloc.arrossegant {
+    opacity: 0.35;
+}
+@keyframes batec {
+    50% {
+        box-shadow: 0 0 0 5px rgba(79, 70, 229, 0.18);
+    }
+}
+@media (hover: hover) {
+    .tauler:not(.resolt):not(.estatic) .lloc.buit:hover,
+    .tauler:not(.resolt):not(.estatic) .lloc.ple:hover {
+        border-color: var(--primary-hover);
+        background: var(--primary-light);
+    }
+}
+.tauler.error .lloc.ple {
+    border-color: var(--danger);
+    color: #991b1b;
+}
+.tauler.resolt .lloc.ple {
+    border-color: var(--success);
+    color: #065f46;
+    cursor: default;
+    box-shadow: none;
+}
+.tauler.estatic .lloc {
+    cursor: default;
+}
+.lloc.acaba-de-posar {
+    animation: posa 0.25s ease-out;
+}
+.lloc.celebra {
+    animation: celebra 0.45s ease-out;
+}
+.lloc.sacseja {
+    animation: sacseja 0.3s;
+}
+@keyframes posa {
+    from {
+        transform: scale(0.8);
+    }
+}
+@keyframes celebra {
+    40% {
+        transform: translateY(-10%) scale(1.08);
+    }
+}
+
+/* ══════════════════════════════════════════════
+   MISSATGE (error / encert / avís), sota la pila
+══════════════════════════════════════════════ */
+.missatge {
+    margin: 10px auto 4px auto;
+    padding: 10px 16px;
+    max-width: 520px;
+    width: calc(100% - 32px);
+    text-align: center;
+    border-radius: 10px;
+    font-weight: 600;
+    line-height: 1.4;
+    animation: fadeIn 0.3s;
+}
+.missatge:empty {
+    display: none;
+}
+.missatge ul {
+    list-style: none;
+    margin: 6px 0 0 0;
+    padding: 0;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 6px 14px;
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 1.05em;
+}
+.missatge .btn-principal {
+    margin-top: 12px;
+}
+.missatge.error {
+    color: #991b1b;
+    background: var(--danger-light);
+    border: 1px solid #fecaca;
+}
+.missatge.ok {
+    color: #065f46;
+    background: var(--success-light);
+    border: 1px solid #a7f3d0;
+}
+.missatge.info {
+    color: var(--primary-dark);
+    background: var(--primary-light);
+    border: 1px solid #c7d2fe;
+}
+
+.accions {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    padding: 12px 16px 4px 16px;
+}
+.pista {
+    margin: 8px 16px 16px 16px;
+    text-align: center;
+    color: var(--text-muted);
+    font-size: 0.88em;
+    line-height: 1.5;
+}
+
+/* ══════════════════════════════════════════════
+   TRIA DE PROBLEMA (diàleg)
+══════════════════════════════════════════════ */
+.dialeg-tria {
+    border: none;
+    border-radius: 12px;
+    padding: 18px;
+    width: min(420px, calc(100vw - 32px));
+    box-shadow: 0 20px 50px rgba(15, 23, 42, 0.3);
+    color: var(--text-main);
+}
+.dialeg-tria::backdrop {
+    background: rgba(15, 23, 42, 0.45);
+}
+.dialeg-tria h2 {
+    margin: 0 0 4px 0;
+    font-size: 1.15em;
+    color: var(--primary-dark);
+}
+.dialeg-tria p {
+    margin: 0 0 12px 0;
+    color: var(--text-muted);
+    font-size: 0.9em;
+}
+.graella {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    gap: 8px;
+}
+.graella button {
+    position: relative;
+    font: inherit;
+    font-weight: bold;
+    min-height: 44px;
+    border-radius: 8px;
+    border: 2px solid var(--border-heavy);
+    background: white;
+    color: var(--text-main);
+    cursor: pointer;
+}
+.graella button.fet {
+    background: var(--success-light);
+    border-color: #6ee7b7;
+    color: #065f46;
+}
+.graella button.fet::after {
+    content: '✓';
+    position: absolute;
+    top: -2px;
+    right: 3px;
+    font-size: 0.75em;
+}
+.graella button.actual {
+    border-color: var(--primary);
+    box-shadow: 0 0 0 2px var(--primary);
+}
+@media (hover: hover) {
+    .graella button:hover {
+        border-color: var(--primary);
+    }
+}
+.dialeg-peu {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 10px;
+    margin-top: 16px;
+    flex-wrap: wrap;
+}
+.btn-text {
+    font: inherit;
+    font-size: 0.85em;
+    background: none;
+    border: none;
+    color: var(--text-muted);
+    text-decoration: underline;
+    cursor: pointer;
+    padding: 8px 0;
+}
+
+/* ---- Pantalles estretes ---- */
+@media (max-width: 480px) {
+    h1 {
+        font-size: 1.3em;
+    }
+    .header-info {
+        padding: 10px 12px;
+    }
+    .pila {
+        gap: 10px;
+        padding: 8px 4px;
+    }
+    .instr-cos {
+        padding: 0 12px 14px 12px;
+    }
+    .instr-fila.exemple {
+        flex-direction: column;
+    }
+    .instr-fila.exemple .instr-fletxa-gran {
+        transform: rotate(90deg);
+    }
+}

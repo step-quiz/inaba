@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="ca">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Puzzles matemàtics de Naoki Inaba, traduïts al català i fets interactius.">
+    <title>Puzzles matemàtics</title>
+    <link rel="stylesheet" href="css/comu.css">
+    <style>
+        :root {
+            --primary: #4f46e5;
+            --primary-light: #eef2ff;
+            --primary-hover: #4338ca;
+            --primary-dark: #312e81;
+        }
+        .llista {
+            width: 100%;
+            max-width: 760px;
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+            gap: 14px;
+        }
+        .puzzle {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+            padding: 16px 18px;
+            background: white;
+            border: 1px solid var(--border-color);
+            border-top: 5px solid var(--primary);
+            border-radius: 8px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+            color: var(--text-main);
+            text-decoration: none;
+        }
+        .puzzle strong {
+            font-size: 1.15em;
+            color: var(--primary-dark);
+        }
+        .puzzle .jp {
+            color: var(--text-muted);
+            font-size: 0.85em;
+        }
+        .puzzle .desc {
+            font-size: 0.95em;
+            line-height: 1.4;
+        }
+        .puzzle .progres {
+            margin-top: 6px;
+            font-family: monospace;
+            font-weight: bold;
+            color: var(--primary);
+        }
+        a.puzzle:hover {
+            border-color: var(--primary);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(79, 70, 229, 0.15);
+        }
+        a.puzzle {
+            transition: transform 0.15s, box-shadow 0.15s;
+        }
+        .puzzle.aviat {
+            border-top-color: var(--border-heavy);
+            box-shadow: none;
+            background: #f8fafc;
+        }
+        .puzzle.aviat strong {
+            color: var(--text-muted);
+        }
+        h2 {
+            width: 100%;
+            max-width: 760px;
+            margin: 28px 0 10px 0;
+            font-size: 1em;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: var(--text-muted);
+        }
+    </style>
+</head>
+<body>
+    <h1>Puzzles matemàtics</h1>
+    <p class="subtitol">Els puzzles de Naoki Inaba, en català</p>
+
+    <div class="llista">
+        <a class="puzzle" href="enllac-multiples.html">
+            <strong>Enllaç de múltiples</strong>
+            <span class="jp">倍数リンク</span>
+            <span class="desc">Col·loca les targetes perquè cada fletxa porti a un múltiple.</span>
+            <span class="progres" id="progres-enllac">42 problemes</span>
+        </a>
+    </div>
+
+    <h2>Properament</h2>
+    <div class="llista">
+        <div class="puzzle aviat"><strong>Creuat de múltiples</strong><span class="jp">倍数クロス</span></div>
+        <div class="puzzle aviat"><strong>On és la xifra?</strong><span class="jp">どこかな算</span></div>
+        <div class="puzzle aviat"><strong>Expressions bessones</strong><span class="jp">双子式</span></div>
+        <div class="puzzle aviat"><strong>Busca el nombre</strong><span class="jp">かずさがし</span></div>
+        <div class="puzzle aviat"><strong>Laberint d'angles</strong><span class="jp">角度メイズ</span></div>
+        <div class="puzzle aviat"><strong>Dipòsits d'aigua</strong><span class="jp">水そうと水</span></div>
+        <div class="puzzle aviat"><strong>Busca el triangle</strong><span class="jp">三角探し</span></div>
+        <div class="puzzle aviat"><strong>Talla en rectangles</strong><span class="jp">四角カット</span></div>
+        <div class="puzzle aviat"><strong>L'escala de nombres</strong><span class="jp">数字の階段</span></div>
+        <div class="puzzle aviat"><strong>Afegeix zeros</strong><span class="jp">ゼロゼロ式</span></div>
+        <div class="puzzle aviat"><strong>Busca la figura</strong><span class="jp">図形探し</span></div>
+    </div>
+
+    <footer class="credits">
+        Puzzles originals de Naoki Inaba (稲葉直貴), de domini públic. Traducció i adaptació al català.
+    </footer>
+
+    <script src="js/portada.js" defer></script>
+</body>
+</html>
