@@ -14,6 +14,7 @@ Els PDF originals (en japonès) són a [`src/`](src/): `*_q.pdf` són els enunci
 
 La portada ([`index.html`](index.html)) també llista els altres 10 puzzles de `src/` com a «Properament».
 La traducció de les instruccions de cada puzzle i les notes sobre els problemes són a [`docs/`](docs/).
+Les dels 10 puzzles que encara no s'han fet són a [`docs/traduccions.md`](docs/traduccions.md).
 
 ## Com es juga a l'Enllaç de múltiples
 
@@ -72,6 +73,7 @@ js/<puzzle>/
 tests/<puzzle>.test.js         ← cada problema té una sola solució, i és la del PDF
 tools/extreu-laberint.py       ← llegeix els laberints del PDF i escriu js/laberint-angles/problemes.js
 docs/<puzzle>.md               ← traducció de les instruccions i notes
+docs/traduccions.md            ← traducció de les instruccions dels puzzles pendents
 src/                           ← PDF originals
 ```
 
