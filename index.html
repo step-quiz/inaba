@@ -60,6 +60,18 @@
         a.puzzle {
             transition: transform 0.15s, box-shadow 0.15s;
         }
+        /* Cada puzzle, amb el color del seu tema */
+        .puzzle.laberint {
+            border-top-color: #0369a1;
+        }
+        .puzzle.laberint strong,
+        .puzzle.laberint .progres {
+            color: #0c4a6e;
+        }
+        a.puzzle.laberint:hover {
+            border-color: #0369a1;
+            box-shadow: 0 8px 20px rgba(3, 105, 161, 0.15);
+        }
         .puzzle.aviat {
             border-top-color: var(--border-heavy);
             box-shadow: none;
@@ -95,6 +107,12 @@
             <span class="desc">Col·loca les targetes perquè cada fletxa porti a un múltiple.</span>
             <span class="progres" id="progres-enllac">42 problemes</span>
         </a>
+        <a class="puzzle laberint" href="laberint-angles.html">
+            <strong>Laberint d'angles</strong>
+            <span class="jp">角度メイズ</span>
+            <span class="desc">Ves de la S a la G girant, a cada cercle amb número, l'angle que hi diu.</span>
+            <span class="progres" id="progres-laberint">38 problemes</span>
+        </a>
     </div>
 
     <h2>Properament</h2>
@@ -103,7 +121,6 @@
         <div class="puzzle aviat"><strong>On és la xifra?</strong><span class="jp">どこかな算</span></div>
         <div class="puzzle aviat"><strong>Expressions bessones</strong><span class="jp">双子式</span></div>
         <div class="puzzle aviat"><strong>Busca el nombre</strong><span class="jp">かずさがし</span></div>
-        <div class="puzzle aviat"><strong>Laberint d'angles</strong><span class="jp">角度メイズ</span></div>
         <div class="puzzle aviat"><strong>Dipòsits d'aigua</strong><span class="jp">水そうと水</span></div>
         <div class="puzzle aviat"><strong>Busca el triangle</strong><span class="jp">三角探し</span></div>
         <div class="puzzle aviat"><strong>Talla en rectangles</strong><span class="jp">四角カット</span></div>

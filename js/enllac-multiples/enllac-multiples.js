@@ -10,9 +10,8 @@
  *   - Teclat: Tab o fletxes per anar d'un lloc a l'altre, escriure el número
  *     de la targeta, ⌫/Supr per treure-la, Esc per desfer la tria.
  * Quan tots els llocs són plens, es comprova sol.
- * El progrés (problemes resolts) es desa a localStorage; si no es pot, es
- * juga igual.
- * DEPENDÈNCIES: problemes.js, motor.js i tauler.js (carregats abans).
+ * El progrés, la capçalera i els missatges són de js/comu.js.
+ * DEPENDÈNCIES: js/comu.js, problemes.js, motor.js i tauler.js (carregats abans).
  * ============================================================================
  */
 (() => {
@@ -20,7 +19,6 @@
     const M = window.MotorEnllac;
     const T = window.TaulerEnllac;
     const N = P.llista.length;
-    const CLAU = 'inaba.enllac-multiples';
     const ESPERA_TECLAT = 900; // ms per escriure la segona xifra d'un número
 
     const $ = id => document.getElementById(id);
@@ -28,39 +26,10 @@
         taulerWrap: $('tauler-wrap'),
         pila: $('pila'),
         missatge: $('missatge'),
-        titol: $('titol-problema'),
-        jaResolt: $('ja-resolt'),
-        comptador: $('comptador'),
-        anterior: $('btn-anterior'),
-        seguent: $('btn-seguent'),
-        tria: $('btn-tria'),
         reinicia: $('btn-reinicia'),
-        dialeg: $('dialeg-tria'),
-        graella: $('graella-problemes'),
-        tanca: $('btn-tanca-tria'),
-        esborra: $('btn-esborra-progres'),
     };
-
-    // ============================================================
-    // PROGRÉS DESAT AL NAVEGADOR
-    // ============================================================
-    function llegeixProgres() {
-        try {
-            const d = JSON.parse(localStorage.getItem(CLAU));
-            if (d && Array.isArray(d.resolts)) return d;
-        } catch (e) {
-            /* sense localStorage: es juga igual, però no es desa res */
-        }
-        return { resolts: [], actual: 0 };
-    }
-    function desaProgres() {
-        try {
-            localStorage.setItem(CLAU, JSON.stringify(progres));
-        } catch (e) {
-            /* ídem */
-        }
-    }
-    const progres = llegeixProgres();
+    const progres = Comu.progres('inaba.enllac-multiples');
+    const nav = Comu.navegacio({ total: N, progres, carrega });
 
     // ============================================================
     // ESTAT DEL PROBLEMA
@@ -92,14 +61,7 @@
         els.taulerWrap.replaceChildren(vista.el);
         construeixPila();
         amagaMissatge();
-
-        progres.actual = actual;
-        desaProgres();
-        try {
-            history.replaceState(null, '', '?p=' + (actual + 1));
-        } catch (e) {
-            /* file:// en alguns navegadors */
-        }
+        nav.obre(actual);
         pinta();
     }
 
@@ -171,11 +133,7 @@
             t.setAttribute('aria-pressed', String(seleccio === v));
         });
 
-        els.titol.textContent = `Problema ${actual + 1} de ${N}`;
-        els.jaResolt.hidden = !progres.resolts.includes(actual + 1);
-        els.comptador.textContent = `Resolts: ${progres.resolts.length} / ${N}`;
-        els.anterior.disabled = actual === 0;
-        els.seguent.disabled = actual === N - 1;
+        nav.actualitza();
     }
 
     // ============================================================
@@ -241,26 +199,13 @@
     function celebra() {
         resolt = true;
         problema.fletxes.forEach(([o, d], i) => vista.etiqueta(i, '×' + tauler[d] / tauler[o]));
-        if (!progres.resolts.includes(actual + 1)) {
-            progres.resolts.push(actual + 1);
-            progres.resolts.sort((a, b) => a - b);
-            desaProgres();
-        }
+        progres.marcaResolt(actual + 1);
         pinta();
         vista.llocs.forEach((div, j) => setTimeout(() => anima(div, 'celebra'), j * 70));
 
         const frases = problema.fletxes.map(([o, d]) => `${tauler[d]} = ${tauler[o]} × ${tauler[d] / tauler[o]}`);
-        const totsResolts = progres.resolts.length === N;
-        const boto = document.createElement('button');
-        boto.className = 'btn-principal';
-        if (actual < N - 1) {
-            boto.textContent = 'Problema següent →';
-            boto.addEventListener('click', () => carrega(actual + 1));
-        } else {
-            boto.textContent = totsResolts ? 'Torna a mirar els problemes' : 'Escull un altre problema';
-            boto.addEventListener('click', obreTria);
-        }
-        const titol = totsResolts
+        const boto = nav.botoSeguent();
+        const titol = nav.totsResolts()
             ? '🏆 Molt bé! Has resolt tots els problemes!'
             : '🎉 Molt bé! Cada fletxa porta a un múltiple.';
         mostraMissatge('ok', titol, frases, boto);
@@ -518,65 +463,9 @@
     // ============================================================
     // MISSATGES I ANIMACIONS
     // ============================================================
-    function mostraMissatge(tipus, titol, frases = [], boto = null) {
-        const m = els.missatge;
-        m.className = 'missatge ' + tipus;
-        const t = document.createElement('div');
-        t.className = 'missatge-titol';
-        t.textContent = titol;
-        m.replaceChildren(t);
-        if (frases.length) {
-            const ul = document.createElement('ul');
-            frases.forEach(f => {
-                const li = document.createElement('li');
-                li.textContent = f;
-                ul.appendChild(li);
-            });
-            m.appendChild(ul);
-        }
-        if (boto) m.appendChild(boto);
-    }
-
-    function amagaMissatge() {
-        els.missatge.className = 'missatge';
-        els.missatge.replaceChildren();
-    }
-
-    function anima(el, classe) {
-        el.classList.remove(classe);
-        void el.offsetWidth; // reinicia l'animació
-        el.classList.add(classe);
-        el.addEventListener('animationend', () => el.classList.remove(classe), { once: true });
-    }
-
-    // ============================================================
-    // TRIA DE PROBLEMA
-    // ============================================================
-    function construeixGraella() {
-        for (let i = 0; i < N; i++) {
-            const b = document.createElement('button');
-            b.type = 'button';
-            b.textContent = i + 1;
-            b.addEventListener('click', () => {
-                els.dialeg.close();
-                carrega(i);
-            });
-            els.graella.appendChild(b);
-        }
-    }
-
-    function obreTria() {
-        [...els.graella.children].forEach((b, i) => {
-            const fet = progres.resolts.includes(i + 1);
-            b.classList.toggle('fet', fet);
-            b.classList.toggle('actual', i === actual);
-            b.setAttribute('aria-label', `Problema ${i + 1}${fet ? ', resolt' : ''}`);
-            if (i === actual) b.setAttribute('aria-current', 'true');
-            else b.removeAttribute('aria-current');
-        });
-        els.dialeg.showModal();
-        els.graella.children[actual].focus();
-    }
+    const mostraMissatge = (...args) => Comu.missatge(els.missatge, ...args);
+    const amagaMissatge = () => Comu.amagaMissatge(els.missatge);
+    const anima = Comu.anima;
 
     // ============================================================
     // ARRENCADA
@@ -596,32 +485,15 @@
         $('ex-malament').prepend(parella([1, 0], [10, 4], '✗', 'error'));
     }
 
-    els.anterior.addEventListener('click', () => carrega(actual - 1));
-    els.seguent.addEventListener('click', () => carrega(actual + 1));
-    els.tria.addEventListener('click', obreTria);
-    els.tanca.addEventListener('click', () => els.dialeg.close());
     els.reinicia.addEventListener('click', reinicia);
-    els.esborra.addEventListener('click', () => {
-        if (!confirm("S'esborraran les marques ✓ de tots els problemes resolts. Vols continuar?")) return;
-        progres.resolts = [];
-        desaProgres();
-        els.dialeg.close();
-        carrega(0);
-    });
-    // Clicar fora del diàleg el tanca
-    els.dialeg.addEventListener('click', e => {
-        if (e.target === els.dialeg) els.dialeg.close();
-    });
     // Esc fora d'un lloc o d'una targeta: desfà la tria
     document.addEventListener('keydown', e => {
-        if (e.key === 'Escape' && seleccio !== null && !els.dialeg.open) {
+        if (e.key === 'Escape' && seleccio !== null && !nav.dialegObert()) {
             seleccio = null;
             pinta();
         }
     });
 
     pintaInstruccions();
-    construeixGraella();
-    const demanat = parseInt(new URLSearchParams(location.search).get('p'), 10);
-    carrega(demanat >= 1 && demanat <= N ? demanat - 1 : progres.actual || 0);
+    carrega(nav.inicial());
 })();
