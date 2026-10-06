@@ -29,7 +29,7 @@ el factor (×2, ×5…).
 
 Altres detalls:
 
-- Els problemes resolts es desen al navegador (localStorage) i es veuen amb un ✓ a «Tria…» i a la
+- Els problemes resolts es desen al navegador (localStorage) i es veuen amb un ✓ a «Escull…» i a la
   portada. Si el navegador no ho permet, es juga igual.
 - Per enviar un problema concret als alumnes: `enllac-multiples.html?p=13` (de l'1 al 42).
 
@@ -41,6 +41,7 @@ Com que no fa servir mòduls, n'hi ha prou amb obrir `index.html` amb doble clic
 
 ```
 index.html                     ← portada
+icon.png                       ← la sabatilla (enllaça a step-quiz.net), la mateixa d'operacions
 enllac-multiples.html          ← el puzzle
 css/comu.css                   ← estils comuns a tots els puzzles
 css/enllac-multiples.css       ← estils del puzzle
