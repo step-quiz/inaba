@@ -5,6 +5,7 @@ ROL: Estils comuns de les versions per imprimir (imprimir/<puzzle>.html):
      fulls A4 per plastificar i escriure-hi amb retolador de pissarra.
 ARQUITECTURA: Cada .pagina és un full A4 (210 × 297 mm). El PDF el fa
      tools/genera-pdf.js amb Chromium. Tot es mesura en mm i pt.
+     Només blanc, negre i gris fosc: la impressora és en blanc i negre.
 DEPENDÈNCIES: Cap. Cada puzzle hi afegeix el seu CSS d'impressió.
 ============================================================================
 */
@@ -13,13 +14,8 @@ DEPENDÈNCIES: Cap. Cada puzzle hi afegeix el seu CSS d'impressió.
     margin: 0;
 }
 :root {
-    --tinta: #1e293b;
-    --gris: #64748b;
-    --vora: #cbd5e1;
-    --be: #047857;
-    --malament: #dc2626;
-    --tema: #b45309; /* cada puzzle el canvia */
-    --tema-clar: #fffbeb;
+    --tinta: #000;
+    --gris: #333; /* gris fosc: textos secundaris i vores fines */
 }
 * {
     box-sizing: border-box;
@@ -28,7 +24,7 @@ html,
 body {
     margin: 0;
     padding: 0;
-    background: #e2e8f0;
+    background: #d4d4d4; /* només a la pantalla */
     color: var(--tinta);
     font-family: Inter, 'Segoe UI', Arial, sans-serif;
     -webkit-print-color-adjust: exact;
@@ -40,7 +36,7 @@ body {
     width: 210mm;
     height: 297mm;
     margin: 0 auto 8mm auto;
-    padding: 12mm 11mm 9mm 11mm;
+    padding: 10mm 7mm 8mm 7mm;
     background: white;
     display: flex;
     flex-direction: column;
@@ -69,7 +65,7 @@ body {
     justify-content: space-between;
     gap: 6mm;
     padding-bottom: 3mm;
-    border-bottom: 0.6mm solid var(--tema);
+    border-bottom: 0.6mm solid var(--tinta);
     margin-bottom: 6mm;
 }
 .cap h1 {
@@ -78,7 +74,7 @@ body {
     font-weight: 800;
     letter-spacing: 0.04em;
     text-transform: uppercase;
-    color: var(--tema);
+    color: var(--tinta);
 }
 .cap .jp {
     font-family: 'IPAGothic', sans-serif;
@@ -96,7 +92,7 @@ body {
 .peu {
     margin-top: auto;
     padding-top: 2.5mm;
-    border-top: 0.2mm solid var(--vora);
+    border-top: 0.2mm solid var(--gris);
     font-size: 7.5pt;
     color: var(--gris);
     text-align: center;
@@ -135,15 +131,15 @@ body {
 .caixa {
     margin-top: 4mm;
     padding: 3.5mm 5mm;
-    border: 0.3mm solid var(--vora);
+    border: 0.3mm solid var(--gris);
     border-radius: 3mm;
-    background: #f8fafc;
+    background: white;
 }
 .caixa h2 {
     margin: 0 0 3mm 0;
     font-size: 12pt;
     text-align: center;
-    color: var(--tema);
+    color: var(--tinta);
 }
 .caixa p,
 .caixa li {
@@ -168,15 +164,8 @@ body {
     display: block;
     font-size: 14pt;
 }
-.veredicte.be b {
-    color: var(--be);
-}
-.veredicte.malament b {
-    color: var(--malament);
-}
 .retolador {
-    border-color: var(--tema);
-    background: var(--tema-clar);
+    border: 0.7mm solid var(--tinta);
 }
 
 /* ---- Fulls de problemes ---- */
@@ -185,7 +174,7 @@ body {
     display: grid;
     grid-template-columns: 1fr 1fr;
     grid-template-rows: repeat(3, 1fr);
-    gap: 4mm 5mm;
+    gap: 4mm;
     align-items: center;
 }
 .problema {
@@ -204,7 +193,7 @@ body {
     align-items: center;
     justify-content: center;
     border-radius: 4mm;
-    background: var(--tema);
+    background: var(--tinta);
     color: white;
     font-size: 11pt;
     font-weight: 800;

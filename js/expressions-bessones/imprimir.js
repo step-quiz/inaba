@@ -37,7 +37,12 @@
         total: P.llista.length,
         perFull: 6,
         regla: 'Posa els <strong>mateixos signes</strong> a totes dues targetes perquè les dues igualtats siguin correctes.',
-        dibuixa: i => T.estatic(P.llista[i], [buida, buida]),
+        dibuixa: i => {
+            const el = T.estatic(P.llista[i], [buida, buida]);
+            // 37–42: els números de dues xifres no hi cabrien a la mida dels altres
+            if (P.llista[i].some(([a, b, c]) => Math.max(a, b, c) >= 10)) el.classList.add('dues-xifres');
+            return el;
+        },
     });
     window.Imprimir.capsIPeus({ titol: 'Expressions bessones', jp: '双子式' });
 })();
