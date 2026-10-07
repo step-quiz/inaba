@@ -30,7 +30,7 @@ jobs:
           shopt -s nullglob
           for z in _uploads/*.zip; do
             echo "Processing $z"
-            unzip -o "$z" -d .
+            unzip -o "$z" -d . -x '.github/*'
             rm "$z"
           done
 
