@@ -1,15 +1,25 @@
 # HANDOUT — handover for a cold-start Claude
 
-You are continuing a project: turning the public-domain math puzzles of **Naoki Inaba** (Japanese PDFs in
-`src/`) into interactive, static, vanilla-JS web pages in **Catalan**, for a secondary-school math teacher.
-4 of the 12 puzzles are done; **8 are pending**. Read this file fully before touching anything: it encodes
-every decision already agreed with the user, the architecture, the data pipeline, the testing method and the
-traps already found. There is also a **second phase: printable A4 sheets** (laminated, written on with a
-whiteboard marker): done for Expressions bessones, see §14.
+You are continuing a project for a secondary-school math teacher: the public-domain math puzzles of
+**Naoki Inaba** (Japanese PDFs in `src/`) turned into material **in Catalan**. Read this file fully before
+touching anything: it encodes every decision already agreed with the user, the architecture, the data
+pipeline, the testing method and the traps already found.
 
-Sections: 1 User & rules · 2 Environment · 3 Git/PR workflow · 4 Repo layout · 5 Shared architecture ·
-6 Conventions · 7 Interaction patterns · 8 The 4 finished puzzles · 9 PDF data extraction · 10 Testing ·
-11 Recipe for a new puzzle · 12 The 8 pending puzzles · 13 Open points · 14 Print versions (phase 2)
+## 0. Two very different tasks — find out which one you are asked for
+
+| | **Task A — web puzzle** | **Task B — printable PDF** |
+|---|---|---|
+| What | Implement a pending puzzle as an interactive static page (vanilla HTML/CSS/JS, drag + click + keyboard) | Make the printable version of an **already implemented** puzzle: A4 sheets, laminated, written on with a whiteboard marker |
+| Typical request | «Implementa «<nom>»» | «Fes la versió per imprimir de «<nom>»» |
+| Output | `<slug>.html` + `js/<slug>/*` + `css/<slug>.css` + test + integrations | `imprimir/<slug>.html` (ready to print) + `imprimir/<slug>.pdf` + link on the game page |
+| Read | §1–4 (shared) + **Part A** §5–12 | §1–4 (shared) + **Part B** §13 (it reuses the game's `tauler.js`, see §5 and §8) |
+| Status | 4 of 12 done (§8), **8 pending** (§12) | 1 of 4 done (Expressions bessones), **3 pending** (§13.5) |
+
+After finishing Task A, do not start Task B on your own: offer it in one line and let the user decide.
+
+Sections: 1 User & rules · 2 Environment · 3 Git/PR workflow · 4 Repo layout · **Part A**: 5 Shared
+architecture · 6 Conventions · 7 Interaction patterns · 8 The 4 finished puzzles · 9 PDF data extraction ·
+10 Testing · 11 Recipe · 12 The 8 pending puzzles · **Part B**: 13 Printable PDF · 14 Open points
 
 ---
 
@@ -31,9 +41,9 @@ Sections: 1 User & rules · 2 Environment · 3 Git/PR workflow · 4 Repo layout 
     fine; a short `instr-compte` note inside the instructions is fine.
   - Header: shoe icon (`icon.png`) linking to `https://step-quiz.net/`, same as their `operacions` repo;
     big ‹ › SVG arrows; middle button label **«Escull…»**.
-  - **Every puzzle gets a print version** (§14) and, on its game page, a discreet link «Versió per imprimir»
-    (printer icon) at the right of «← Tots els puzzles» in `nav.dalt`. Add the link only when
-    `imprimir/<puzzle>.html` exists (copy it from `expressions-bessones.html`).
+  - Every puzzle will get a print version (Part B); its game page then shows a discreet link «Versió per
+    imprimir» (printer icon) at the right of «← Tots els puzzles» in `nav.dalt` — only once
+    `imprimir/<slug>.html` exists (copy the `<a class="per-imprimir">` from `expressions-bessones.html`).
   - Footer: `<p class="credits">Puzzle original de Naoki Inaba</p>` + the CC BY-NC-SA licence bar
     (`footer.peu-llicencia`, copied from `operacions/index.html`). Copy it from any existing page.
   - Laberint d'angles: keep **S/G** letters; angle arcs **visible while playing**; never say the path
@@ -112,13 +122,15 @@ docs/traduccions.md           reviewed translations of the PENDING puzzles (move
 src/*_q.pdf, src/*_a.pdf      original problems / answers (8 pages q: p1 = instructions; 7 pages a)
 .github/workflows/tests.yml   CI: runs every tests/*.test.js step (add one step per new puzzle)
 .prettierrc.json              same config as operacions (4 spaces, single quotes, width 120)
-imprimir/<puzzle>.html        print version (A4 sheets) + imprimir/<puzzle>.pdf generated from it (§14)
-css/imprimir.css              shared print styles; css/imprimir-<puzzle>.css per puzzle
-js/imprimir.js                window.Imprimir: problem sheets (6 per page), header/footer, print button
-js/<puzzle>/imprimir.js       fills the print page (instruction examples + problem sheets)
-tools/genera-pdf.js           Playwright/Chromium: imprimir/<puzzle>.html → PDF, fails on any overflow
+imprimir/<slug>.html, .pdf    Task B: ready-to-print page and the PDF generated from it (§13)
+css/imprimir.css              Task B: shared print styles; css/imprimir-<slug>.css per puzzle
+js/imprimir.js                Task B: window.Imprimir (problem sheets, header/footer, print button)
+js/<slug>/imprimir.js         Task B: fills the print page (instruction examples + problem sheets)
+tools/genera-pdf.js           Task B: Chromium renders imprimir/<slug>.html → PDF, with layout checks
 README.md                     user-facing (Catalan) description; update per puzzle
 ```
+
+# Part A — web puzzles
 
 ## 5. Shared architecture
 
@@ -151,19 +163,15 @@ README.md                     user-facing (Catalan) description; update per puzz
   `resolt = true`, `progres.marcaResolt(actual + 1)`, message `ok` with the computed facts + next button
   (focused); `reinicia()`; event sections (click/tap, keyboard, pointer drag); `pintaInstruccions()` builds
   static example boards with `T.estatic`; bootstrap `carrega(nav.inicial())`.
-- **CSS**: `css/comu.css` defines tokens (`--text-main #1e293b`, `--text-muted #64748b`, `--border-*`,
-  `--success #047857`, `--success-light`, `--danger #dc2626`, `--danger-light`, `--warning`) and defaults
-  for `--primary/-light/-hover/-dark`; each puzzle CSS overrides `--primary*` in `:root`. Shared classes:
-  `.instr-cos/.instr-regles/.instr-fila(.exemple)/.instr-caixa/.instr-compte/.instr-veredicte.be|.malament`,
-  `.regla`, `#tauler-wrap` (flex centre), `.pila-wrap/.pila-titol/.pila(.avisa)`, `.missatge(.error|.ok|.info)`,
-  `.accions`, `.btn-principal/.btn-sec/.btn-nav/.btn-text`, `.dialeg-tria/.graella`, keyframes
-  `fadeIn`, `sacseja`, `home-blink-shake`. Puzzle CSS defines its own `posa`/`celebra`/`batec` keyframes.
-- **Theme colours used**: Enllaç indigo `#4f46e5`; Laberint sky `#0369a1` (path `#0284c7`); Bessones amber
-  `#b45309`; Rectangles violet `#6d28d9` (+ `--mida-0..3` piece fills). Each new puzzle gets its own colour
-  (ideas: teal `#0f766e`, rose `#be123c`, cyan `#0e7490`, fuchsia `#a21caf`, orange `#c2410c`, emerald —
-  keep enough contrast with white text; avoid confusion with success green/danger red). The home card uses
-  the same colour via a `.puzzle.<slug>` class in `index.html`'s `<style>` (border-top, strong/progres
-  colour, hover).
+- **CSS**: `css/comu.css` has the tokens (`--text-main`, `--text-muted`, `--border-*`, `--success(-light)`,
+  `--danger(-light)`, `--warning`, default `--primary/-light/-hover/-dark`) and the shared classes
+  (`.dalt`, `.instr-*`, `.regla`, `#tauler-wrap`, `.pila*`, `.missatge.error|ok|info`, `.accions`, `.btn-*`,
+  `.dialeg-tria/.graella`, keyframes `fadeIn`, `sacseja`); each puzzle CSS overrides `--primary*` in `:root`
+  and defines its own `posa`/`celebra`/`batec` keyframes.
+- **Theme colours used**: Enllaç indigo `#4f46e5`, Laberint sky `#0369a1`, Bessones amber `#b45309`,
+  Rectangles violet `#6d28d9`. A new puzzle gets its own (teal `#0f766e`, rose `#be123c`, cyan `#0e7490`,
+  fuchsia `#a21caf`, orange `#c2410c`…; not green/red), also on its home card (`.puzzle.<slug>` rules in
+  `index.html`'s `<style>`).
 - **Scaling boards**: board units → SVG `viewBox` (+ HTML overlays positioned in %), CSS `width` in px with
   `max-width: 100%`; fonts inside HTML overlays use container query units
   (`container-type: inline-size` + `calc(100cqw * k / var(--amplada))`). Must have **no horizontal scroll
@@ -241,7 +249,7 @@ during play (e.g. rectangle size label, angle arcs, ✓ on used cards/sizes).
 - `motor.js`: exact fractions; `avalua` returns calculation steps (`['(1 + 1) × 2', '2 × 2', '4']`),
   negatives/fractions in parentheses mid-step, division by zero flagged; `comprova`, `resol` (48 combos).
 - UI: the two cards share **one** set of sign slots ("twins"): a sign placed in either card appears in both.
-  CSS grid with fixed column slots so twins align. Palette `+ − × ÷ ( )`; «( )» dropped on the operation to
+  CSS grid with fixed column slots so twins align (numbers carry `.pos-a/.pos-b/.pos-c`, used by print). Palette `+ − × ÷ ( )`; «( )» dropped on the operation to
   do first; keys `+ - * x / : ( )`. Instructions add an order-of-operations reminder (not in PDF).
 - Any valid answer accepted. PDF answer errors: **17** (its answer `4 ÷ 2 + 1 = 4` is false; with the
   original statement the only solutions are `a × (b − c)` or `a ÷ (b − c)` — user chose to keep the
@@ -323,7 +331,8 @@ tool via `importlib` creates `__pycache__`.
    rules), `js/portada.js` (add `{ clau, el, total }`), `.github/workflows/tests.yml` (new step),
    `README.md` (table row, «Com es juga…» section, structure, tests; update the «altres N puzzles» count),
    `docs/<slug>.md` (move the section out of `docs/traduccions.md` + fix its intro list), translation notes.
-7. Prettier, all tests, browser tests (§10), commit, push, PR, reply in Catalan with merge steps + preview.
+7. Prettier, all tests, browser tests (§10), commit, push, PR, reply in Catalan with merge steps + preview,
+   and offer (one line) the print version (Part B).
 
 ## 12. The 8 pending puzzles
 
@@ -347,45 +356,109 @@ heads); kazu = grey dashed 4.17 grid + red fruit fills; mizu = black 12.5 (tank 
 edges), 3.125 (tick marks); sankaku/zukei = grey dashed 4.17 grid + black filled dots; step = black 18.75
 (lines) + white-filled circles with black 12.5 outline; zero = black 3.125 card boxes (numbers are text).
 
-## 13. Open points / ideas
+# Part B — printable PDF
 
-- Nothing pending from the user right now; the next request will probably be "Implementa «<name>»" or a
-  print version of another puzzle (§14).
+## 13. Task B: the printable version of a finished puzzle
+
+**Use**: the user prints the PDF **double-sided on a black & white printer**, laminates the sheets, and
+students (12–13 years old) write the answers with a **thick whiteboard marker**, then wipe them off.
+Reference implementation: Expressions bessones (`imprimir/expressions-bessones.html`, 9 pages).
+
+### 13.1 Rules agreed with the user (non-negotiable)
+
+1. **Ready-to-print HTML first**: `imprimir/<slug>.html` is a normal page that shows the A4 sheets on screen
+   and prints them exactly; the PDF is generated *from it* (`tools/genera-pdf.js`) and committed next to it.
+   A screen-only bar offers «← Torna al joc», «Imprimeix o desa com a PDF» (`window.print()`) and «Descarrega
+   el PDF».
+2. **Only white, black and dark grey**: `--tinta: #000`, `--gris: #333`. No theme colour, no green/red for
+   ✓/✗ (the symbols are enough), no pale fills or light-grey lines (they vanish on a B/W laser).
+3. **Page order**: **1 = instructions** (the game's «Com es juga?» text and examples + a box «Amb el
+   retolador» saying where to write), **2 = blank** (back of the instructions), **3… = problems, 6 per page**
+   (2 columns × 3 rows, in order). Pages = 2 + ⌈N/6⌉ (42 → 9, 38 → 9, 49 → 11). If a puzzle's figures cannot
+   be made writable at 6 per page, propose fewer per page in the sample message — do not decide alone.
+4. **Always show pages 1 and 3 first** (`--pagines 1,3`, sent with `SendUserFile`) and wait for the user's
+   «OK»; iterate on their remarks. Only then generate the full PDF, commit and open the PR.
+5. **Writing room as large as fits**: boxes must not touch the card border (air above and below), must be
+   centred between their neighbours, and big (after the first sample the user asked for +10 % width and
+   +15 % height: «el màxim espai possible»). Numbers and labels bold and large.
+6. When done, add the «Versió per imprimir» link to the game page (§1) and a row to the README table.
+
+### 13.2 Files and API
+
+- `css/imprimir.css` (shared): `@page { size: A4; margin: 0 }`; `.pagina` = one sheet, exactly 210 × 297 mm,
+  padding 10 mm top, 6 mm sides, 8 mm bottom, flex column, `overflow: hidden`, `break-after: page`; grey body
+  background on screen only. Classes: `.cap` (h1 + `.jp` Japanese name + `.quins`), `.peu` (footer, pushed
+  down with `margin-top: auto`), page 1 blocks `.regles`, `.fila` + `figure`/`figcaption`, `.caixa`,
+  `.caixa.retolador` (thick border), `.veredicte`; problem pages `.regla-full`, `.problemes` (grid
+  `1fr 1fr` × 3 rows, gap 4 mm × 3 mm → **97.5 mm per column**), `.problema`, `.num-problema` (black pill).
+  `.barra` is screen-only: its `@media print { display: none }` must come **after** the `.barra` rule
+  (otherwise it prints as an extra page — happened once).
+- `js/imprimir.js` (`window.Imprimir`):
+  - `problemes({ total, perFull, regla, dibuixa })` appends one `section.pagina[data-quins="Problemes a–b"]`
+    per group: `p.regla-full` (HTML) + `.problemes` with `figure.problema` = `.num-problema` + `dibuixa(i)`.
+  - `capsIPeus({ titol, jp })` adds header and footer (credits + licence) to every `.pagina[data-quins]`;
+    the blank page has no `data-quins`, so it stays empty.
+  - wires `[data-imprimeix]` buttons to `window.print()`.
+- `imprimir/<slug>.html`: `<head>` loads `../css/imprimir.css`, `../css/imprimir-<slug>.css`,
+  `../js/imprimir.js`, the game's `problemes.js` + `tauler.js` (+ `motor.js` if needed) and
+  `../js/<slug>/imprimir.js`, all `defer`. `<body>`: `nav.barra`, then
+  `section.pagina.mida-instr[data-quins="Instruccions"]` written in HTML (copy the texts from `<slug>.html`,
+  with empty `<figure id="ex-…">` placeholders), then `section.pagina` (blank). Problem pages come from JS.
+- `js/<slug>/imprimir.js` (IIFE): fill the instruction figures with the game's `Tauler<X>.estatic(...)`, call
+  `Imprimir.problemes({ total: P.llista.length, perFull: 6, regla: '<one-line rule>', dibuixa: i =>
+  T.estatic(P.llista[i], <empty state>) })`, then `Imprimir.capsIPeus({ titol, jp })`.
+- `css/imprimir-<slug>.css`: restyles **the game's own DOM** in mm/pt (no px), black/dark grey only;
+  `.mida-instr …` = the smaller size for page 1. If the print CSS needs a hook the DOM lacks, add a class in
+  `tauler.js` (harmless for the game; bessones added `.pos-a/.pos-b/.pos-c`). SVG boards (laberint,
+  rectangles, enllaç arrows): give the SVG a width in mm and override `stroke`/`fill` to black, white or
+  `#333`; check that thin lines stay ≥ 0.3 mm.
+
+### 13.3 Generate and verify
+
+```bash
+node tools/genera-pdf.js <slug> --pagines 1,3 --sortida imprimir/<slug>-mostra.pdf   # sample (git-ignored)
+node tools/genera-pdf.js <slug>                          # full → imprimir/<slug>.pdf (commit it)
+```
+
+`genera-pdf.js` opens the page via `file://`, waits for `document.fonts.ready`, fails on any JS error, on any
+overflow (`scrollWidth/Height > client…` of `.pagina`, `.problemes`, `.problema`, `.caixa`: a `1fr` grid
+track silently grows to its content and spills into the page padding) and on any visible non-`.pagina` body
+child under print media; then `page.pdf({ preferCSSPageSize: true, printBackground: true, pageRanges })`.
+Fonts: Inter (embedded as Type 3 — poppler's «Bad bounding box in Type 3 glyph» warnings are harmless) and
+IPAGothic for the Japanese name. Then always:
+
+- `pdfinfo` → page count = 2 + ⌈N/6⌉.
+- `pdftoppm -r 90 -png` → Read pages 1, 3 and the **last** one (largest numbers/figures are usually at the
+  end); `pdftoppm -r 200 -x … -y … -W … -H …` to zoom on one card (dashed lines, air around boxes).
+- No colour: with PIL count pixels where `max(r,g,b) − min(r,g,b) > 12` → must be 0 on every page.
+- Measure in mm with Playwright (`getBoundingClientRect().width / 96 × 25.4`): widest card ≤ 97.5 mm, and
+  any geometric promise (bessones: left gap = right gap of every box, measured with a `Range` on the
+  number text).
+- Screen view at 1000 px (bar + first sheet) and game page link at 360 px.
+
+### 13.4 Lessons from Expressions bessones (anticipate them)
+
+The user's remarks came in this order — design for them from the start: (1) colour → B/W only; (2) dashed
+boxes touched the card border → `--aire` 2.2 mm above/below; (3) more room → boxes 11.5 → 14 mm, card height
++50 %; (4) boxes not centred between numbers (the parenthesis slot sat on one side only) → add the slot
+width as margin on the other side. Final sizes: boxes 14 × 14 mm (dashed 0.45 mm `#333`, radius 2 mm),
+parenthesis slots 5 mm, numbers 19.5 pt Inter 800, card border 0.5 mm black; problems with two-digit
+operands (37–42) get `.dues-xifres` (15 pt) so they fit; first number right-aligned, last left-aligned.
+Also: reset `figure { margin: 0 }` (browser default 40 px); width, not height, is always the constraint.
+
+### 13.5 Pending print versions (suggestions to put in the sample message, not decisions)
+
+| Puzzle | Pages | Ideas |
+|---|---|---|
+| Enllaç de múltiples | 9 | Empty slots = large dashed boxes to write the number; arrows black; the spare cards printed as a row of numbers students can cross out. |
+| Laberint d'angles | 9 | Students draw the path over the lines: lines dark grey, circles big with black numbers, S/G bold; no angle arcs (they are play aids). Large mazes may need 4 per page — ask. |
+| Talla en rectangles | 9 | Cells ≥ 9 mm with dark-grey grid so cuts can be drawn with the marker; figure outline thick black; size list in bold under each figure. |
+
+## 14. Open points / ideas
+
+- Nothing pending from the user right now; the next request will probably be «Implementa «<nom>»» (Task A)
+  or the print version of another puzzle (Task B).
 - Possible refactors if a third puzzle needs them: shared digit-entry pad (bcross, dokoeq, step), shared
   dot-grid selector (sankaku, zukei), shared exact-fraction helper (bessones, mizu).
 - `docs/traduccions.md` notes contain the known Gemini mistakes (only sums in dokoeq; 1 litre per cube in
   mizu; «0, 1, 2 zeros» is not a rule; kazu «Compte!» is about the dotted line and square size).
-
-## 14. Print versions (phase 2)
-
-The user prints the PDF **double-sided on a black & white printer**, laminates the sheets and students write
-the answers with a **whiteboard marker** (12–13 year olds, thick marker → big writing areas).
-
-- **Pages**: 1 = instructions (same text and examples as the game's «Com es juga?»), 2 = blank (back of the
-  instructions), 3… = problems, **6 per page** in a 2 × 3 grid (Expressions bessones: 42 → pages 3–9,
-  i.e. 1–6, 7–12, … 37–42). Each problem page: header (title + Japanese name + «Problemes a–b»), a one-line
-  rule, the grid, footer (credits + CC BY-NC-SA). The examples on page 1 are in a smaller size
-  (`.mida-instr`).
-- **Rules the user set**: only **white, black and dark grey** (`--tinta: #000`, `--gris: #333`; no colour at
-  all, also for ✓/✗: verify by rendering with `pdftoppm` and counting pixels with R≠G≠B); dashed boxes must
-  **not touch** the card border (vertical air `--aire`); boxes **centred** between the two numbers (equal
-  space on both sides, see the `data-forat` margins); as much writing room as fits.
-- **How it is built**: `imprimir/<puzzle>.html` is a static page whose first sheet (instructions) is written
-  in HTML; `js/<puzzle>/imprimir.js` renders the examples with the game's own `Tauler<X>.estatic(...)` and
-  calls `Imprimir.problemes({ total, perFull: 6, regla, dibuixa })` and `Imprimir.capsIPeus({ titol, jp })`.
-  Each sheet is a `.pagina` of exactly 210 × 297 mm (`@page { size: A4; margin: 0 }`), everything in mm/pt.
-  On screen there is a bar (hidden in print) with «← Torna al joc», «Imprimeix o desa com a PDF»
-  (`window.print()`) and a download link to the generated PDF. The game page links to it with
-  `a.per-imprimir` in `nav.dalt` (see §1).
-- **Pending**: print versions of Enllaç de múltiples, Laberint d'angles and Talla en rectangles (and of every
-  new puzzle). Same layout rules; design each one's writing areas for a thick marker, send a sample first.
-- **Width is the constraint**: page side padding 6 mm, column gap 3 mm → 97.5 mm per column. Expressions
-  bessones: boxes 14 × 14 mm, parenthesis slots 5 mm, numbers 19.5 pt; problems 37–42 (two-digit operands)
-  get `.dues-xifres` (15 pt numbers) so their cards fit; first number right-aligned and last left-aligned so a
-  one-digit number sharing a column with a two-digit one stays next to its box.
-- **Generate**: `node tools/genera-pdf.js expressions-bessones` → `imprimir/expressions-bessones.pdf`
-  (commit it; regenerate whenever the data or the print CSS change). `--pagines 1,3 --sortida
-  imprimir/x-mostra.pdf` makes a sample for the user (`*-mostra.pdf` is git-ignored). The script throws if any
-  `.pagina`, `.problemes`, `.problema` or `.caixa` overflows: the grid can silently grow into the page padding
-  otherwise.
-- **Workflow with the user**: send a sample (pages 1 and 3) with `SendUserFile`, iterate, then the full PDF.
