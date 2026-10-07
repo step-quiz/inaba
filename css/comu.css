@@ -57,19 +57,37 @@ body {
     min-height: 100dvh;
 }
 
-/* ---- Enllaç a la portada ---- */
-.tornar {
+/* ---- Fila de dalt: tornar a la portada i, si el puzzle en té, la versió per imprimir ---- */
+.dalt {
     align-self: center;
     width: 100%;
     max-width: 760px;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 4px 16px;
+}
+.tornar,
+.per-imprimir {
     color: var(--text-muted);
     text-decoration: none;
     font-weight: 600;
     font-size: 0.95em;
 }
-.tornar:hover {
+.tornar:hover,
+.per-imprimir:hover {
     color: var(--primary-dark);
     text-decoration: underline;
+}
+.per-imprimir {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+}
+.per-imprimir svg {
+    width: 1.15em;
+    height: 1.15em;
 }
 
 /* ---- Títol, amb la sabatilla que porta a step-quiz.net (com a operacions) ---- */
