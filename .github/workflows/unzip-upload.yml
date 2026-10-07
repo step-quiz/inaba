@@ -4,15 +4,17 @@
 #  · concurrency: si es pugen dos zip seguits, el segon espera que acabi el primer.
 #    Abans corrien alhora i l'últim a acabar esborrava la feina de l'altre
 #    («l'últim zip guanya»).
-#  · Abans de desar, passa les comprovacions dels dos cursos. Si alguna falla, no es
-#    desa res: el zip es queda a _uploads/ i l'acció surt amb una creu vermella que
-#    diu quina comprovació ha fallat. Es corregeix i es torna a pujar.
+#  · Abans de desar, passa els tests dels puzzles (tests/*.test.js). Si algun falla, no
+#    es desa res: el zip es queda a _uploads/ i l'acció surt amb una creu vermella que
+#    diu quin test ha fallat. Es corregeix i es torna a pujar.
+#  · També es pot llançar a mà (Actions → «Extract and commit zip uploads» → Run workflow).
 name: Extract and commit zip uploads
 
 on:
   push:
     paths:
       - '_uploads/**.zip'
+  workflow_dispatch:
 
 permissions:
   contents: write
@@ -40,14 +42,12 @@ jobs:
             rm "$z"
           done
 
-      - uses: actions/setup-python@v5
+      - uses: actions/setup-node@v4
         with:
-          python-version: '3.12'
+          node-version: '22'
 
-      - name: Check both courses before saving
-        run: |
-          python 1eso/eines/comprova.py
-          python 4eso/eines/comprova.py
+      - name: Run the puzzle tests before saving
+        run: for t in tests/*.test.js; do node "$t"; done
 
       - name: Commit and push changes
         run: |
