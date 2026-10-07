@@ -11,10 +11,11 @@ Els PDF originals (en japonès) són a [`src/`](src/): `*_q.pdf` són els enunci
 |---|---|---|---|
 | Enllaç de múltiples | 倍数リンク (`blink`) | [`enllac-multiples.html`](enllac-multiples.html) | 42 |
 | Laberint d'angles | 角度メイズ (`kmaze`) | [`laberint-angles.html`](laberint-angles.html) | 38 |
+| Expressions bessones | 双子式 (`gemini`) | [`expressions-bessones.html`](expressions-bessones.html) | 42 |
 
-La portada ([`index.html`](index.html)) també llista els altres 10 puzzles de `src/` com a «Properament».
+La portada ([`index.html`](index.html)) també llista els altres 9 puzzles de `src/` com a «Properament».
 La traducció de les instruccions de cada puzzle i les notes sobre els problemes són a [`docs/`](docs/).
-Les dels 10 puzzles que encara no s'han fet són a [`docs/traduccions.md`](docs/traduccions.md).
+Les dels puzzles que encara no s'han fet són a [`docs/traduccions.md`](docs/traduccions.md).
 
 ## Com es juga a l'Enllaç de múltiples
 
@@ -44,6 +45,21 @@ Els cercles on es pot anar tenen la vora discontínua, i als cercles amb número
 dibuixa l'angle que hi formen les dues línies del camí: un escaire si és de 90°, un mig cercle si és de
 180° (un angle pla: el camí va recte) i un arc si és un altre. Quan el camí arriba a la G, es comprova sol: si algun angle no és el que demana
 el cercle, es marca en vermell i es diu quin fa («Al cercle del 180, el camí fa 90°»).
+
+## Com es juga a les Expressions bessones
+
+Les dues targetes són «bessones»: cada signe (+, −, ×, ÷) es posa una sola vegada i va sol a totes dues.
+Els parèntesis «( )» es deixen sobre el signe de l'operació que s'ha de fer primer. Tres maneres de fer-ho:
+
+- **Arrossegar** un signe fins a un forat. Un signe posat es pot arrossegar a l'altre forat (s'intercanvien)
+  o fora (es treu).
+- **Clicar o tocar** un signe i després el forat. Clicar un signe posat el treu, i clicar un parèntesi treu
+  els parèntesis.
+- **Teclat**: Tab o les fletxes per anar d'un forat a l'altre, escriure `+ - * /` (o `x :`), `(` per posar o
+  treure els parèntesis, ⌫ per esborrar.
+
+Quan hi ha els dos signes, es comprova sol i es mostra el càlcul de cada targeta pas a pas
+(«1 + 1 × 2 = 1 + 2 = 3, i no 4»). S'accepta qualsevol solució correcta, encara que no sigui la del PDF.
 
 ## Comú als puzzles
 
@@ -83,6 +99,7 @@ src/                           ← PDF originals
 ```
 node tests/enllac-multiples.test.js
 node tests/laberint-angles.test.js
+node tests/expressions-bessones.test.js
 ```
 
 GitHub els executa sols a cada pull request i a cada canvi a `main` (pestanya **Actions**).

@@ -27,3 +27,5 @@ jobs:
         run: node tests/enllac-multiples.test.js
       - name: Laberint d'angles
         run: node tests/laberint-angles.test.js
+      - name: Expressions bessones
+        run: node tests/expressions-bessones.test.js

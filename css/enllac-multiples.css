@@ -26,44 +26,6 @@ DEPENDÈNCIES: css/comu.css (s'ha de carregar abans).
 /* ══════════════════════════════════════════════
    TARGETES (pila de sota el tauler)
 ══════════════════════════════════════════════ */
-.pila-wrap {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 8px;
-    padding: 6px 16px 4px 16px;
-}
-.pila-titol {
-    font-size: 0.8em;
-    font-weight: bold;
-    letter-spacing: 0.5px;
-    text-transform: uppercase;
-    color: var(--text-muted);
-}
-.pila {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 14px;
-    padding: 10px 16px;
-    border-radius: 14px;
-    border: 2px dashed transparent;
-}
-.pila.avisa {
-    animation: avisa 0.9s;
-}
-@keyframes avisa {
-    0%,
-    100% {
-        border-color: transparent;
-    }
-    30%,
-    70% {
-        border-color: var(--primary);
-        background: var(--primary-light);
-    }
-}
-
 /* ---- Una targeta (a la pila o al fantasma d'arrossegar) ---- */
 .targeta {
     position: relative;
@@ -309,9 +271,3 @@ DEPENDÈNCIES: css/comu.css (s'ha de carregar abans).
 }
 
 /* ---- Pantalles estretes ---- */
-@media (max-width: 480px) {
-    .pila {
-        gap: 10px;
-        padding: 8px 4px;
-    }
-}
