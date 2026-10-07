@@ -31,6 +31,9 @@ Sections: 1 User & rules · 2 Environment · 3 Git/PR workflow · 4 Repo layout 
     fine; a short `instr-compte` note inside the instructions is fine.
   - Header: shoe icon (`icon.png`) linking to `https://step-quiz.net/`, same as their `operacions` repo;
     big ‹ › SVG arrows; middle button label **«Escull…»**.
+  - **Every puzzle gets a print version** (§14) and, on its game page, a discreet link «Versió per imprimir»
+    (printer icon) at the right of «← Tots els puzzles» in `nav.dalt`. Add the link only when
+    `imprimir/<puzzle>.html` exists (copy it from `expressions-bessones.html`).
   - Footer: `<p class="credits">Puzzle original de Naoki Inaba</p>` + the CC BY-NC-SA licence bar
     (`footer.peu-llicencia`, copied from `operacions/index.html`). Copy it from any existing page.
   - Laberint d'angles: keep **S/G** letters; angle arcs **visible while playing**; never say the path
@@ -123,7 +126,8 @@ README.md                     user-facing (Catalan) description; update per puzz
   Load order per page: `js/comu.js`, `problemes.js`, `motor.js`, `tauler.js`, controller. Each file exposes
   one global on `window` (or is an IIFE). Tests load data+motor in Node with `vm.runInContext` and a fake
   `window` object — so **motor.js and problemes.js must not touch the DOM**.
-- **HTML skeleton** (copy `talla-rectangles.html` or `expressions-bessones.html` and edit): `a.tornar` →
+- **HTML skeleton** (copy `talla-rectangles.html` or `expressions-bessones.html` and edit): `nav.dalt` (`a.tornar`
+  + `a.per-imprimir` if there is a print version) →
   `.title-row` (shoe + `h1`) → `details#instruccions.instruccions` → `main.panel` with `.header-info`
   (`#titol-problema`, `#ja-resolt`, `#comptador`, nav `#btn-anterior` / `#btn-tria` «Escull…» /
   `#btn-seguent`), `p.regla`, puzzle area (`#tauler-wrap`, optional `.pila-wrap > #pila`), `#missatge`
@@ -370,8 +374,11 @@ the answers with a **whiteboard marker** (12–13 year olds, thick marker → bi
   in HTML; `js/<puzzle>/imprimir.js` renders the examples with the game's own `Tauler<X>.estatic(...)` and
   calls `Imprimir.problemes({ total, perFull: 6, regla, dibuixa })` and `Imprimir.capsIPeus({ titol, jp })`.
   Each sheet is a `.pagina` of exactly 210 × 297 mm (`@page { size: A4; margin: 0 }`), everything in mm/pt.
-  On screen there is a bar (hidden in print) with «Imprimeix o desa com a PDF» (`window.print()`) and a
-  download link to the generated PDF.
+  On screen there is a bar (hidden in print) with «← Torna al joc», «Imprimeix o desa com a PDF»
+  (`window.print()`) and a download link to the generated PDF. The game page links to it with
+  `a.per-imprimir` in `nav.dalt` (see §1).
+- **Pending**: print versions of Enllaç de múltiples, Laberint d'angles and Talla en rectangles (and of every
+  new puzzle). Same layout rules; design each one's writing areas for a thick marker, send a sample first.
 - **Width is the constraint**: page side padding 6 mm, column gap 3 mm → 97.5 mm per column. Expressions
   bessones: boxes 14 × 14 mm, parenthesis slots 5 mm, numbers 19.5 pt; problems 37–42 (two-digit operands)
   get `.dues-xifres` (15 pt numbers) so their cards fit; first number right-aligned and last left-aligned so a

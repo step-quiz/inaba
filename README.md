@@ -88,7 +88,8 @@ la pàgina 1 són les instruccions, la 2 és en blanc (el revers) i a partir de 
 |---|---|---|
 | Expressions bessones | [`imprimir/expressions-bessones.html`](imprimir/expressions-bessones.html) | [`imprimir/expressions-bessones.pdf`](imprimir/expressions-bessones.pdf) (9 pàgines) |
 
-La pàgina té un botó per imprimir-la o desar-la com a PDF des del navegador. El PDF del repositori el fa
+S'hi arriba des de l'enllaç «Versió per imprimir» de dalt de la pàgina del joc. La pàgina té un botó per
+imprimir-la o desar-la com a PDF des del navegador. El PDF del repositori el fa
 `node tools/genera-pdf.js expressions-bessones` (amb Chromium); si es canvien els problemes o els estils
 d'impressió, s'ha de tornar a fer.
 
