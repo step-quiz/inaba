@@ -5,8 +5,8 @@ fet. Està feta directament dels PDF i contrastada amb una traducció de Gemini;
 on no coincidien i per què.
 
 Quan es faci un puzzle, la seva part passa al seu propi fitxer (com
-[`enllac-multiples.md`](enllac-multiples.md), [`laberint-angles.md`](laberint-angles.md) i
-[`expressions-bessones.md`](expressions-bessones.md)).
+[`enllac-multiples.md`](enllac-multiples.md), [`laberint-angles.md`](laberint-angles.md),
+[`expressions-bessones.md`](expressions-bessones.md) i [`talla-rectangles.md`](talla-rectangles.md)).
 
 **Criteris:**
 
@@ -24,7 +24,6 @@ Quan es faci un puzzle, la seva part passa al seu propi fitxer (com
 | [Busca el nombre](#busca-el-nombre) | かずさがし | `kazu` |
 | [Dipòsits d'aigua](#dipòsits-daigua) | 水そうと水 | `mizu` |
 | [Busca el triangle](#busca-el-triangle) | 三角探し | `sankaku` |
-| [Talla en rectangles](#talla-en-rectangles) | 四角カット | `shikaku` |
 | [L'escala de nombres](#lescala-de-nombres) | 数字の階段 | `step` |
 | [Afegeix zeros](#afegeix-zeros) | ゼロゼロ式 | `zero` |
 | [Busca la figura](#busca-la-figura) | 図形探し | `zukei` |
@@ -169,28 +168,6 @@ Notes:
 
 - La traducció de Gemini és correcta. Només cal escriure els decimals amb coma (1,5) i la divisió com es
   fa a classe.
-
----
-
-## Talla en rectangles
-
-`src/shikaku_q.pdf` · 四角カット. (Gemini no va poder obrir aquest PDF.)
-
-| Japonès | Català |
-|---|---|
-| 四角カット | Talla en rectangles |
-| マス目にそって決められたマス数の四角形に分けましょう | Divideix la figura en rectangles, seguint les línies de la quadrícula, que tinguin el nombre de quadrets indicat. |
-| ３，５，６マス | 3, 5 i 6 quadrets |
-| マス目にそって四角形に分けましょう | Divideix-la en rectangles seguint les línies de la quadrícula |
-| どれも四角形です | Tots són rectangles. ✓ |
-| 四角形ではありません | Aquest no és un rectangle. ✗ |
-| 四角形は決められたマス数になるようにします | Cada rectangle ha de tenir un dels nombres de quadrets indicats |
-| ３マス ／ ５マス ／ ６マス | 3 quadrets / 5 quadrets / 6 quadrets |
-
-Notes:
-
-- 四角形 vol dir «quadrilàter», però si es talla per les línies de la quadrícula, els únics quadrilàters
-  possibles són rectangles (l'exemple ✗ és una peça en forma de L). Per això «rectangles».
 
 ---
 

@@ -29,3 +29,5 @@ jobs:
         run: node tests/laberint-angles.test.js
       - name: Expressions bessones
         run: node tests/expressions-bessones.test.js
+      - name: Talla en rectangles
+        run: node tests/talla-rectangles.test.js

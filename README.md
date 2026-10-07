@@ -12,8 +12,9 @@ Els PDF originals (en japonès) són a [`src/`](src/): `*_q.pdf` són els enunci
 | Enllaç de múltiples | 倍数リンク (`blink`) | [`enllac-multiples.html`](enllac-multiples.html) | 42 |
 | Laberint d'angles | 角度メイズ (`kmaze`) | [`laberint-angles.html`](laberint-angles.html) | 38 |
 | Expressions bessones | 双子式 (`gemini`) | [`expressions-bessones.html`](expressions-bessones.html) | 42 |
+| Talla en rectangles | 四角カット (`shikaku`) | [`talla-rectangles.html`](talla-rectangles.html) | 42 |
 
-La portada ([`index.html`](index.html)) també llista els altres 9 puzzles de `src/` com a «Properament».
+La portada ([`index.html`](index.html)) també llista els altres 8 puzzles de `src/` com a «Properament».
 La traducció de les instruccions de cada puzzle i les notes sobre els problemes són a [`docs/`](docs/).
 Les dels puzzles que encara no s'han fet són a [`docs/traduccions.md`](docs/traduccions.md).
 
@@ -61,6 +62,17 @@ Els parèntesis «( )» es deixen sobre el signe de l'operació que s'ha de fer 
 Quan hi ha els dos signes, es comprova sol i es mostra el càlcul de cada targeta pas a pas
 («1 + 1 × 2 = 1 + 2 = 3, i no 4»). S'accepta qualsevol solució correcta, encara que no sigui la del PDF.
 
+## Com es juga al Talla en rectangles
+
+- **Arrossegar** (amb el ratolí o el dit) d'un quadret fins al de la cantonada oposada dibuixa un rectangle;
+  mentre es dibuixa, es veu «base × altura = quadrets». Si en trepitja d'altres, els treu.
+- **Tocar** un rectangle el treu.
+- **Teclat**: fletxes per moure el quadret marcat, Enter per començar i acabar un rectangle, Esc per desfer-lo,
+  Supr per treure el rectangle del quadret marcat.
+
+Cada mida de la llista té un color, i els rectangles amb una mida que no toca es pinten de vermell. Quan la
+figura és plena, es comprova sola.
+
 ## Comú als puzzles
 
 - Els problemes resolts es desen al navegador (localStorage) i es veuen amb un ✓ a «Escull…» i a la
@@ -89,6 +101,7 @@ js/<puzzle>/
     <puzzle>.js                ← controlador: arrossegar, clicar, teclat
 tests/<puzzle>.test.js         ← cada problema té una sola solució, i és la del PDF
 tools/extreu-laberint.py       ← llegeix els laberints del PDF i escriu js/laberint-angles/problemes.js
+tools/extreu-rectangles.py     ← llegeix les figures del PDF i escriu js/talla-rectangles/problemes.js
 docs/<puzzle>.md               ← traducció de les instruccions i notes
 docs/traduccions.md            ← traducció de les instruccions dels puzzles pendents
 src/                           ← PDF originals
@@ -100,6 +113,7 @@ src/                           ← PDF originals
 node tests/enllac-multiples.test.js
 node tests/laberint-angles.test.js
 node tests/expressions-bessones.test.js
+node tests/talla-rectangles.test.js
 ```
 
 GitHub els executa sols a cada pull request i a cada canvi a `main` (pestanya **Actions**).
