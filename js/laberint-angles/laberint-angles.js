@@ -209,7 +209,7 @@
         const boto = nav.botoSeguent();
         const titol = nav.totsResolts()
             ? '🏆 Molt bé! Has resolt tots els laberints!'
-            : '🎉 Molt bé! Has arribat a la G girant els angles que demanen els cercles.';
+            : '🎉 Molt bé! Has arribat a la G formant els angles que demanen els cercles.';
         mostraMissatge('ok', titol, [], boto);
         setTimeout(() => boto.focus({ preventScroll: true }), 0);
     }
@@ -315,6 +315,20 @@
         const doble = sol.slice(0, 6).concat([mig]);
         $('ex-dues-vegades').prepend(T.estatic(ex, doble, { ...opcions, classes: [[mig, 'erroni']] }));
         $('ex-angles').prepend(T.estatic(ex, sol, { ...opcions, final: true, marques: marques(sol) }));
+        // Un angle pla: tres cercles en línia, i el del mig és el del 180
+        const pla = {
+            nodes: [
+                [0, 0],
+                [1, 0, 180],
+                [2, 0],
+            ],
+            arestes: [
+                [0, 1],
+                [1, 2],
+            ],
+            tallades: [],
+        };
+        $('ex-pla').prepend(T.estatic(pla, [0, 1, 2], { amplada: 200, marques: [{ pos: 1, angle: 180 }] }));
     }
 
     els.desfes.addEventListener('click', desfes);

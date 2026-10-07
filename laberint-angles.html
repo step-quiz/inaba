@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Puzzle d'angles: ves de la S a la G per les línies, girant als cercles amb número l'angle que hi diu.">
+    <meta name="description" content="Puzzle d'angles: ves de la S a la G per les línies; a cada cercle amb número, el camí hi ha de formar l'angle que hi diu.">
     <title>Laberint d'angles</title>
     <link rel="icon" href="icon.png">
     <link rel="stylesheet" href="css/comu.css">
@@ -25,7 +25,7 @@
             <ul class="instr-regles">
                 <li>Ves de la <strong>S</strong> (sortida) a la <strong>G</strong> (meta) seguint les línies.</li>
                 <li>Només pots passar <strong>una vegada</strong> per cada cercle.</li>
-                <li>Als cercles amb un <strong>número</strong>, el camí gira fent aquest <strong>angle</strong>.</li>
+                <li>Als cercles amb un <strong>número</strong>, les dues línies del camí hi formen aquest <strong>angle</strong>.</li>
             </ul>
 
             <div class="instr-fila exemple">
@@ -42,7 +42,7 @@
             </div>
 
             <div class="instr-caixa">
-                <h3>Als cercles amb un número, el camí gira fent aquest angle</h3>
+                <h3>Als cercles amb un número, les dues línies del camí hi formen aquest angle</h3>
                 <div class="instr-fila">
                     <figure id="ex-angles"></figure>
                 </div>
@@ -51,7 +51,10 @@
                     <li>Al cercle del 90 del mig, l'angle és de 90° (un angle recte).</li>
                     <li>Pel cercle del 90 de la dreta no hi passa: hi ha cercles per on no cal passar.</li>
                 </ul>
-                <p class="instr-compte">180° vol dir que el camí continua recte, sense girar.</p>
+                <div class="instr-fila">
+                    <figure id="ex-pla"><figcaption>Al cercle del 180, l'angle és pla.</figcaption></figure>
+                </div>
+                <p class="instr-compte">180° és un angle pla: les dues línies queden alineades i el camí continua recte.</p>
             </div>
         </div>
     </details>
@@ -68,7 +71,7 @@
             </nav>
         </div>
 
-        <p class="regla">Ves de la <strong>S</strong> a la <strong>G</strong>. Als cercles amb número, el camí gira fent aquest <strong>angle</strong>.</p>
+        <p class="regla">Ves de la <strong>S</strong> a la <strong>G</strong>. Als cercles amb número, el camí hi ha de formar aquest <strong>angle</strong>.</p>
         <div id="tauler-wrap"></div>
 
         <div class="missatge" id="missatge" aria-live="polite"></div>

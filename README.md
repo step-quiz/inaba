@@ -41,7 +41,8 @@ El camí sempre surt de la S. Tres maneres de fer-lo, i es poden barrejar:
   l'últim pas.
 
 Els cercles on es pot anar tenen la vora discontínua, i als cercles amb número per on passa el camí es
-dibuixa l'angle que hi fa. Quan el camí arriba a la G, es comprova sol: si algun angle no és el que demana
+dibuixa l'angle que hi formen les dues línies del camí: un escaire si és de 90°, un mig cercle si és de
+180° (un angle pla: el camí va recte) i un arc si és un altre. Quan el camí arriba a la G, es comprova sol: si algun angle no és el que demana
 el cercle, es marca en vermell i es diu quin fa («Al cercle del 180, el camí fa 90°»).
 
 ## Comú als puzzles

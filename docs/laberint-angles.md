@@ -10,12 +10,12 @@ Versió interactiva: [`laberint-angles.html`](../laberint-angles.html).
 | 角度メイズ | Laberint d'angles |
 | スタート（Ｓ）からゴール（Ｇ）まで線をたどりましょう | Ves de la S (sortida) a la G (meta) seguint les línies. |
 | ・同じ○は１回しか通れません | · Només pots passar una vegada per cada cercle. |
-| ・数字が書かれた○ではその角度で曲がります | · Als cercles amb un número, el camí gira fent aquest angle. |
+| ・数字が書かれた○ではその角度で曲がります | · Als cercles amb un número, les dues línies del camí hi formen aquest angle. |
 | 【例題】 | Exemple |
 | 【解答】 | Solució |
 | 同じ○は１回しか通れません | Només pots passar una vegada per cada cercle |
 | 矢印のコースだと真ん中の○を２回通ります | Aquest camí passa dues vegades pel cercle del mig. |
-| 数字が書かれた○ではその角度で曲がります | Als cercles amb un número, el camí gira fent aquest angle |
+| 数字が書かれた○ではその角度で曲がります | Als cercles amb un número, les dues línies del camí hi formen aquest angle |
 | この角度は 60 度です | Aquest angle és de 60°. |
 | この角度は 90 度です | Aquest angle és de 90°. |
 | 通らない○もあります | Hi ha cercles per on no cal passar. |
@@ -25,8 +25,16 @@ Notes de traducció:
 - **メイズ** (*maze*) és «laberint».
 - **Ｓ** i **Ｇ** són *start* i *goal*. S'han deixat les lletres del PDF; a la web s'explica «S (sortida)»
   i «G (meta)».
-- L'angle és el que formen la línia per on arriba el camí i la línia per on surt. La frase «180° vol dir
-  que el camí continua recte» no és al PDF: s'ha afegit perquè als problemes hi ha cercles de 180.
+- **Quin angle és el número.** 曲がります vol dir «tomba, es doblega». Traduït per «el camí gira fent aquest
+  angle», fa pensar en l'**angle de gir** (com la tortuga del LOGO), i llavors 180° seria fer mitja volta.
+  Però el número és l'**angle que formen les dues línies del camí** al cercle (la línia per on arriba i la
+  línia per on surt): el dibuix de la pàgina 1 marca l'arc entre els dos segments. Per tant, **180° és un
+  angle pla**: el camí continua recte. (Angle de gir = 180° − angle del cercle; només coincideixen al 90.)
+- Comprovació amb els 38 laberints: llegint el número com a angle entre les dues línies, tots tenen una sola
+  solució, la del PDF; llegint-lo com a angle de gir, 26 no en tenen cap, 7 en tenen una i 5 en tenen més
+  d'una.
+- Per això la web no fa servir el verb «girar» («les dues línies del camí hi formen aquest angle»), dibuixa
+  el 180° com un mig cercle i hi afegeix la nota «180° és un angle pla», que no és al PDF.
 
 ## Els 38 problemes
 
