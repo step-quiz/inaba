@@ -1,2 +1,4 @@
 # Memòria cau de Python (es crea en executar els scripts de tools/)
 __pycache__/
+# Mostres de PDF per revisar (tools/genera-pdf.js --sortida …-mostra.pdf)
+imprimir/*-mostra.pdf
