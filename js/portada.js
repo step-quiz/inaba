@@ -9,6 +9,7 @@
     const PUZZLES = [
         { clau: 'inaba.enllac-multiples', el: 'progres-enllac', total: 42 },
         { clau: 'inaba.laberint-angles', el: 'progres-laberint', total: 38 },
+        { clau: 'inaba.expressions-bessones', el: 'progres-bessones', total: 42 },
     ];
     PUZZLES.forEach(({ clau, el, total }) => {
         try {

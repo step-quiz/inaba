@@ -1,11 +1,12 @@
 # Traduccions de les instruccions dels puzzles pendents
 
-Traducció revisada de la pàgina 1 (instruccions i exemples) dels 10 puzzles de `src/` que encara no s'han
+Traducció revisada de la pàgina 1 (instruccions i exemples) dels puzzles de `src/` que encara no s'han
 fet. Està feta directament dels PDF i contrastada amb una traducció de Gemini; les notes de cada puzzle diuen
 on no coincidien i per què.
 
 Quan es faci un puzzle, la seva part passa al seu propi fitxer (com
-[`enllac-multiples.md`](enllac-multiples.md) i [`laberint-angles.md`](laberint-angles.md)).
+[`enllac-multiples.md`](enllac-multiples.md), [`laberint-angles.md`](laberint-angles.md) i
+[`expressions-bessones.md`](expressions-bessones.md)).
 
 **Criteris:**
 
@@ -20,7 +21,6 @@ Quan es faci un puzzle, la seva part passa al seu propi fitxer (com
 |---|---|---|
 | [Creuat de múltiples](#creuat-de-múltiples) | 倍数クロス | `bcross` |
 | [On és la xifra?](#on-és-la-xifra) | どこかな算 | `dokoeq` |
-| [Expressions bessones](#expressions-bessones) | 双子式 | `gemini` |
 | [Busca el nombre](#busca-el-nombre) | かずさがし | `kazu` |
 | [Dipòsits d'aigua](#dipòsits-daigua) | 水そうと水 | `mizu` |
 | [Busca el triangle](#busca-el-triangle) | 三角探し | `sankaku` |
@@ -84,35 +84,6 @@ Notes:
   **fila**. Per això «la fila o la columna».
 - «０だけでも使えません» només diu que un nombre no pot ser un 0 sol. La traducció de Gemini hi afegia «ni com
   a resultat precedit de zero», que el PDF no diu.
-
----
-
-## Expressions bessones
-
-`src/gemini_q.pdf` · 双子式
-
-| Japonès | Català |
-|---|---|
-| 双子式 | Expressions bessones |
-| 数字が書かれた二枚のカードがあります | Hi ha dues targetes amb números. |
-| ・どちらにも同じ記号を書き加えて正しい式にしましょう | · Afegeix els mateixos signes a totes dues perquè les dues igualtats siguin correctes. |
-| ・使うことのできる記号は＋－×÷と（）です | · Pots fer servir els signes +, −, ×, ÷ i els parèntesis ( ). |
-| 【例題】 1 1 2 ＝4 ／ 2 1 1 ＝3 | Exemple: 1 1 2 = 4 / 2 1 1 = 3 |
-| 【解答】 （1＋1）×2＝4 ／ （2＋1）×1＝3 | Solució: (1 + 1) × 2 = 4 / (2 + 1) × 1 = 3 |
-| ＋－×÷と（）を使って正しい式にしましょう | Fes servir +, −, ×, ÷ i ( ) perquè la igualtat sigui correcta |
-| 1＋1＋2＝4 正しい式です | 1 + 1 + 2 = 4: és correcta. ✓ |
-| 1＋1×2＝4 計算が合っていません | 1 + 1 × 2 = 4: el càlcul no surt. ✗ |
-| どちらのカードにも同じ記号を書き加えます | Afegeix els mateixos signes a totes dues targetes |
-| （1＋1）×2＝4 ／ （2＋1）×1＝3 どちらも同じです | (1 + 1) × 2 = 4 / (2 + 1) × 1 = 3: totes dues tenen els mateixos signes. ✓ |
-| 1＋1＋2＝4 ／ 2×1＋1＝3 同じではありません | 1 + 1 + 2 = 4 / 2 × 1 + 1 = 3: no tenen els mateixos signes. ✗ |
-
-Notes:
-
-- «Els mateixos signes» vol dir **els mateixos i als mateixos llocs** (l'exemple ✗ fa servir els mateixos
-  dos signes, però no on toca).
-- L'exemple ✗ «1 + 1 × 2 = 4» falla per la **prioritat de les operacions** (1 + 1 × 2 = 3): lliga bé amb
-  `prioritat.html` d'operacions.
-- La traducció de Gemini en deia «equacions»; aquí no hi ha incògnites.
 
 ---
 
