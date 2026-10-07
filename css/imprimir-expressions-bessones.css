@@ -1,0 +1,99 @@
+/*
+============================================================================
+FITXER: css/imprimir-expressions-bessones.css
+ROL: Les targetes de les «Expressions bessones» en paper: forats grans per
+     escriure-hi el signe amb retolador i espai per als parèntesis.
+ARQUITECTURA: Fa servir el mateix DOM que el joc (TaulerBessones), però amb
+     mides en mm. Columnes: marge ( a ○ ( b ) ○ c ) = r marge estat.
+DEPENDÈNCIES: css/imprimir.css (s'ha de carregar abans).
+============================================================================
+*/
+.bessones {
+    --forat: 11.5mm; /* costat del forat d'un signe */
+    --paren: 4.2mm; /* espai per escriure un parèntesi */
+    display: grid;
+    grid-template-columns:
+        2mm var(--paren) auto auto var(--paren) auto var(--paren) auto auto var(--paren) auto auto
+        2mm auto;
+    row-gap: 4mm;
+    align-items: center;
+    justify-content: center;
+    font-size: 19.5pt;
+    font-weight: 800;
+    font-variant-numeric: tabular-nums;
+    color: var(--tinta);
+}
+.targeta-fons {
+    align-self: stretch;
+    border: 0.5mm solid var(--tinta);
+    border-radius: 2.5mm;
+    background: white;
+}
+.targeta-fons.be {
+    border-color: var(--be);
+    background: #ecfdf5;
+}
+.targeta-fons.malament {
+    border-color: var(--malament);
+    background: #fef2f2;
+}
+.num {
+    padding: 2mm 0.7mm;
+    text-align: center;
+}
+.igual {
+    padding: 0 0.6mm 0 1.6mm;
+    color: var(--gris);
+}
+.estat {
+    padding-left: 1.5mm;
+    font-size: 0.8em;
+}
+.estat:empty {
+    padding: 0;
+}
+.estat.be {
+    color: var(--be);
+}
+.estat.malament {
+    color: var(--malament);
+}
+.paren {
+    text-align: center;
+}
+.paren.posat {
+    color: var(--tema);
+    font-weight: 700;
+}
+.forat {
+    width: var(--forat);
+    height: var(--forat);
+    margin: 0 0.9mm;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 0.45mm dashed #94a3b8;
+    border-radius: 2mm;
+    line-height: 1;
+    color: var(--tema);
+}
+.forat.ple {
+    border-style: solid;
+    border-color: var(--tema);
+    background: var(--tema-clar);
+}
+
+/* Les targetes més petites de les instruccions */
+.mida-instr .bessones {
+    --forat: 9mm;
+    --paren: 3.5mm;
+    row-gap: 2.5mm;
+    font-size: 15pt;
+}
+.mida-instr .num {
+    padding: 1.4mm 0.6mm;
+}
+.mida-instr .forat {
+    margin: 0 0.8mm;
+    border-width: 0.35mm;
+}
