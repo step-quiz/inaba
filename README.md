@@ -79,6 +79,19 @@ figura és plena, es comprova sola.
   portada. Si el navegador no ho permet, es juga igual.
 - Per enviar un problema concret als alumnes: `enllac-multiples.html?p=13`, `laberint-angles.html?p=5`…
 
+## Versions per imprimir
+
+Fulls A4 per imprimir a doble cara (en blanc i negre), plastificar i escriure-hi amb retolador de pissarra:
+la pàgina 1 són les instruccions, la 2 és en blanc (el revers) i a partir de la 3 hi ha 6 problemes per full.
+
+| Puzzle | Pàgina | PDF |
+|---|---|---|
+| Expressions bessones | [`imprimir/expressions-bessones.html`](imprimir/expressions-bessones.html) | [`imprimir/expressions-bessones.pdf`](imprimir/expressions-bessones.pdf) (9 pàgines) |
+
+La pàgina té un botó per imprimir-la o desar-la com a PDF des del navegador. El PDF del repositori el fa
+`node tools/genera-pdf.js expressions-bessones` (amb Chromium); si es canvien els problemes o els estils
+d'impressió, s'ha de tornar a fer.
+
 ## Provar-ho a l'ordinador
 
 Com que no fa servir mòduls, n'hi ha prou amb obrir `index.html` amb doble clic.
@@ -104,6 +117,10 @@ js/<puzzle>/
 tests/<puzzle>.test.js         ← cada problema té una sola solució, i és la del PDF
 tools/extreu-laberint.py       ← llegeix els laberints del PDF i escriu js/laberint-angles/problemes.js
 tools/extreu-rectangles.py     ← llegeix les figures del PDF i escriu js/talla-rectangles/problemes.js
+tools/genera-pdf.js            ← fa el PDF per imprimir d'un puzzle (imprimir/<puzzle>.html → .pdf)
+imprimir/<puzzle>.html, .pdf   ← versió per imprimir i el seu PDF
+css/imprimir.css               ← estils comuns de les versions per imprimir (+ css/imprimir-<puzzle>.css)
+js/imprimir.js                 ← fulls de problemes, capçalera i peu (+ js/<puzzle>/imprimir.js)
 docs/<puzzle>.md               ← traducció de les instruccions i notes
 docs/traduccions.md            ← traducció de les instruccions dels puzzles pendents
 src/                           ← PDF originals

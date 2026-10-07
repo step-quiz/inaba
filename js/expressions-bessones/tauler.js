@@ -37,9 +37,9 @@ window.TaulerBessones = (() => {
         const files = cartes.map(([a, b, c, r], k) => {
             const fila = k + 1;
             const fons = cel(el, 'targeta-fons', fila, '1 / 14');
-            cel(el, 'num', fila, COL.a, a);
-            cel(el, 'num', fila, COL.b, b);
-            cel(el, 'num', fila, COL.c, c);
+            cel(el, 'num pos-a', fila, COL.a, a);
+            cel(el, 'num pos-b', fila, COL.b, b);
+            cel(el, 'num pos-c', fila, COL.c, c);
             cel(el, 'igual', fila, COL.igual, '=');
             cel(el, 'num resultat', fila, COL.r, r);
             const forats = [cel(el, 'forat', fila, COL.forat0), cel(el, 'forat', fila, COL.forat1)];

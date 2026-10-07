@@ -44,13 +44,25 @@ async function main() {
     await pagina.evaluate(() => document.fonts.ready);
     if (errors.length) throw new Error(errors.join('\n'));
 
-    // Cap full no pot desbordar: si passa, el PDF quedaria tallat
+    // Cap full ni cap problema no pot desbordar: el PDF quedaria tallat o encavalcat
     const desborden = await pagina.$$eval('.pagina', fulls =>
         fulls
-            .map((f, i) => (f.scrollHeight > f.clientHeight + 1 || f.scrollWidth > f.clientWidth + 1 ? i + 1 : 0))
+            .map((f, i) => {
+                const caixes = [f, ...f.querySelectorAll('.problemes, .problema, .caixa')];
+                return caixes.some(c => c.scrollHeight > c.clientHeight + 1 || c.scrollWidth > c.clientWidth + 1)
+                    ? i + 1
+                    : 0;
+            })
             .filter(Boolean)
     );
     if (desborden.length) throw new Error(`Hi ha fulls que no hi caben: ${desborden.join(', ')}`);
+
+    // En imprimir, només s'han de veure els fulls (la barra de dalt no): si no, hi hauria pàgines de més
+    await pagina.emulateMedia({ media: 'print' });
+    const sobren = await pagina.$$eval('body > *:not(.pagina):not(script)', els =>
+        els.filter(el => getComputedStyle(el).display !== 'none').map(el => el.tagName.toLowerCase())
+    );
+    if (sobren.length) throw new Error(`Hi ha elements que s'imprimirien fora dels fulls: ${sobren.join(', ')}`);
 
     await pagina.pdf({
         path: sortida,

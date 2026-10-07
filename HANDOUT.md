@@ -4,11 +4,12 @@ You are continuing a project: turning the public-domain math puzzles of **Naoki 
 `src/`) into interactive, static, vanilla-JS web pages in **Catalan**, for a secondary-school math teacher.
 4 of the 12 puzzles are done; **8 are pending**. Read this file fully before touching anything: it encodes
 every decision already agreed with the user, the architecture, the data pipeline, the testing method and the
-traps already found.
+traps already found. There is also a **second phase: printable A4 sheets** (laminated, written on with a
+whiteboard marker): done for Expressions bessones, see §14.
 
 Sections: 1 User & rules · 2 Environment · 3 Git/PR workflow · 4 Repo layout · 5 Shared architecture ·
 6 Conventions · 7 Interaction patterns · 8 The 4 finished puzzles · 9 PDF data extraction · 10 Testing ·
-11 Recipe for a new puzzle · 12 The 8 pending puzzles · 13 Open points
+11 Recipe for a new puzzle · 12 The 8 pending puzzles · 13 Open points · 14 Print versions (phase 2)
 
 ---
 
@@ -108,6 +109,11 @@ docs/traduccions.md           reviewed translations of the PENDING puzzles (move
 src/*_q.pdf, src/*_a.pdf      original problems / answers (8 pages q: p1 = instructions; 7 pages a)
 .github/workflows/tests.yml   CI: runs every tests/*.test.js step (add one step per new puzzle)
 .prettierrc.json              same config as operacions (4 spaces, single quotes, width 120)
+imprimir/<puzzle>.html        print version (A4 sheets) + imprimir/<puzzle>.pdf generated from it (§14)
+css/imprimir.css              shared print styles; css/imprimir-<puzzle>.css per puzzle
+js/imprimir.js                window.Imprimir: problem sheets (6 per page), header/footer, print button
+js/<puzzle>/imprimir.js       fills the print page (instruction examples + problem sheets)
+tools/genera-pdf.js           Playwright/Chromium: imprimir/<puzzle>.html → PDF, fails on any overflow
 README.md                     user-facing (Catalan) description; update per puzzle
 ```
 
@@ -339,8 +345,40 @@ edges), 3.125 (tick marks); sankaku/zukei = grey dashed 4.17 grid + black filled
 
 ## 13. Open points / ideas
 
-- Nothing pending from the user right now; the next request will probably be "Implementa «<name>»".
+- Nothing pending from the user right now; the next request will probably be "Implementa «<name>»" or a
+  print version of another puzzle (§14).
 - Possible refactors if a third puzzle needs them: shared digit-entry pad (bcross, dokoeq, step), shared
   dot-grid selector (sankaku, zukei), shared exact-fraction helper (bessones, mizu).
 - `docs/traduccions.md` notes contain the known Gemini mistakes (only sums in dokoeq; 1 litre per cube in
   mizu; «0, 1, 2 zeros» is not a rule; kazu «Compte!» is about the dotted line and square size).
+
+## 14. Print versions (phase 2)
+
+The user prints the PDF **double-sided on a black & white printer**, laminates the sheets and students write
+the answers with a **whiteboard marker** (12–13 year olds, thick marker → big writing areas).
+
+- **Pages**: 1 = instructions (same text and examples as the game's «Com es juga?»), 2 = blank (back of the
+  instructions), 3… = problems, **6 per page** in a 2 × 3 grid (Expressions bessones: 42 → pages 3–9,
+  i.e. 1–6, 7–12, … 37–42). Each problem page: header (title + Japanese name + «Problemes a–b»), a one-line
+  rule, the grid, footer (credits + CC BY-NC-SA). The examples on page 1 are in a smaller size
+  (`.mida-instr`).
+- **Rules the user set**: only **white, black and dark grey** (`--tinta: #000`, `--gris: #333`; no colour at
+  all, also for ✓/✗: verify by rendering with `pdftoppm` and counting pixels with R≠G≠B); dashed boxes must
+  **not touch** the card border (vertical air `--aire`); boxes **centred** between the two numbers (equal
+  space on both sides, see the `data-forat` margins); as much writing room as fits.
+- **How it is built**: `imprimir/<puzzle>.html` is a static page whose first sheet (instructions) is written
+  in HTML; `js/<puzzle>/imprimir.js` renders the examples with the game's own `Tauler<X>.estatic(...)` and
+  calls `Imprimir.problemes({ total, perFull: 6, regla, dibuixa })` and `Imprimir.capsIPeus({ titol, jp })`.
+  Each sheet is a `.pagina` of exactly 210 × 297 mm (`@page { size: A4; margin: 0 }`), everything in mm/pt.
+  On screen there is a bar (hidden in print) with «Imprimeix o desa com a PDF» (`window.print()`) and a
+  download link to the generated PDF.
+- **Width is the constraint**: page side padding 6 mm, column gap 3 mm → 97.5 mm per column. Expressions
+  bessones: boxes 14 × 14 mm, parenthesis slots 5 mm, numbers 19.5 pt; problems 37–42 (two-digit operands)
+  get `.dues-xifres` (15 pt numbers) so their cards fit; first number right-aligned and last left-aligned so a
+  one-digit number sharing a column with a two-digit one stays next to its box.
+- **Generate**: `node tools/genera-pdf.js expressions-bessones` → `imprimir/expressions-bessones.pdf`
+  (commit it; regenerate whenever the data or the print CSS change). `--pagines 1,3 --sortida
+  imprimir/x-mostra.pdf` makes a sample for the user (`*-mostra.pdf` is git-ignored). The script throws if any
+  `.pagina`, `.problemes`, `.problema` or `.caixa` overflows: the grid can silently grow into the page padding
+  otherwise.
+- **Workflow with the user**: send a sample (pages 1 and 3) with `SendUserFile`, iterate, then the full PDF.

@@ -36,7 +36,7 @@ body {
     width: 210mm;
     height: 297mm;
     margin: 0 auto 8mm auto;
-    padding: 10mm 7mm 8mm 7mm;
+    padding: 10mm 6mm 8mm 6mm;
     background: white;
     display: flex;
     flex-direction: column;
@@ -55,6 +55,42 @@ body {
     }
     .pagina {
         margin: 0;
+    }
+}
+
+/* ---- Barra de dalt: només a la pantalla ---- */
+.barra {
+    width: 210mm;
+    margin: 0 auto;
+    padding: 14px 0;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 10px 16px;
+    font-size: 15px;
+}
+.barra a,
+.barra button {
+    padding: 8px 14px;
+    border: 2px solid var(--tinta);
+    border-radius: 8px;
+    background: white;
+    color: var(--tinta);
+    font: inherit;
+    font-weight: 700;
+    text-decoration: none;
+    cursor: pointer;
+}
+.barra button {
+    background: var(--tinta);
+    color: white;
+}
+.barra span {
+    color: var(--gris);
+}
+@media print {
+    .barra {
+        display: none;
     }
 }
 
@@ -174,7 +210,7 @@ body {
     display: grid;
     grid-template-columns: 1fr 1fr;
     grid-template-rows: repeat(3, 1fr);
-    gap: 4mm;
+    gap: 4mm 3mm;
     align-items: center;
 }
 .problema {

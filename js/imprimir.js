@@ -2,7 +2,8 @@
  * ============================================================================
  * FITXER: js/imprimir.js
  * ROL: Munta els fulls A4 de les versions per imprimir (imprimir/<puzzle>.html):
- *      els fulls de problemes (6 per full) i la capçalera i el peu de cada full.
+ *      els fulls de problemes (6 per full), la capçalera i el peu de cada full,
+ *      i el botó «Imprimeix» de la barra de dalt.
  * ARQUITECTURA: El full d'instruccions s'escriu a mà a l'HTML. Aquest fitxer
  *   hi afegeix al darrere els fulls de problemes, i després posa capçalera i peu
  *   a tots els fulls que porten data-quins (els fulls en blanc no en porten).
@@ -61,6 +62,9 @@ window.Imprimir = (() => {
             full.appendChild(element('footer', 'peu', PEU));
         });
     }
+
+    // El botó «Imprimeix» de la barra de dalt (la barra no s'imprimeix)
+    document.querySelectorAll('[data-imprimeix]').forEach(b => b.addEventListener('click', () => window.print()));
 
     return { problemes, capsIPeus };
 })();
