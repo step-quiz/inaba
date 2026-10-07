@@ -86,6 +86,8 @@ Com que no fa servir mòduls, n'hi ha prou amb obrir `index.html` amb doble clic
 ## Estructura
 
 ```
+HANDOUT.md                     ← traspàs tècnic (en anglès) per a una IA que continuï la feina
+CLAUDE.md                      ← Claude Code el llegeix sol: remet a HANDOUT.md
 index.html                     ← portada
 icon.png                       ← la sabatilla (enllaça a step-quiz.net), la mateixa d'operacions
 enllac-multiples.html          ← un fitxer HTML per puzzle
