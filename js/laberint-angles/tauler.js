@@ -96,12 +96,12 @@ window.TaulerLaberint = (() => {
             return div;
         });
 
-        // L'arc d'un angle (o l'escaire, si és recte) entre les dues línies del camí
+        // La marca de l'angle que formen les dues línies del camí: un escaire si és recte (90°),
+        // un mig cercle si és pla (180°) i un arc si és un altre
         function arc(v, u, w, graus, classe) {
             const cv = centres[v];
             const a1 = Math.atan2(centres[u].y - cv.y, centres[u].x - cv.x);
             const a2 = Math.atan2(centres[w].y - cv.y, centres[w].x - cv.x);
-            if (graus >= 180) return null; // recte: no hi ha cap angle a marcar
             const p1 = { x: cv.x + RA * Math.cos(a1), y: cv.y + RA * Math.sin(a1) };
             const p3 = { x: cv.x + RA * Math.cos(a2), y: cv.y + RA * Math.sin(a2) };
             let d;
@@ -111,10 +111,22 @@ window.TaulerLaberint = (() => {
                 const e3 = { x: cv.x + q * Math.cos(a2), y: cv.y + q * Math.sin(a2) };
                 d = `M${e1.x} ${e1.y}L${e1.x + e3.x - cv.x} ${e1.y + e3.y - cv.y}L${e3.x} ${e3.y}`;
             } else {
-                let gir = a2 - a1;
-                while (gir <= -Math.PI) gir += 2 * Math.PI;
-                while (gir > Math.PI) gir -= 2 * Math.PI;
-                d = `M${p1.x} ${p1.y}A${RA} ${RA} 0 0 ${gir > 0 ? 1 : 0} ${p3.x} ${p3.y}`;
+                // Angle amb signe de la primera línia a la segona: l'arc va pel costat de l'angle convex
+                let delta = a2 - a1;
+                while (delta <= -Math.PI) delta += 2 * Math.PI;
+                while (delta > Math.PI) delta -= 2 * Math.PI;
+                let sentit = delta > 0 ? 1 : 0;
+                let gran = 0;
+                if (graus === 180) {
+                    // Angle pla: el mig cercle va per sobre (o per la dreta, si les línies són verticals).
+                    // Amb sentit 1, l'arc passa per (nx, ny), a 90° de la primera línia.
+                    const nx = -Math.sin(a1);
+                    const ny = Math.cos(a1);
+                    const vol = ny < -0.01 || (Math.abs(ny) <= 0.01 && nx > 0) ? 1 : 0;
+                    gran = vol === sentit ? 0 : 1; // als laberints irregulars, l'angle dibuixat no és exactament 180°
+                    sentit = vol;
+                }
+                d = `M${p1.x} ${p1.y}A${RA} ${RA} 0 ${gran} ${sentit} ${p3.x} ${p3.y}`;
             }
             return svg('path', { class: 'arc ' + (classe || ''), d });
         }
