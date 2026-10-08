@@ -6,8 +6,8 @@ on no coincidien i per què.
 
 Quan es faci un puzzle, la seva part passa al seu propi fitxer (com
 [`enllac-multiples.md`](enllac-multiples.md), [`laberint-angles.md`](laberint-angles.md),
-[`expressions-bessones.md`](expressions-bessones.md), [`talla-rectangles.md`](talla-rectangles.md) i
-[`creuat-multiples.md`](creuat-multiples.md)).
+[`expressions-bessones.md`](expressions-bessones.md), [`talla-rectangles.md`](talla-rectangles.md),
+[`creuat-multiples.md`](creuat-multiples.md) i [`on-es-la-xifra.md`](on-es-la-xifra.md)).
 
 **Criteris:**
 
@@ -20,41 +20,12 @@ Quan es faci un puzzle, la seva part passa al seu propi fitxer (com
 
 | Puzzle | Original | PDF |
 |---|---|---|
-| [On és la xifra?](#on-és-la-xifra) | どこかな算 | `dokoeq` |
 | [Busca el nombre](#busca-el-nombre) | かずさがし | `kazu` |
 | [Dipòsits d'aigua](#dipòsits-daigua) | 水そうと水 | `mizu` |
 | [Busca el triangle](#busca-el-triangle) | 三角探し | `sankaku` |
 | [L'escala de nombres](#lescala-de-nombres) | 数字の階段 | `step` |
 | [Afegeix zeros](#afegeix-zeros) | ゼロゼロ式 | `zero` |
 | [Busca la figura](#busca-la-figura) | 図形探し | `zukei` |
-
----
-
-## On és la xifra?
-
-`src/dokoeq_q.pdf` · どこかな算
-
-| Japonès | Català |
-|---|---|
-| どこかな算 | On és la xifra? |
-| ・□に０～９の数字を入れて正しい筆算にしましょう | · Escriu una xifra del 0 al 9 a cada □ perquè la suma en columna sigui correcta. |
-| ・一番上の位に０は入りません（０だけでも使えません） | · La primera xifra d'un nombre no pot ser 0 (i un nombre tampoc pot ser només un 0). |
-| ・周りの数字は矢印が指している列のどこかに入ります | · Cada número de fora va en algun lloc de la fila o la columna a què apunta la seva fletxa. |
-| 正しい筆算にしましょう | La suma ha de ser correcta |
-| 正しい筆算です | Aquesta suma és correcta (8 + 5 = 13). ✓ |
-| ！注意！ 一番上の位が０になってはいけません | Compte! La primera xifra no pot ser 0 (3 + 5 = 08). ✗ |
-| 周りの数字は矢印が指している列のどこかに入ります | Cada número de fora va en algun lloc de la fila o la columna a què apunta la seva fletxa |
-| 矢印が指す列に３と５が入っています | El 3 i el 5 són a la columna i a la fila on apunten les fletxes. ✓ |
-| 列のどこにも３が入っていません | El 3 no és enlloc de la columna. ✗ |
-
-Notes:
-
-- 筆算 és el càlcul «escrit», en columna. Tots els signes del PDF (48) són **+**: només hi ha sumes. La
-  traducció de Gemini deia «suma/resta».
-- 列 vol dir «renglera»: a l'exemple, el 3 apunta cap avall a una **columna** i el 5 apunta de costat a una
-  **fila**. Per això «la fila o la columna».
-- «０だけでも使えません» només diu que un nombre no pot ser un 0 sol. La traducció de Gemini hi afegia «ni com
-  a resultat precedit de zero», que el PDF no diu.
 
 ---
 

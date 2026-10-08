@@ -31,3 +31,7 @@ jobs:
         run: node tests/expressions-bessones.test.js
       - name: Talla en rectangles
         run: node tests/talla-rectangles.test.js
+      - name: Creuat de múltiples
+        run: node tests/creuat-multiples.test.js
+      - name: On és la xifra?
+        run: node tests/on-es-la-xifra.test.js
