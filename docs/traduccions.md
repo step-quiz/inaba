@@ -7,7 +7,7 @@ on no coincidien i per què.
 Quan es faci un puzzle, la seva part passa al seu propi fitxer (com
 [`enllac-multiples.md`](enllac-multiples.md), [`laberint-angles.md`](laberint-angles.md),
 [`expressions-bessones.md`](expressions-bessones.md), [`talla-rectangles.md`](talla-rectangles.md),
-[`creuat-multiples.md`](creuat-multiples.md) i [`on-es-la-xifra.md`](on-es-la-xifra.md)).
+[`creuat-multiples.md`](creuat-multiples.md), [`on-es-la-xifra.md`](on-es-la-xifra.md) i [`busca-el-nombre.md`](busca-el-nombre.md)).
 
 **Criteris:**
 
@@ -20,48 +20,11 @@ Quan es faci un puzzle, la seva part passa al seu propi fitxer (com
 
 | Puzzle | Original | PDF |
 |---|---|---|
-| [Busca el nombre](#busca-el-nombre) | かずさがし | `kazu` |
 | [Dipòsits d'aigua](#dipòsits-daigua) | 水そうと水 | `mizu` |
 | [Busca el triangle](#busca-el-triangle) | 三角探し | `sankaku` |
 | [L'escala de nombres](#lescala-de-nombres) | 数字の階段 | `step` |
 | [Afegeix zeros](#afegeix-zeros) | ゼロゼロ式 | `zero` |
 | [Busca la figura](#busca-la-figura) | 図形探し | `zukei` |
-
----
-
-## Busca el nombre
-
-`src/kazu_q.pdf` · かずさがし. Està escrit en *hiragana*, per als més petits: el català ha de ser senzill.
-
-| Japonès | Català |
-|---|---|
-| かずさがし | Busca el nombre |
-| ・いわれたところを「たて３ よこ３ のしかく」でかこみましょう | · Envolta el lloc que et demanen amb un «quadrat de 3 × 3» (3 d'alt i 3 d'ample). |
-| 【もんだい】／【こたえ】 | Problema / Resposta |
-| ２こ はどこ？ | On n'hi ha 2? |
-| かこんだリンゴのかずをかぞえてみよう | Compta les pomes que queden dins del quadrat |
-| １こ ／ ３こ ／ ４こ | 1 / 3 / 4 |
-| ！ちゅうい！ てんせんから はみだしては いけません | Compte! No pots sortir de la línia de punts. |
-| しかくの おおきさが ちがいます | Aquest quadrat no és de la mida que toca. |
-
-Preguntes de les pàgines 2-8:
-
-| Japonès | Català |
-|---|---|
-| ・いわれたところを「たて２ よこ２ のしかく」でかこみましょう | · Envolta el lloc que et demanen amb un «quadrat de 2 × 2». |
-| ０こ はどこ？ … １０こ はどこ？ | On n'hi ha 0? … On n'hi ha 10? |
-| ミカンがリンゴより おおいのはどこ？ | On hi ha més mandarines que pomes? |
-| ミカンがリンゴより すくないのはどこ？ | On hi ha menys mandarines que pomes? |
-| リンゴがミカンより おおいのはどこ？ | On hi ha més pomes que mandarines? |
-| リンゴがミカンより すくないのはどこ？ | On hi ha menys pomes que mandarines? |
-| リンゴとミカンのかずが おなじなのはどこ？ | On hi ha tantes pomes com mandarines? |
-| リンゴとミカンのかずのさ が０／１／２ なのはどこ？ | On la diferència entre pomes i mandarines és 0 / 1 / 2? |
-
-Notes:
-
-- かこむ és «envoltar»: és un quadrat, no un cercle (Gemini deia «encercla»).
-- El «Compte!» és per no sortir de la línia de punts i per la mida del quadrat (els dos exemples ✗). Gemini
-  ho havia llegit com «compta bé els elements».
 
 ---
 

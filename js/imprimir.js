@@ -26,7 +26,8 @@ window.Imprimir = (() => {
     /**
      * Afegeix els fulls de problemes al final del document.
      *   total, perFull: quants problemes n'hi ha i quants per full
-     *   regla: una frase (HTML) per recordar la regla a dalt de cada full
+     *   regla: una frase (HTML) per recordar la regla a dalt de cada full, o una funció
+     *          (primer, darrer) → frase, si canvia d'un full a un altre
      *   dibuixa(i): l'element del problema i (0…)
      */
     function problemes({ total, perFull, regla, dibuixa }) {
@@ -36,7 +37,7 @@ window.Imprimir = (() => {
             full.dataset.quins = `Problemes ${primer}–${darrer}`;
             if (regla) {
                 const p = element('p', 'regla-full');
-                p.innerHTML = regla;
+                p.innerHTML = typeof regla === 'function' ? regla(primer, darrer) : regla;
                 full.appendChild(p);
             }
             const graella = element('div', 'problemes');

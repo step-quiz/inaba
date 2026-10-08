@@ -116,6 +116,17 @@
             border-color: #a21caf;
             box-shadow: 0 8px 20px rgba(162, 28, 175, 0.15);
         }
+        .puzzle.busca-el-nombre {
+            border-top-color: #c2410c;
+        }
+        .puzzle.busca-el-nombre strong,
+        .puzzle.busca-el-nombre .progres {
+            color: #7c2d12;
+        }
+        a.puzzle.busca-el-nombre:hover {
+            border-color: #c2410c;
+            box-shadow: 0 8px 20px rgba(194, 65, 12, 0.15);
+        }
         .puzzle.aviat {
             border-top-color: var(--border-heavy);
             box-shadow: none;
@@ -181,11 +192,16 @@
             <span class="desc">Escriu una xifra a cada casella perquè la suma sigui correcta i cada número de fora sigui a la seva fila o columna.</span>
             <span class="progres" id="progres-xifra">42 problemes</span>
         </a>
+        <a class="puzzle busca-el-nombre" href="busca-el-nombre.html">
+            <strong>Busca el nombre</strong>
+            <span class="jp">かずさがし</span>
+            <span class="desc">Posa el quadrat on hi ha el nombre de pomes o mandarines que et demanen.</span>
+            <span class="progres" id="progres-nombre">42 problemes</span>
+        </a>
     </div>
 
     <h2>Properament</h2>
     <div class="llista">
-        <div class="puzzle aviat"><strong>Busca el nombre</strong><span class="jp">かずさがし</span></div>
         <div class="puzzle aviat"><strong>Dipòsits d'aigua</strong><span class="jp">水そうと水</span></div>
         <div class="puzzle aviat"><strong>Busca el triangle</strong><span class="jp">三角探し</span></div>
         <div class="puzzle aviat"><strong>L'escala de nombres</strong><span class="jp">数字の階段</span></div>
