@@ -13,13 +13,13 @@ pipeline, the testing method and the traps already found.
 | Typical request | «Implementa «<nom>»» | «Fes la versió per imprimir de «<nom>»» |
 | Output | `<slug>.html` + `js/<slug>/*` + `css/<slug>.css` + test + integrations | `imprimir/<slug>.html` (ready to print) + `imprimir/<slug>.pdf` + link on the game page |
 | Read | §1–4 (shared) + **Part A** §5–12 | §1–4 (shared) + **Part B** §13 (it reuses the game's `tauler.js`, see §5 and §8) |
-| Status | 4 of 12 done (§8), **8 pending** (§12) | 1 of 4 done (Expressions bessones), **3 pending** (§13.5) |
+| Status | 5 of 12 done (§8), **7 pending** (§12) | 1 of 4 done (Expressions bessones), **3 pending** (§13.5) |
 
 After finishing Task A, do not start Task B on your own: offer it in one line and let the user decide.
 
 Sections: 1 User & rules · 2 Environment · 3 Git/PR workflow · 4 Repo layout · **Part A**: 5 Shared
 architecture · 6 Conventions · 7 Interaction patterns · 8 The 4 finished puzzles · 9 PDF data extraction ·
-10 Testing · 11 Recipe · 12 The 8 pending puzzles · **Part B**: 13 Printable PDF · 14 Open points
+10 Testing · 11 Recipe · 12 The 7 pending puzzles · **Part B**: 13 Printable PDF · 14 Open points
 
 ---
 
@@ -103,7 +103,7 @@ git push -u origin <designated-branch>
 ```
 index.html                    home: available puzzle cards + «Properament» list (inline <style>)
 icon.png                      shoe icon (from operacions); also favicon
-enllac-multiples.html  laberint-angles.html  expressions-bessones.html  talla-rectangles.html
+enllac-multiples.html  laberint-angles.html  expressions-bessones.html  talla-rectangles.html  creuat-multiples.html
 css/comu.css                  everything shared (tokens, layout, header, buttons, instructions, pila,
                               messages, dialog, footer, keyframes, ≤480px rules)
 css/<puzzle>.css              theme colours (--primary…) + puzzle-specific styles
@@ -117,6 +117,7 @@ tests/<puzzle>.test.js        node test: data sanity + unique solution + equals 
 tests/<puzzle>-solucions.json answers extracted from *_a.pdf (only for generated datasets)
 tools/extreu-laberint.py      PDF → js/laberint-angles/problemes.js + tests/laberint-angles-solucions.json
 tools/extreu-rectangles.py    PDF → js/talla-rectangles/problemes.js + tests/talla-rectangles-solucions.json
+tools/extreu-creuat.py        PDF → js/creuat-multiples/problemes.js + tests/creuat-multiples-solucions.json
 docs/<puzzle>.md              JA↔CA translation table + translation notes + problem notes + PDF errata
 docs/traduccions.md           reviewed translations of the PENDING puzzles (move a section out when done)
 src/*_q.pdf, src/*_a.pdf      original problems / answers (8 pages q: p1 = instructions; 7 pages a)
@@ -156,7 +157,7 @@ README.md                     user-facing (Catalan) description; update per puzz
     function-declaration (hoisted), passed before definition.
   - `missatge(el, tipus, titol, frases = [], boto = null)` with `tipus` ∈ `error | ok | info`;
     `amagaMissatge(el)`; `anima(el, classe)` (restartable CSS animation, removes class on `animationend`).
-- **Controller skeleton** (all four follow it): constants & `els`; `progres`, `nav`; state vars;
+- **Controller skeleton** (all five follow it): constants & `els`; `progres`, `nav`; state vars;
   `carrega(i)` (reset state, build view via `T.crea`, wire events, `nav.obre`, `pinta()`); `pinta()`
   (pure state→DOM incl. aria-labels, then `nav.actualitza()`); actions that end in `canvi()` →
   `amagaMissatge(); pinta(); revisa()`; `revisa()` checks only when the board is complete; `celebra()` sets
@@ -215,7 +216,7 @@ concrete mathematical reason («10 no és múltiple de 4», «Al cercle del 180,
 the underlying maths (×k labels, base × altura, step-by-step calculation). Local, non-revealing aids are OK
 during play (e.g. rectangle size label, angle arcs, ✓ on used cards/sizes).
 
-## 8. The four finished puzzles
+## 8. The five finished puzzles
 
 ### 8.1 Enllaç de múltiples (`blink`, 倍数リンク) — 42 problems, indigo
 - Data (hand-transcribed, `js/enllac-multiples/problemes.js`): `{ llocs: [[col, fila, valor?]], fletxes:
@@ -269,10 +270,27 @@ during play (e.g. rectangle size label, angle arcs, ✓ on used cards/sizes).
   the list; keyboard cursor (arrows, Enter start/finish, Esc, Supr). Each size has a colour; wrong sizes red.
 - PDF answer error: **41** (cuts drawn wrong; test uses the correct solution).
 
+### 8.5 Creuat de múltiples (`bcross`, 倍数クロス) — 42 problems, teal
+- Data **generated** by `tools/extreu-creuat.py`: list of rows, each a string of cells separated by a space:
+  `.` white, `#` black, `#d8` (clue 8 read **rightwards**, ◥), `#a3` (clue 3 read **downwards**, ◣),
+  `#a3d8` both. Example (page 1 is hard-coded in the script). Max 4 white cells per problem.
+- Cell colour is decided by **rasterising the page** (`pdftoppm`, 4 sample points away from the thick outer
+  border and the centre): the vector data is ambiguous (some cells are drawn twice with opposite styles, some
+  black cells have no path). Clue half = position of the number relative to the cell diagonal.
+- `motor.js`: `analitza` (grid + `trams` = each clue with the white cells it «sees»), `buida`, `nombreDe`,
+  `comprova` (→ per clue `estat` 'be'|'zero'|'multiple'|'incomplet', with a concrete `motiu`), `resol`.
+- `tauler.js`: CSS grid (black cell = dark bg + white diagonal gradient `to top right`, numbers absolutely
+  positioned), `crea` (with `pinta({v, cursor, resultat})`) and `estatic` (instructions).
+- UI: digit pad 0–9 + ⌫; drag pad→cell, cell→cell (swap), cell→outside (clear); tap cell then digit (cursor
+  advances to next empty) or digit then cell; keyboard digits/arrows/Backspace. Nothing is judged until all white
+  cells are filled; then per-clue «96 = 8 × 12» or the reason. A tap on a filled cell only selects it
+  (deviation from «tap a filled target removes»): clearing is ⌫, Backspace/Delete or dragging out.
+- No PDF errata found: every problem has exactly one solution and it equals the PDF's.
+
 ## 9. PDF data extraction (the technique that works)
 
 All 12 PDFs are **vector** drawings. Only `shikaku_q.pdf` page 1 embeds raster images (its example was
-copied by hand); `pdfimages -list` reports 0 images for all 8 pending `_q.pdf`.
+copied by hand); `pdfimages -list` reports 0 images for all 7 pending `_q.pdf`.
 Pipeline used by both tools (copy the helpers from `tools/extreu-laberint.py`):
 
 1. `pdftocairo -svg -f P -l P file.pdf -` → parse every `<path>` after `</defs>`: attributes (`stroke`,
@@ -334,14 +352,13 @@ tool via `importlib` creates `__pycache__`.
 7. Prettier, all tests, browser tests (§10), commit, push, PR, reply in Catalan with merge steps + preview,
    and offer (one line) the print version (Part B).
 
-## 12. The 8 pending puzzles
+## 12. The 7 pending puzzles
 
 All have 8-page `_q.pdf` (page 1 = instructions) and 7-page `_a.pdf`; all vector. Reviewed Catalan
 instructions are in `docs/traduccions.md`. Approved Catalan names in **bold**.
 
 | Name (slug idea) | PDF | Problems | What it is | Interaction idea |
 |---|---|---|---|---|
-| **Creuat de múltiples** (`creuat-multiples`) | `bcross` | 42 | Kakuro-like grid; black cells split by a diagonal hold clue numbers; fill white cells with digits 0–9; the number read from a clue (◣ lower-left half → downwards; ◥ upper-right half → rightwards) must be a multiple of the clue; no leading 0. | Digit entry: focus cell + type; on-screen digit pad 0–9 (drag/tap) for mobile. Feedback per clue «96 = 8 × 12». |
 | **On és la xifra?** (`on-es-la-xifra`) | `dokoeq` | 42 | Column additions with □ boxes (only **sums**: all 48 signs are +); clue digits outside with arrows point to a column (from above) or a row (from the side): the digit must appear somewhere in that line; no leading 0, no number that is just 0. | Same digit-entry component as bcross (worth putting in `comu.js`). |
 | **Busca el nombre** (`busca-el-nombre`) | `kazu` | 42 | For young kids (hiragana). Grid with apples (red fill `rgb(98%,36%,24%)`), later also mandarins; place a 3×3 (or 2×2) square frame where the count = N, or «més/menys mandarines que pomes», «tantes com», «la diferència és 0/1/2». Must stay inside the dotted area. | Drag a fixed-size frame snapping to cells; arrows move it; Enter checks. Very simple language. |
 | **Dipòsits d'aigua** (`diposits-aigua`) | `mizu` | 42 | 3-D drawn cubes; tanks = thick-bordered groups of cubes; **1 cube = 1 litre**; arrows give row/column totals as fractions (5/6, 3/2…); water settles: same level within a tank, lower floor full before upper. | Drag the water surface of each tank (snap to the tick marks — thirds/quarters/sixths); exact fractions (reuse bessones fraction code). |

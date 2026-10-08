@@ -13,8 +13,9 @@ Els PDF originals (en japonès) són a [`src/`](src/): `*_q.pdf` són els enunci
 | Laberint d'angles | 角度メイズ (`kmaze`) | [`laberint-angles.html`](laberint-angles.html) | 38 |
 | Expressions bessones | 双子式 (`gemini`) | [`expressions-bessones.html`](expressions-bessones.html) | 42 |
 | Talla en rectangles | 四角カット (`shikaku`) | [`talla-rectangles.html`](talla-rectangles.html) | 42 |
+| Creuat de múltiples | 倍数クロス (`bcross`) | [`creuat-multiples.html`](creuat-multiples.html) | 42 |
 
-La portada ([`index.html`](index.html)) també llista els altres 8 puzzles de `src/` com a «Properament».
+La portada ([`index.html`](index.html)) també llista els altres 7 puzzles de `src/` com a «Properament».
 La traducció de les instruccions de cada puzzle i les notes sobre els problemes són a [`docs/`](docs/).
 Les dels puzzles que encara no s'han fet són a [`docs/traduccions.md`](docs/traduccions.md).
 
@@ -73,6 +74,19 @@ Quan hi ha els dos signes, es comprova sol i es mostra el càlcul de cada target
 Cada mida de la llista té un color, i els rectangles amb una mida que no toca es pinten de vermell. Quan la
 figura és plena, es comprova sola.
 
+## Com es juga al Creuat de múltiples
+
+- **Arrossegar** una xifra de la fila de sota fins a una casella blanca. Una xifra del quadre es pot arrossegar
+  a una altra casella (s'intercanvien) o fora del quadre (s'esborra).
+- **Clicar o tocar**: una casella i després una xifra (el cursor passa a la següent casella buida), o una xifra
+  i després una casella. El botó ⌫ esborra la casella triada.
+- **Teclat**: Tab o fletxes per anar d'una casella a una altra, escriure la xifra directament, Retrocés o Supr
+  per esborrar.
+
+Quan totes les caselles blanques tenen xifra, es comprova sol i es mostra cada nombre («96 = 8 × 12») o per
+què no va bé («65 no és múltiple de 8: 8 × 8 = 64 i 8 × 9 = 72»). S'accepta només la solució del PDF, que és
+l'única que hi ha.
+
 ## Comú als puzzles
 
 - Els problemes resolts es desen al navegador (localStorage) i es veuen amb un ✓ a «Escull…» i a la
@@ -118,6 +132,7 @@ js/<puzzle>/
 tests/<puzzle>.test.js         ← cada problema té una sola solució, i és la del PDF
 tools/extreu-laberint.py       ← llegeix els laberints del PDF i escriu js/laberint-angles/problemes.js
 tools/extreu-rectangles.py     ← llegeix les figures del PDF i escriu js/talla-rectangles/problemes.js
+tools/extreu-creuat.py         ← llegeix els quadres del PDF i escriu js/creuat-multiples/problemes.js
 tools/genera-pdf.js            ← fa el PDF per imprimir d'un puzzle (imprimir/<puzzle>.html → .pdf)
 imprimir/<puzzle>.html, .pdf   ← versió per imprimir i el seu PDF
 css/imprimir.css               ← estils comuns de les versions per imprimir (+ css/imprimir-<puzzle>.css)
@@ -134,6 +149,7 @@ node tests/enllac-multiples.test.js
 node tests/laberint-angles.test.js
 node tests/expressions-bessones.test.js
 node tests/talla-rectangles.test.js
+node tests/creuat-multiples.test.js
 ```
 
 GitHub els executa sols a cada pull request i a cada canvi a `main` (pestanya **Actions**).

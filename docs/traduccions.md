@@ -6,7 +6,8 @@ on no coincidien i per què.
 
 Quan es faci un puzzle, la seva part passa al seu propi fitxer (com
 [`enllac-multiples.md`](enllac-multiples.md), [`laberint-angles.md`](laberint-angles.md),
-[`expressions-bessones.md`](expressions-bessones.md) i [`talla-rectangles.md`](talla-rectangles.md)).
+[`expressions-bessones.md`](expressions-bessones.md), [`talla-rectangles.md`](talla-rectangles.md) i
+[`creuat-multiples.md`](creuat-multiples.md)).
 
 **Criteris:**
 
@@ -19,7 +20,6 @@ Quan es faci un puzzle, la seva part passa al seu propi fitxer (com
 
 | Puzzle | Original | PDF |
 |---|---|---|
-| [Creuat de múltiples](#creuat-de-múltiples) | 倍数クロス | `bcross` |
 | [On és la xifra?](#on-és-la-xifra) | どこかな算 | `dokoeq` |
 | [Busca el nombre](#busca-el-nombre) | かずさがし | `kazu` |
 | [Dipòsits d'aigua](#dipòsits-daigua) | 水そうと水 | `mizu` |
@@ -27,34 +27,6 @@ Quan es faci un puzzle, la seva part passa al seu propi fitxer (com
 | [L'escala de nombres](#lescala-de-nombres) | 数字の階段 | `step` |
 | [Afegeix zeros](#afegeix-zeros) | ゼロゼロ式 | `zero` |
 | [Busca la figura](#busca-la-figura) | 図形探し | `zukei` |
-
----
-
-## Creuat de múltiples
-
-`src/bcross_q.pdf` · 倍数クロス
-
-| Japonès | Català |
-|---|---|
-| 倍数クロス | Creuat de múltiples |
-| 空いている白マスに０～９の数字を入れましょう | Escriu una xifra del 0 al 9 a cada casella blanca buida. |
-| ・数が入った三角マス ◣ から下に向かって列の数字を見たとき、その数の倍数が見えるようにします（◥ からは右に見ます） | · Des de cada triangle amb un número, mira les xifres de la columna cap avall: el nombre que hi veus ha de ser un múltiple del número del triangle. (Des dels triangles de dalt a la dreta, mira cap a la dreta.) |
-| 【例題】／【解答】 | Exemple / Solució |
-| 三角マスから見える数 | El nombre que es veu des d'un triangle |
-| この三角からは「９」が見えます | Des d'aquest triangle es veu el «9». |
-| この三角からは「６５」が見えます | Des d'aquest triangle es veu el «65». |
-| この三角からは「９６」が見えます | Des d'aquest triangle es veu el «96». |
-| この三角からは「５」が見えます | Des d'aquest triangle es veu el «5». |
-| ！注意！ 一番上の位に０は入りません | Compte! La primera xifra d'un nombre no pot ser 0. |
-| 「見える数」は三角に書かれた数の倍数です | El nombre que es veu és un múltiple del número del triangle. |
-| ９６は８の１２倍 ／ ９は３の３倍 ／ ５は５の１倍 ／ ６５は１３の５倍 | 96 és 12 vegades 8 / 9 és 3 vegades 3 / 5 és 1 vegada 5 / 65 és 5 vegades 13 |
-
-Notes:
-
-- Les caselles negres estan partides en dos triangles, com en un kakuro: el número de la meitat de **baix a
-  l'esquerra** (◣) es llegeix **cap avall**, i el de la meitat de **dalt a la dreta** (◥), **cap a la dreta**.
-  Al PDF són dues icones dins del text; a la web convindrà dibuixar-les.
-- 一番上の位 és «la posició de més valor»: és a dir, el nombre no pot començar per 0.
 
 ---
 

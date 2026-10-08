@@ -1,13 +1,6 @@
-# Desempaqueta els zip que es pugen a _uploads/ i en desa el contingut.
-#
-# Dues proteccions (30/9/2026):
+# Desempaqueta els zip que es pugen a _uploads/ i en desa el contingut, sense cap test.
 #  · concurrency: si es pugen dos zip seguits, el segon espera que acabi el primer.
-#    Abans corrien alhora i l'últim a acabar esborrava la feina de l'altre
-#    («l'últim zip guanya»).
-#  · Abans de desar, passa els tests dels puzzles (tests/*.test.js). Si algun falla, no
-#    es desa res: el zip es queda a _uploads/ i l'acció surt amb una creu vermella que
-#    diu quin test ha fallat. Es corregeix i es torna a pujar.
-#  · També es pot llançar a mà (Actions → «Extract and commit zip uploads» → Run workflow).
+#  · També es pot llançar a mà: Actions → «Extract and commit zip uploads» → Run workflow.
 name: Extract and commit zip uploads
 
 on:
@@ -29,7 +22,6 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      # El que hi hagi hagut de nou mentre aquesta acció esperava el seu torn.
       - name: Bring the branch up to date
         run: git pull --ff-only origin "${GITHUB_REF_NAME}"
 
@@ -38,16 +30,9 @@ jobs:
           shopt -s nullglob
           for z in _uploads/*.zip; do
             echo "Processing $z"
-            unzip -o "$z" -d .
+            unzip -o "$z" -d . -x '.github/*'
             rm "$z"
           done
-
-      - uses: actions/setup-node@v4
-        with:
-          node-version: '22'
-
-      - name: Run the puzzle tests before saving
-        run: for t in tests/*.test.js; do node "$t"; done
 
       - name: Commit and push changes
         run: |

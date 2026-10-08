@@ -94,6 +94,17 @@
             border-color: #6d28d9;
             box-shadow: 0 8px 20px rgba(109, 40, 217, 0.15);
         }
+        .puzzle.creuat-multiples {
+            border-top-color: #0f766e;
+        }
+        .puzzle.creuat-multiples strong,
+        .puzzle.creuat-multiples .progres {
+            color: #134e4a;
+        }
+        a.puzzle.creuat-multiples:hover {
+            border-color: #0f766e;
+            box-shadow: 0 8px 20px rgba(15, 118, 110, 0.15);
+        }
         .puzzle.aviat {
             border-top-color: var(--border-heavy);
             box-shadow: none;
@@ -147,11 +158,16 @@
             <span class="desc">Talla la figura en rectangles que tinguin el nombre de quadrets indicat.</span>
             <span class="progres" id="progres-rectangles">42 problemes</span>
         </a>
+        <a class="puzzle creuat-multiples" href="creuat-multiples.html">
+            <strong>Creuat de múltiples</strong>
+            <span class="jp">倍数クロス</span>
+            <span class="desc">Escriu xifres a les caselles blanques perquè cada nombre que es veu des d'un triangle sigui múltiple del seu número.</span>
+            <span class="progres" id="progres-creuat">42 problemes</span>
+        </a>
     </div>
 
     <h2>Properament</h2>
     <div class="llista">
-        <div class="puzzle aviat"><strong>Creuat de múltiples</strong><span class="jp">倍数クロス</span></div>
         <div class="puzzle aviat"><strong>On és la xifra?</strong><span class="jp">どこかな算</span></div>
         <div class="puzzle aviat"><strong>Busca el nombre</strong><span class="jp">かずさがし</span></div>
         <div class="puzzle aviat"><strong>Dipòsits d'aigua</strong><span class="jp">水そうと水</span></div>
