@@ -13,13 +13,13 @@ pipeline, the testing method and the traps already found.
 | Typical request | «Implementa «<nom>»» | «Fes la versió per imprimir de «<nom>»» |
 | Output | `<slug>.html` + `js/<slug>/*` + `css/<slug>.css` + test + integrations | `imprimir/<slug>.html` (ready to print) + `imprimir/<slug>.pdf` + link on the game page |
 | Read | §1–4 (shared) + **Part A** §5–12 | §1–4 (shared) + **Part B** §13 (it reuses the game's `tauler.js`, see §5 and §8) |
-| Status | 5 of 12 done (§8), **7 pending** (§12) | 1 of 4 done (Expressions bessones), **3 pending** (§13.5) |
+| Status | 6 of 12 done (§8; On és la xifra? is documented in `docs/on-es-la-xifra.md`), **6 pending** (§12) | 3 of 6 done (Expressions bessones, Creuat de múltiples, On és la xifra?), **3 pending** (§13.5) |
 
 After finishing Task A, do not start Task B on your own: offer it in one line and let the user decide.
 
 Sections: 1 User & rules · 2 Environment · 3 Git/PR workflow · 4 Repo layout · **Part A**: 5 Shared
 architecture · 6 Conventions · 7 Interaction patterns · 8 The 4 finished puzzles · 9 PDF data extraction ·
-10 Testing · 11 Recipe · 12 The 7 pending puzzles · **Part B**: 13 Printable PDF · 14 Open points
+10 Testing · 11 Recipe · 12 The 6 pending puzzles · **Part B**: 13 Printable PDF · 14 Open points
 
 ---
 
@@ -286,6 +286,11 @@ during play (e.g. rectangle size label, angle arcs, ✓ on used cards/sizes).
   cells are filled; then per-clue «96 = 8 × 12» or the reason. A tap on a filled cell only selects it
   (deviation from «tap a filled target removes»): clearing is ⌫, Backspace/Delete or dragging out.
 - No PDF errata found: every problem has exactly one solution and it equals the PDF's.
+- **Print version done** (`imprimir/creuat-multiples.html/.pdf`, 9 pages): the game's `.creuat` boards restyled in
+  mm in `css/imprimir-creuat-multiples.css`; cell size `min(22mm, 60mm / --alt)` (`tauler.js` sets `--alt`), i.e.
+  22 / ≈20 / ≈15 mm for 2 / 3 / 4 rows; solid black clue cells with a white diagonal; the run highlight in
+  the instructions is a thick black border + a tiny → / ↓ arrow. Pill numbers are aligned per row and the board
+  is vertically centred in the rest of the card (`.problema .creuat { margin: auto 0 }`).
 
 ## 9. PDF data extraction (the technique that works)
 
@@ -352,14 +357,13 @@ tool via `importlib` creates `__pycache__`.
 7. Prettier, all tests, browser tests (§10), commit, push, PR, reply in Catalan with merge steps + preview,
    and offer (one line) the print version (Part B).
 
-## 12. The 7 pending puzzles
+## 12. The 6 pending puzzles
 
 All have 8-page `_q.pdf` (page 1 = instructions) and 7-page `_a.pdf`; all vector. Reviewed Catalan
 instructions are in `docs/traduccions.md`. Approved Catalan names in **bold**.
 
 | Name (slug idea) | PDF | Problems | What it is | Interaction idea |
 |---|---|---|---|---|
-| **On és la xifra?** (`on-es-la-xifra`) | `dokoeq` | 42 | Column additions with □ boxes (only **sums**: all 48 signs are +); clue digits outside with arrows point to a column (from above) or a row (from the side): the digit must appear somewhere in that line; no leading 0, no number that is just 0. | Same digit-entry component as bcross (worth putting in `comu.js`). |
 | **Busca el nombre** (`busca-el-nombre`) | `kazu` | 42 | For young kids (hiragana). Grid with apples (red fill `rgb(98%,36%,24%)`), later also mandarins; place a 3×3 (or 2×2) square frame where the count = N, or «més/menys mandarines que pomes», «tantes com», «la diferència és 0/1/2». Must stay inside the dotted area. | Drag a fixed-size frame snapping to cells; arrows move it; Enter checks. Very simple language. |
 | **Dipòsits d'aigua** (`diposits-aigua`) | `mizu` | 42 | 3-D drawn cubes; tanks = thick-bordered groups of cubes; **1 cube = 1 litre**; arrows give row/column totals as fractions (5/6, 3/2…); water settles: same level within a tank, lower floor full before upper. | Drag the water surface of each tank (snap to the tick marks — thirds/quarters/sixths); exact fractions (reuse bessones fraction code). |
 | **Busca el triangle** (`busca-el-triangle`) | `sankaku` | 42 | Dot grid (dashed grey lines) with black dots; choose 3 dots → triangle with the given area (1, 1,5, 2, 3…). Instructions explain base×altura:2 and the "box minus corner triangles" method. | Tap 3 dots, polygon drawn; on check show area by the box method; dot-grid component shared with zukei. |
@@ -470,6 +474,10 @@ Also: reset `figure { margin: 0 }` (browser default 40 px); width, not height, i
 | Enllaç de múltiples | 9 | Empty slots = large dashed boxes to write the number; arrows black; the spare cards printed as a row of numbers students can cross out. |
 | Laberint d'angles | 9 | Students draw the path over the lines: lines dark grey, circles big with black numbers, S/G bold; no angle arcs (they are play aids). Large mazes may need 4 per page — ask. |
 | Talla en rectangles | 9 | Cells ≥ 9 mm with dark-grey grid so cuts can be drawn with the marker; figure outline thick black; size list in bold under each figure. |
+
+Lesson from Creuat de múltiples: boards of different height share a sheet, so align the number pills per row and
+centre each board vertically in the rest of the card (`margin: auto 0`), and size the cell from the board's
+height (`60mm / rows`) and width, not from a fixed size; 4-row boards ended up at ≈15 mm per cell.
 
 ## 14. Open points / ideas
 

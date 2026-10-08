@@ -60,3 +60,17 @@ caselles blanques.
 **una sola solució** i que és la del PDF de solucions (que l'script també llegeix del PDF).
 
 **Errades del PDF:** cap. Les 42 solucions del PDF són l'única solució de cada problema.
+
+## Versió per imprimir
+
+[`imprimir/creuat-multiples.html`](../imprimir/creuat-multiples.html) i el PDF
+[`imprimir/creuat-multiples.pdf`](../imprimir/creuat-multiples.pdf) (9 pàgines A4: instruccions, una de
+buida i 7 fulls de 6 problemes). Es fa amb `node tools/genera-pdf.js creuat-multiples`.
+
+- Els quadres són els del joc (`TaulerCreuat.estatic`), sense xifres i en blanc i negre: les caselles negres
+  són negres amb la diagonal i els números en blanc, i les blanques, buides.
+- La mida de la casella s'ajusta a l'alçada: 22 mm als quadres de 2 files, uns 20 mm als de 3 i uns 15 mm als
+  de 4 files (problemes 16, 18, 28, 30, 41 i 42). El quadre més ample fa 90,5 mm (el límit d'una columna és 97,5).
+- Text que no és al PDF: la caixa «Amb el retolador» de la pàgina 1 («Escriu una xifra a cada casella blanca,
+  ben grossa. Una casella pot formar part de dos nombres… Per esborrar…»), en el mateix estil que la d'Expressions
+  bessones. A les instruccions, les fletxes → i ↓ de les figures marquen cap on es llegeix.

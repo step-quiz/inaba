@@ -30,6 +30,7 @@ window.TaulerCreuat = (() => {
         const el = document.createElement('div');
         el.className = 'creuat';
         el.style.setProperty('--amp', g.amp);
+        el.style.setProperty('--alt', g.alt); // la versió per imprimir ajusta la mida de la casella a l'alçada
         const blanques = g.cel.map(() => new Array(g.amp).fill(null));
         const claus = new Map();
         g.cel.forEach((fila, y) =>
