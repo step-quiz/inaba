@@ -13,13 +13,13 @@ pipeline, the testing method and the traps already found.
 | Typical request | «Implementa «<nom>»» | «Fes la versió per imprimir de «<nom>»» |
 | Output | `<slug>.html` + `js/<slug>/*` + `css/<slug>.css` + test + integrations | `imprimir/<slug>.html` (ready to print) + `imprimir/<slug>.pdf` + link on the game page |
 | Read | §1–4 (shared) + **Part A** §5–12 | §1–4 (shared) + **Part B** §13 (it reuses the game's `tauler.js`, see §5 and §8) |
-| Status | 6 of 12 done (§8; On és la xifra? is documented in `docs/on-es-la-xifra.md`), **6 pending** (§12) | 3 of 6 done (Expressions bessones, Creuat de múltiples, On és la xifra?), **3 pending** (§13.5) |
+| Status | **12 of 12 done** (§8; On és la xifra?, Busca el nombre and the five of §8.6–8.10 are documented in `docs/<slug>.md`); nothing pending | **12 of 12 done** — every puzzle has its print version (§13.5) |
 
 After finishing Task A, do not start Task B on your own: offer it in one line and let the user decide.
 
 Sections: 1 User & rules · 2 Environment · 3 Git/PR workflow · 4 Repo layout · **Part A**: 5 Shared
-architecture · 6 Conventions · 7 Interaction patterns · 8 The 4 finished puzzles · 9 PDF data extraction ·
-10 Testing · 11 Recipe · 12 The 6 pending puzzles · **Part B**: 13 Printable PDF · 14 Open points
+architecture · 6 Conventions · 7 Interaction patterns · 8 The 12 finished puzzles · 9 PDF data extraction ·
+10 Testing · 11 Recipe · 12 The 6 puzzles that were pending · **Part B**: 13 Printable PDF · 14 Open points
 
 ---
 
@@ -41,9 +41,13 @@ architecture · 6 Conventions · 7 Interaction patterns · 8 The 4 finished puzz
     fine; a short `instr-compte` note inside the instructions is fine.
   - Header: shoe icon (`icon.png`) linking to `https://step-quiz.net/`, same as their `operacions` repo;
     big ‹ › SVG arrows; middle button label **«Escull…»**.
-  - Every puzzle will get a print version (Part B); its game page then shows a discreet link «Versió per
-    imprimir» (printer icon) at the right of «← Tots els puzzles» in `nav.dalt` — only once
-    `imprimir/<slug>.html` exists (copy the `<a class="per-imprimir">` from `expressions-bessones.html`).
+  - **Compact header** (user's request, Oct 2026): `header.capcalera` puts «← Tots els puzzles», the title row
+    (shoe + h1) and «Obtenir fitxes PDF» in **one row** (two rows below 860 px); shoe 52 px (42 on phones,
+    36 on low landscape screens); an even more compact mode for `(orientation: landscape) and (max-height:
+    820px)` (laptops, Chromebooks, landscape tablets). «Com es juga?»: arrow 1.8× the text and a colour change
+    (background, text and border) on hover. Do not grow it back.
+  - Every puzzle has a print version (Part B); its game page shows a discreet link «Obtenir fitxes PDF»
+    (printer icon) at the right end of `header.capcalera` (copy the `<a class="per-imprimir">` from any page).
   - Footer: `<p class="credits">Puzzle original de Naoki Inaba</p>` + the CC BY-NC-SA licence bar
     (`footer.peu-llicencia`, copied from `operacions/index.html`). Copy it from any existing page.
   - Laberint d'angles: keep **S/G** letters; angle arcs **visible while playing**; never say the path
@@ -58,7 +62,7 @@ architecture · 6 Conventions · 7 Interaction patterns · 8 The 4 finished puzz
 
 ## 2. Environment facts
 
-- Repos: `step-quiz/inaba` (this one, the product) and `step-quiz/operacions` (their other site, **read-only
+- Repos: `arsocivil/inaba` (this one, the product) and `step-quiz/operacions` (their other site, **read-only
   reference** for look & feel: `prioritat.html`, `vocabulari.html`, `css/shared.css`, `css/tokens.css`).
 - Deploy: **Cloudflare Pages** builds every push. Production = `main`. Branch previews:
   `https://<branch-name-with-dashes>.inaba-2uz.pages.dev/` (e.g. `claude-sharp-tesla-ayy1yw.inaba-2uz…`).
@@ -89,7 +93,7 @@ EOF
 git push -u origin <designated-branch>
 ```
 
-- Work only on the designated branch from the session instructions (so far `claude/sharp-tesla-ayy1yw`).
+- Work only on the designated branch from the session instructions (it changes from session to session).
 - `git checkout -B <branch> origin/main` was **refused by the permission classifier** ("irreversible local
   destruction"). Use `git merge --ff-only origin/main` instead (works because merged PRs leave the branch
   as an ancestor of main). Never force-push.
@@ -101,7 +105,7 @@ git push -u origin <designated-branch>
 ## 4. Repository layout
 
 ```
-index.html                    home: available puzzle cards + «Properament» list (inline <style>)
+index.html                    home: the 12 puzzle cards (inline <style>, one colour rule set per puzzle)
 icon.png                      shoe icon (from operacions); also favicon
 enllac-multiples.html  laberint-angles.html  expressions-bessones.html  talla-rectangles.html  creuat-multiples.html
 css/comu.css                  everything shared (tokens, layout, header, buttons, instructions, pila,
@@ -119,7 +123,7 @@ tools/extreu-laberint.py      PDF → js/laberint-angles/problemes.js + tests/la
 tools/extreu-rectangles.py    PDF → js/talla-rectangles/problemes.js + tests/talla-rectangles-solucions.json
 tools/extreu-creuat.py        PDF → js/creuat-multiples/problemes.js + tests/creuat-multiples-solucions.json
 docs/<puzzle>.md              JA↔CA translation table + translation notes + problem notes + PDF errata
-docs/traduccions.md           reviewed translations of the PENDING puzzles (move a section out when done)
+docs/traduccions.md           translation criteria + index of the 12 docs/<slug>.md (all sections moved out)
 src/*_q.pdf, src/*_a.pdf      original problems / answers (8 pages q: p1 = instructions; 7 pages a)
 .github/workflows/tests.yml   CI: runs every tests/*.test.js step (add one step per new puzzle)
 .prettierrc.json              same config as operacions (4 spaces, single quotes, width 120)
@@ -139,9 +143,9 @@ README.md                     user-facing (Catalan) description; update per puzz
   Load order per page: `js/comu.js`, `problemes.js`, `motor.js`, `tauler.js`, controller. Each file exposes
   one global on `window` (or is an IIFE). Tests load data+motor in Node with `vm.runInContext` and a fake
   `window` object — so **motor.js and problemes.js must not touch the DOM**.
-- **HTML skeleton** (copy `talla-rectangles.html` or `expressions-bessones.html` and edit): `nav.dalt` (`a.tornar`
-  + `a.per-imprimir` if there is a print version) →
-  `.title-row` (shoe + `h1`) → `details#instruccions.instruccions` → `main.panel` with `.header-info`
+- **HTML skeleton** (copy `talla-rectangles.html` or `expressions-bessones.html` and edit): `header.capcalera`
+  (`a.tornar`, `.title-row` with shoe + `h1`, `a.per-imprimir`; a CSS grid places them) →
+  `details#instruccions.instruccions` → `main.panel` with `.header-info`
   (`#titol-problema`, `#ja-resolt`, `#comptador`, nav `#btn-anterior` / `#btn-tria` «Escull…» /
   `#btn-seguent`), `p.regla`, puzzle area (`#tauler-wrap`, optional `.pila-wrap > #pila`), `#missatge`
   (`aria-live="polite"`), `.accions > #btn-reinicia` → `p.credits` → `footer.peu-llicencia` →
@@ -154,7 +158,8 @@ README.md                     user-facing (Catalan) description; update per puzz
     totsResolts(), obreTria(), dialegObert() }`. `obre(i)` saves progress, sets `?p=i+1` (replaceState),
     refreshes header. `inicial()` = `?p=` or last seen. `botoSeguent()` returns the «Problema següent →»
     (or «Escull un altre problema») button for the success message. `carrega` is the controller's
-    function-declaration (hoisted), passed before definition.
+    function-declaration (hoisted), passed before definition. The «Escull…» dialog closes only on a click
+    **outside its rectangle** (a click on its inner padding also has the dialog as `target`: it used to close it).
   - `missatge(el, tipus, titol, frases = [], boto = null)` with `tipus` ∈ `error | ok | info`;
     `amagaMissatge(el)`; `anima(el, classe)` (restartable CSS animation, removes class on `animationend`).
 - **Controller skeleton** (all five follow it): constants & `els`; `progres`, `nav`; state vars;
@@ -166,7 +171,7 @@ README.md                     user-facing (Catalan) description; update per puzz
   static example boards with `T.estatic`; bootstrap `carrega(nav.inicial())`.
 - **CSS**: `css/comu.css` has the tokens (`--text-main`, `--text-muted`, `--border-*`, `--success(-light)`,
   `--danger(-light)`, `--warning`, default `--primary/-light/-hover/-dark`) and the shared classes
-  (`.dalt`, `.instr-*`, `.regla`, `#tauler-wrap`, `.pila*`, `.missatge.error|ok|info`, `.accions`, `.btn-*`,
+  (`.capcalera`, `.instr-*`, `.regla`, `#tauler-wrap`, `.pila*`, `.missatge.error|ok|info`, `.accions`, `.btn-*`,
   `.dialeg-tria/.graella`, keyframes `fadeIn`, `sacseja`); each puzzle CSS overrides `--primary*` in `:root`
   and defines its own `posa`/`celebra`/`batec` keyframes.
 - **Theme colours used**: Enllaç indigo `#4f46e5`, Laberint sky `#0369a1`, Bessones amber `#b45309`,
@@ -182,7 +187,8 @@ README.md                     user-facing (Catalan) description; update per puzz
 
 - Code identifiers, comments, file headers, UI text: **Catalan**. File header block (see any JS file:
   `FITXER / ROL / ARQUITECTURA / DEPENDÈNCIES`). Match comment density of existing files.
-- Prettier with `.prettierrc.json`; run `prettier --write js css tests` and `--check`. Data tables keep one
+- Prettier with `.prettierrc.json` (it was missing from the repo until Busca el triangle; it reproduces the existing style:
+  4 spaces, single quotes, width 120, `arrowParens: avoid`, `quoteProps: consistent`, `trailingComma: es5`); run `prettier --write js css tests` and `--check`. Data tables keep one
   problem per line using a `// prettier-ignore` comment **exactly** (extra text after it disables it).
 - UI language: address the student as **tu** («Col·loca», «Ves», «Arrossega»). Vocabulary: **xifra** =
   digit 0–9, **nombre** = quantity, **número** = the written label on a card/circle; 式 = **igualtat** (not
@@ -216,7 +222,7 @@ concrete mathematical reason («10 no és múltiple de 4», «Al cercle del 180,
 the underlying maths (×k labels, base × altura, step-by-step calculation). Local, non-revealing aids are OK
 during play (e.g. rectangle size label, angle arcs, ✓ on used cards/sizes).
 
-## 8. The five finished puzzles
+## 8. Finished puzzles (the first five + §8.6–8.10; On és la xifra? and Busca el nombre are in `docs/`)
 
 ### 8.1 Enllaç de múltiples (`blink`, 倍数リンク) — 42 problems, indigo
 - Data (hand-transcribed, `js/enllac-multiples/problemes.js`): `{ llocs: [[col, fila, valor?]], fletxes:
@@ -292,6 +298,97 @@ during play (e.g. rectangle size label, angle arcs, ✓ on used cards/sizes).
   the instructions is a thick black border + a tiny → / ↓ arrow. Pill numbers are aligned per row and the board
   is vertically centred in the rest of the card (`.problema .creuat { margin: auto 0 }`).
 
+### 8.6 Busca el triangle (`sankaku`, 三角探し) — 42 problems, pink `#be185d`
+- Data **generated** by `tools/extreu-triangle.py`: `{ amp, alt, punts: [[col, fila]], area }` (grid 3×3 or
+  4×4, row 0 at the top). Grid = grey dashed paths; dots = black filled curves; answers = black-stroked rings
+  (r > 6) in `_a.pdf`. Example hard-coded (page 1 mixes the explanation drawings).
+- `motor.js`: `dobleArea` (integers), `desglossa(a, b, c)` → `base` (a side is horizontal/vertical: base,
+  altura) | `caixa` (bounding box + outside pieces: one right triangle per side, plus a rectangle when two
+  vertices are opposite box corners) | `alineats`; `calcul`, `comprova`, `resol`, `text` (decimal comma).
+  The test checks that the decomposition adds up for **every** triple of every problem.
+- `tauler.js`: SVG grid/triangle/calculation + HTML dots (`CEL 64`, `R 9`); `pinta({ tria, estat, d })` draws
+  base + altura (dashed, right-angle mark, «base 4», «altura 3» labels clamped inside the board) or the box +
+  pieces with their areas.
+- UI: tap toggles a dot (ring); trace through dots (a dot crossed in a straight line is dropped:
+  `entremig`; trace pickup radius 0.3 cell, tap 0.45); keyboard arrows/Enter/⌫/Esc. Checked at 3 dots (after
+  lifting the finger when tracing); the calculation is drawn and written both for right and wrong answers.
+- PDF error: **26** has 3 solutions (the game accepts any triangle with the right area).
+- **Print version done** (9 pages, 6 per page): grids 64 mm, «Àrea N» box next to the number pill; students
+  circle three dots and join them.
+
+### 8.7 L'escala de nombres (`step`, 数字の階段) — 42 problems, cyan `#0e7490`
+- Data **generated** by `tools/extreu-escala.py`: `{ nodes: [[x, y, valor?]], fileres: [[i, j, k, …]] }` (x, y
+  in PDF points; a *filera* = a maximal straight chain of edges, ±8°; two lines meeting at an angle are
+  different fileres). Circles = black 12.5 stroked curves; lines = black 18.75 strokes. Problem labels form a
+  2 × 3 grid: each problem takes the label of its cell (lowest label above its centroid, nearest column) —
+  a nearest-circle greedy matching mis-assigned labels. Example hard-coded (page 1).
+- `motor.js`: `filera(vs)` → `be` (with d) | `repetit` | `salt` (with a concrete `motiu`); `comprova`; `resol`
+  propagates (two known values fix a filera), then branches on the difference (values 1–200). Unique and equal
+  to the PDF for all 42; repeated values in *different* fileres are fine (27, 28, 29, 41).
+- `tauler.js`: SVG polylines + HTML circles (`R 14` pt); on success «+d» labels on each segment, placed on
+  the side farthest from circles, other segments and labels already placed.
+- UI: tap a circle then the keypad (phone layout 1 2 3 / 4 5 6 / 7 8 9 / ⌫ 0 ✓; multi-digit: 1, 2 → 12; the
+  first digit after selecting replaces, shown as a highlighted number); a «pantalla» above the keypad and the
+  circle show the number with a blinking caret; ⌫ removes the last digit; ✓ goes to the next empty circle; no
+  circle selected → first empty one; drag a digit onto a circle; drag a number out to clear; keyboard
+  digits/arrows/Enter/Supr. 0 refused. ≥ 700 px: `.zona-joc` puts the keypad at the right of the board. (The old
+  single row 0–9 made the user think only one-digit numbers could be written: bug 5, Oct 2026.) Do not toggle
+  the selection on click (focus has already selected it: it deselected at once — bug found and fixed).
+- **Print version done** (13 pages, **4 per page**, user's choice: at 6 per page circles were 8–10 mm);
+  in the instructions the wrong filera is dotted and its circles have a double border.
+
+### 8.8 Busca la figura (`zukei`, 図形探し) — 42 problems, purple `#9333ea`
+- Data **generated** by `tools/extreu-figura.py` (a copy of `extreu-triangle.py`; the grid cell is computed as
+  width / cells, because 28 pt cells drift): `{ amp, alt, punts, figura }`, figura ∈ quadrat, rectangle, rombe,
+  paral·lelogram, trapezi, isosceles, rectangle-triangle, rectangle-isosceles.
+- `motor.js`: `analitza` (alineats | concau | triangle/quadrilàter with border order, right angles, equal-side
+  groups, parallel pairs; exact integers), `comprova` (inclusive PDF definitions; `motiu` = the missing property,
+  `nom` = the most specific figure made), `marques`, `resol`. Inclusive and exclusive readings give the same
+  unique answer in 40 problems; **17** and **19** have 2 solutions (PDF errors, both accepted, documented).
+- **Reuses `js/busca-el-triangle/tauler.js`** (loaded from the figura pages): `pinta` gained `ordre` (polygon
+  order) and `marques` (`rectes`, `iguals`, `paralleles`: right-angle square, ticks, chevrons). Any change there
+  must keep both puzzles working (re-run both browser tests and both print PDFs).
+- Controller = the triangle one (tap/trace/keyboard), with `cal` = 3 or 4 vertices.
+- **Print version done** (9 pages, 6 per page): figure name boxed next to the number pill; page 1 shows the
+  seven PDF example figures with their marks.
+
+### 8.9 Afegeix zeros (`zero`, ゼロゼロ式) — 49 problems, blue `#1d4ed8`
+- Data **generated** by `tools/extreu-zeros.py` from the PDF **text** (`pdftotext -layout`, NFKC): `{ targetes:
+  [digits], total }`; answers = zeros per card. 1–35 three cards, 36–49 four. Unique and equal to the PDF for
+  all; 16 and 20 are identical in the PDF (kept).
+- `motor.js`: `valor`, `maxZeros` (digits of the total − 1), `comprova` (with `calcul` «30 + 6 + 2 = 38»), `resol`.
+- `tauler.js`: HTML row (cards with the digit + one `span.zero` per added zero, circled like the PDF).
+- UI: tap a card adds a zero (**also when the tap lands on one of its zeros**: the new zero appears right under
+  the finger, so «tap a zero removes it» made a second tap delete it — 1, 0, 1, 0…); the round **−** button under
+  a card with zeros (`.treu-zero`, created by the controller, so print/instructions do not have it) removes one;
+  drag the «0» chip onto a card, drag a zero out (to a full card: it stays); keyboard 0/Enter add, ⌫ remove.
+  Success is automatic (every state is «complete»); a **Comprova** button shows the sum and «Falten / Sobren n».
+- **Print version done** (12 pages, **5 per page, one equation per row**, the last page has 4 — user's choice;
+  7 per page was refused). Cards 38 × 19 mm (30 mm with four cards) with room to write the zeros. In the
+  instructions the circle around an added zero must be clearly bigger than the digit (user's remark):
+  `.zero` 1.5em with the digit at 0.72em.
+
+### 8.10 Dipòsits d'aigua (`mizu`, 水そうと水) — 42 problems, dark green `#047857`
+- Data **generated** by `tools/extreu-diposits.py`: `{ files: ['AB', 'CC'], divisions, totalsFiles, totalsColumnes }`
+  (a letter per cube = its tank; every tank is a rectangle; divisions = 4, 6 or 0 from the short 3.125 ticks, which
+  only exist on each tank's left column; totals as text fractions or null). Front face = bbox of the 12.5 strokes
+  (cube ≈ 45.3 pt); a tank border = a thick stroke through the midpoint of the edge between two cubes. Labels:
+  each face takes the `(n)` of its row with the largest x left of the face (labels sit at the left of each column).
+- Answers: 1–36 = blue fill rects measured and **rounded to the ticks** (the drawing is approximate); 37–42 = the
+  fractions the answer PDF writes in each cube (13/24, 13/36…).
+- `motor.js`: own exact fractions (`[n, d]`), `diposits`, `aiguaCub` (min(1, max(0, h − floors below))),
+  `totals`, `comprova`, `resol` (for each tank choose the floor of the surface → linear equations in the fractional
+  parts; the solution set of each case is a polytope in [0, 1]ⁿ, its **vertices** are found by fixing variables to 0/1
+  and solving with Gauss; unique iff exactly one vertex overall — a plain «free variable = 0» rejected valid
+  solutions), `pas` (ticks, or 2 × lcm of the totals' denominators for 37–42). Unique and equal to the PDF for all.
+- `tauler.js`: SVG front face (no 3D), tank borders, ticks, water rects, per-cube amounts, totals with arrows (margins
+  only on sides that have totals), an HTML layer per tank; a `pattern#aigua-ratllada` for the B/W print version.
+- UI: tap/drag a tank sets its level (snapped to 1/pas); the selected tank's editor has −, + and a text field for a
+  fraction (needed for 37–42, steps 1/16…1/60); keyboard arrows/PgUp/PgDn/Home/End. Success automatic; «Comprova»
+  lists the totals that do not add up («A la fila 1: 1/2 + 0 = 1/2, i hi ha d'haver 3/4»).
+- **Print version done** (13 pages, **4 per page**, user's choice): students draw the water line on the ticks;
+  water in the instructions is hatched.
+
 ## 9. PDF data extraction (the technique that works)
 
 All 12 PDFs are **vector** drawings. Only `shikaku_q.pdf` page 1 embeds raster images (its example was
@@ -337,6 +434,11 @@ tool via `importlib` creates `__pycache__`.
   - Always: solve **every** problem through the UI using the PDF answers, test the error path, keyboard,
     360 px mobile (scrollWidth = 360), then look at screenshots with the Read tool (wait ~500 ms for
     animations or screenshots look half-faded).
+  - Touch: test a **tap** (touchStart + touchEnd, no move) separately from a **drag**: the «aim 40 px above the
+    finger» rule is only for drags (Busca el nombre applied it to taps too and put the square one row too high),
+    and test **repeated taps on the same spot** (Afegeix zeros toggled 1, 0, 1, 0).
+  - Laptops: measure at 1366 × 657 (a 1366 × 768 Chromebook minus the browser bars): the board and its pile
+    should be visible without scrolling.
 - Before each PR: unit tests ✓, prettier ✓, the other puzzles' browser tests still pass (shared CSS/JS).
 
 ## 11. Recipe: adding a puzzle
@@ -357,7 +459,7 @@ tool via `importlib` creates `__pycache__`.
 7. Prettier, all tests, browser tests (§10), commit, push, PR, reply in Catalan with merge steps + preview,
    and offer (one line) the print version (Part B).
 
-## 12. The 6 pending puzzles
+## 12. The 6 puzzles that were pending (all done now; kept as reference)
 
 All have 8-page `_q.pdf` (page 1 = instructions) and 7-page `_a.pdf`; all vector. Reviewed Catalan
 instructions are in `docs/traduccions.md`. Approved Catalan names in **bold**.
@@ -395,14 +497,15 @@ Reference implementation: Expressions bessones (`imprimir/expressions-bessones.h
    ✓/✗ (the symbols are enough), no pale fills or light-grey lines (they vanish on a B/W laser).
 3. **Page order**: **1 = instructions** (the game's «Com es juga?» text and examples + a box «Amb el
    retolador» saying where to write), **2 = blank** (back of the instructions), **3… = problems, 6 per page**
-   (2 columns × 3 rows, in order). Pages = 2 + ⌈N/6⌉ (42 → 9, 38 → 9, 49 → 11). If a puzzle's figures cannot
+   (2 columns × 3 rows, in order). Pages = 2 + ⌈N/6⌉ (42 → 9, 38 → 9, 49 → 11). **Exception decided by the user:
+   Laberint d'angles, Talla en rectangles, L'escala de nombres and Dipòsits d'aigua always 4 per page; Afegeix zeros 5 per page, one equation per row** (2 × 2; 6 was «massa atapeït»). If a puzzle's figures cannot
    be made writable at 6 per page, propose fewer per page in the sample message — do not decide alone.
 4. **Always show pages 1 and 3 first** (`--pagines 1,3`, sent with `SendUserFile`) and wait for the user's
    «OK»; iterate on their remarks. Only then generate the full PDF, commit and open the PR.
 5. **Writing room as large as fits**: boxes must not touch the card border (air above and below), must be
    centred between their neighbours, and big (after the first sample the user asked for +10 % width and
    +15 % height: «el màxim espai possible»). Numbers and labels bold and large.
-6. When done, add the «Versió per imprimir» link to the game page (§1) and a row to the README table.
+6. When done, add the «Obtenir fitxes PDF» link to the game page (§1) and a row to the README table.
 
 ### 13.2 Files and API
 
@@ -437,7 +540,7 @@ Reference implementation: Expressions bessones (`imprimir/expressions-bessones.h
 ### 13.3 Generate and verify
 
 ```bash
-node tools/genera-pdf.js <slug> --pagines 1,3 --sortida imprimir/<slug>-mostra.pdf   # sample (git-ignored)
+node tools/genera-pdf.js <slug> --pagines 1,3 --sortida <scratchpad>/<slug>-mostra.pdf   # sample (there is no .gitignore: never write it in the repo)
 node tools/genera-pdf.js <slug>                          # full → imprimir/<slug>.pdf (commit it)
 ```
 
@@ -446,7 +549,9 @@ overflow (`scrollWidth/Height > client…` of `.pagina`, `.problemes`, `.problem
 track silently grows to its content and spills into the page padding) and on any visible non-`.pagina` body
 child under print media; then `page.pdf({ preferCSSPageSize: true, printBackground: true, pageRanges })`.
 Fonts: Inter (embedded as Type 3 — poppler's «Bad bounding box in Type 3 glyph» warnings are harmless) and
-IPAGothic for the Japanese name. Then always:
+IPAGothic for the Japanese name. All 12 PDFs are made with Inter (check with `pdffonts`): Creuat and Busca el nombre
+had been made with Liberation Sans, and Creuat's page 1 did not fit with Inter (6 mm too long) — fixed in Oct 2026
+(first example cell 12.5 mm, `.caixa` margin 3 mm on page 1) and both regenerated. Then always:
 
 - `pdfinfo` → page count = 2 + ⌈N/6⌉.
 - `pdftoppm -r 90 -png` → Read pages 1, 3 and the **last** one (largest numbers/figures are usually at the
@@ -467,13 +572,22 @@ parenthesis slots 5 mm, numbers 19.5 pt Inter 800, card border 0.5 mm black; pro
 operands (37–42) get `.dues-xifres` (15 pt) so they fit; first number right-aligned, last left-aligned.
 Also: reset `figure { margin: 0 }` (browser default 40 px); width, not height, is always the constraint.
 
-### 13.5 Pending print versions (suggestions to put in the sample message, not decisions)
+### 13.5 Print versions done (all 12) and what each one decided
 
-| Puzzle | Pages | Ideas |
+| Puzzle | Pages | Decisions |
 |---|---|---|
-| Enllaç de múltiples | 9 | Empty slots = large dashed boxes to write the number; arrows black; the spare cards printed as a row of numbers students can cross out. |
-| Laberint d'angles | 9 | Students draw the path over the lines: lines dark grey, circles big with black numbers, S/G bold; no angle arcs (they are play aids). Large mazes may need 4 per page — ask. |
-| Talla en rectangles | 9 | Cells ≥ 9 mm with dark-grey grid so cuts can be drawn with the marker; figure outline thick black; size list in bold under each figure. |
+| Expressions bessones | 9 | Reference implementation (§13.4). |
+| Creuat de múltiples | 9 | See §8.5. |
+| On és la xifra? | 9 | See `docs/on-es-la-xifra.md`. |
+| Busca el nombre | 9 | See `docs/busca-el-nombre.md`. |
+| Enllaç de múltiples | 9 | Boards in mm (`--k` = mm per board unit, set by `js/enllac-multiples/imprimir.js`); empty slots dashed `#333`; under each board the problem's cards (the one already on the board grey with ✓) to cross out; 2 × 2 boards (13–24) put the cards in a column at the right. After the first sample the user asked for **smaller boards, more room between the 3 rows and a black line between rows**: `.problemes` has no column gap (cards pad 1.5 mm instead) so the `border-top` of rows 2–3 is continuous. Never draw the line with an absolutely positioned `::after` outside the card: `genera-pdf.js` counts it as overflow. |
+| Laberint d'angles | 12 | **4 per page**. Lines `#333` 0.55 mm, dotted cut lines with ×, circles white with black numbers, S/G thick border; no arcs on problems (only in the instructions). Circles are scaled up (`--cercle`) to ≥ 8.6 mm on small boards, but not in the instructions (they would hide the angle arcs). The «Amb el retolador» box explains the dotted × lines (19 problems have them; the game does not say it). |
+| Busca el triangle | 9 | See §8.6. |
+| L'escala de nombres | 13 | **4 per page**; see §8.7. |
+| Busca la figura | 9 | See §8.8. |
+| Afegeix zeros | 12 | **5 per page**, one per row; see §8.9. |
+| Dipòsits d'aigua | 13 | **4 per page**; see §8.10. |
+| Talla en rectangles | 13 | **4 per page**. Cell up to 16 mm (`min(16, 92/amp, 104/alt)`), grid `#333` 0.3 mm, outline black 1 mm, no piece colours; «Quadrets: 3 5 6» boxes next to the number pill (absolute, `left: 11 mm`). Wide figures (10–12 cells) stay ≈ 7.5 mm per cell: width is the limit. |
 
 Lesson from Creuat de múltiples: boards of different height share a sheet, so align the number pills per row and
 centre each board vertically in the rest of the card (`margin: auto 0`), and size the cell from the board's
@@ -481,9 +595,17 @@ height (`60mm / rows`) and width, not from a fixed size; 4-row boards ended up a
 
 ## 14. Open points / ideas
 
-- Nothing pending from the user right now; the next request will probably be «Implementa «<nom>»» (Task A)
-  or the print version of another puzzle (Task B).
-- Possible refactors if a third puzzle needs them: shared digit-entry pad (bcross, dokoeq, step), shared
-  dot-grid selector (sankaku, zukei), shared exact-fraction helper (bessones, mizu).
-- `docs/traduccions.md` notes contain the known Gemini mistakes (only sums in dokoeq; 1 litre per cube in
-  mizu; «0, 1, 2 zeros» is not a rule; kazu «Compte!» is about the dotted line and square size).
+- **All 12 puzzles are done**, each with its web version and its print version. There is nothing pending from the
+  user; a new request will probably be a change to an existing puzzle or print version (read its §8 entry and its
+  `docs/<slug>.md` first, and keep the agreed decisions of §1 and §13).
+- Shared code that now exists: the dot-grid board `js/busca-el-triangle/tauler.js` (also used by Busca la figura);
+  every other puzzle has its own board. Exact fractions exist twice (bessones, mizu): unify only if a change needs it.
+- The known Gemini translation mistakes are now in the notes of each `docs/<slug>.md` (only sums in dokoeq; 1 litre per
+  cube in mizu; «0, 1, 2 zeros» is not a rule; kazu «Compte!» is about the dotted line and square size).
+- Low screens (1366 × 657): after the compact header (Oct 2026), the board + pile still do not fit at once in a few
+  problems with tall boards (Dipòsits 18, Laberint 7, Rectangles 3, Escala 1; before: 254 problems in 10 puzzles).
+  The digit pads of Creuat and On és la xifra now fit in one row (`max-width: 680px`; the ⌫ used to wrap). Next step if the user wants it: cap the board height with the viewport, or put the pile beside the
+  board on wide screens (as Escala's keypad already does).
+- Repo hygiene learnt in this round: `.prettierrc.json` and `.github/workflows/tests.yml` were missing and were
+  (re)created; there is no `.gitignore`, so never write sample PDFs or `__pycache__` inside the repo (use the
+  scratchpad; run the tools with `sys.dont_write_bytecode = True` when importing them).

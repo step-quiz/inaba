@@ -16,10 +16,15 @@ Els PDF originals (en japonès) són a [`src/`](src/): `*_q.pdf` són els enunci
 | Creuat de múltiples | 倍数クロス (`bcross`) | [`creuat-multiples.html`](creuat-multiples.html) | 42 |
 | On és la xifra? | どこかな算 (`dokoeq`) | [`on-es-la-xifra.html`](on-es-la-xifra.html) | 42 |
 | Busca el nombre | かずさがし (`kazu`) | [`busca-el-nombre.html`](busca-el-nombre.html) | 42 |
+| Busca el triangle | 三角探し (`sankaku`) | [`busca-el-triangle.html`](busca-el-triangle.html) | 42 |
+| L'escala de nombres | 数字の階段 (`step`) | [`escala-nombres.html`](escala-nombres.html) | 42 |
+| Busca la figura | 図形探し (`zukei`) | [`busca-la-figura.html`](busca-la-figura.html) | 42 |
+| Afegeix zeros | ゼロゼロ式 (`zero`) | [`afegeix-zeros.html`](afegeix-zeros.html) | 49 |
+| Dipòsits d'aigua | 水そうと水 (`mizu`) | [`diposits-aigua.html`](diposits-aigua.html) | 42 |
 
-La portada ([`index.html`](index.html)) també llista els altres 5 puzzles de `src/` com a «Properament».
+Ja hi són tots els puzzles de `src/`.
 La traducció de les instruccions de cada puzzle i les notes sobre els problemes són a [`docs/`](docs/).
-Les dels puzzles que encara no s'han fet són a [`docs/traduccions.md`](docs/traduccions.md).
+Els criteris de traducció són a [`docs/traduccions.md`](docs/traduccions.md).
 
 ## Com es juga a l'Enllaç de múltiples
 
@@ -113,6 +118,54 @@ solució del PDF, que és l'única que hi ha.
 En posar el quadrat es comprova sol: si no és el lloc, es diu què hi ha dins («Aquí hi ha 3 pomes, i en volies 2»)
 i es pot provar un altre lloc.
 
+## Com es juga a Busca el triangle
+
+- **Tocar o clicar** un punt el tria (li surt una anella); tocar-ne un de triat el treu.
+- **Traçar** (amb el ratolí o el dit): prémer un punt i passar per uns altres, com si es dibuixessin els costats.
+  Si el traç passa en línia recta per sobre d'un punt, aquest punt no queda triat.
+- **Teclat**: fletxes per anar d'un punt a l'altre, Enter per triar-lo o treure'l, ⌫ o Supr per treure'l, Esc per
+  treure'ls tots.
+
+Amb tres punts es comprova sol, i es dibuixa com es calcula l'àrea: base × altura : 2 si un costat és horitzontal
+o vertical, o el rectangle que envolta el triangle menys les peces del voltant si és inclinat.
+
+## Com es juga a L'escala de nombres
+
+- **Tocar** un cercle i escriure-hi el nombre amb el teclat (com el d'un telèfon: per fer 12, l'1 i després el 2);
+  la pantalla de sobre el teclat mostra el nombre que s'escriu. ⌫ esborra l'última xifra i ✓ passa al cercle buit
+  següent. Si no hi ha cap cercle triat, la xifra va al primer cercle buit. En una pantalla ampla, el teclat és a la
+  dreta del tauler.
+- **Arrossegar** una xifra fins a un cercle; arrossegar un nombre fora del tauler l'esborra.
+- **Teclat**: Tab o fletxes per anar d'un cercle a l'altre, xifres, ⌫, Supr per buidar-lo i Enter per anar al
+  cercle buit següent.
+
+Quan tots els cercles són plens, es comprova sol: les fileres que no augmenten sempre igual es pinten de vermell
+amb el motiu, i si tot és correcte, a cada tram s'escriu el que augmenta (+3).
+
+## Com es juga a Busca la figura
+
+Com al Busca el triangle (la mateixa quadrícula de punts): **tocar** els vèrtexs (3 per als triangles, 4 per als
+quadrilàters), **traçar** d'un punt a l'altre o fer-ho amb el **teclat**. Amb prou vèrtexs es comprova sol: es
+dibuixen les marques de la definició (angles rectes, costats iguals, costats paral·lels) i, si no és la figura que
+es demana, es diu quina propietat li falta i quina figura s'ha fet.
+
+## Com es juga a Afegeix zeros
+
+- **Tocar** una targeta hi afegeix un zero (3 → 30 → 300); el botó **−** de sota la targeta en treu un.
+- **Arrossegar** el «0» de sota fins a una targeta; arrossegar un zero fora de la targeta el treu.
+- **Teclat**: Tab o fletxes, 0 (o Enter) per afegir un zero, ⌫ per treure'n un.
+
+Quan la igualtat és correcta, es diu sola. El botó «Comprova» mostra el càlcul tal com està i quant falta o sobra.
+
+## Com es juga a Dipòsits d'aigua
+
+- **Tocar** un dipòsit hi posa l'aigua fins a aquella altura (ajustada a les marques); **arrossegar** amunt i avall
+  la fa pujar i baixar. Dins de cada cub s'escriu quanta aigua hi ha.
+- A sota, el dipòsit triat: **−** i **+** (d'una marca en una marca) i el nivell en fracció, que s'hi pot escriure (5/4).
+- **Teclat**: Tab, fletxes amunt i avall, Re Pàg / Av Pàg (un cub), Inici i Fi.
+
+Quan tots els totals quadren, es diu sol. El botó «Comprova» diu quins totals no quadren i per què.
+
 ## Comú als puzzles
 
 - Els problemes resolts es desen al navegador (localStorage) i es veuen amb un ✓ a «Escull…» i a la
@@ -122,7 +175,9 @@ i es pot provar un altre lloc.
 ## Versions per imprimir
 
 Fulls A4 per imprimir a doble cara (en blanc i negre), plastificar i escriure-hi amb retolador de pissarra:
-la pàgina 1 són les instruccions, la 2 és en blanc (el revers) i a partir de la 3 hi ha 6 problemes per full.
+la pàgina 1 són les instruccions, la 2 és en blanc (el revers) i a partir de la 3 hi ha 6 problemes per full
+(4 al Laberint d'angles, al Talla en rectangles, a L'escala de nombres i als Dipòsits d'aigua, que tenen figures més grans;
+a Afegeix zeros, 5 igualtats per full, una per fila).
 
 | Puzzle | Pàgina | PDF |
 |---|---|---|
@@ -130,8 +185,16 @@ la pàgina 1 són les instruccions, la 2 és en blanc (el revers) i a partir de 
 | Creuat de múltiples | [`imprimir/creuat-multiples.html`](imprimir/creuat-multiples.html) | [`imprimir/creuat-multiples.pdf`](imprimir/creuat-multiples.pdf) (9 pàgines) |
 | On és la xifra? | [`imprimir/on-es-la-xifra.html`](imprimir/on-es-la-xifra.html) | [`imprimir/on-es-la-xifra.pdf`](imprimir/on-es-la-xifra.pdf) (9 pàgines) |
 | Busca el nombre | [`imprimir/busca-el-nombre.html`](imprimir/busca-el-nombre.html) | [`imprimir/busca-el-nombre.pdf`](imprimir/busca-el-nombre.pdf) (9 pàgines) |
+| Enllaç de múltiples | [`imprimir/enllac-multiples.html`](imprimir/enllac-multiples.html) | [`imprimir/enllac-multiples.pdf`](imprimir/enllac-multiples.pdf) (9 pàgines) |
+| Laberint d'angles | [`imprimir/laberint-angles.html`](imprimir/laberint-angles.html) | [`imprimir/laberint-angles.pdf`](imprimir/laberint-angles.pdf) (12 pàgines, 4 problemes per full) |
+| Talla en rectangles | [`imprimir/talla-rectangles.html`](imprimir/talla-rectangles.html) | [`imprimir/talla-rectangles.pdf`](imprimir/talla-rectangles.pdf) (13 pàgines, 4 problemes per full) |
+| Busca el triangle | [`imprimir/busca-el-triangle.html`](imprimir/busca-el-triangle.html) | [`imprimir/busca-el-triangle.pdf`](imprimir/busca-el-triangle.pdf) (9 pàgines) |
+| L'escala de nombres | [`imprimir/escala-nombres.html`](imprimir/escala-nombres.html) | [`imprimir/escala-nombres.pdf`](imprimir/escala-nombres.pdf) (13 pàgines, 4 problemes per full) |
+| Busca la figura | [`imprimir/busca-la-figura.html`](imprimir/busca-la-figura.html) | [`imprimir/busca-la-figura.pdf`](imprimir/busca-la-figura.pdf) (9 pàgines) |
+| Afegeix zeros | [`imprimir/afegeix-zeros.html`](imprimir/afegeix-zeros.html) | [`imprimir/afegeix-zeros.pdf`](imprimir/afegeix-zeros.pdf) (12 pàgines, 5 igualtats per full, una per fila) |
+| Dipòsits d'aigua | [`imprimir/diposits-aigua.html`](imprimir/diposits-aigua.html) | [`imprimir/diposits-aigua.pdf`](imprimir/diposits-aigua.pdf) (13 pàgines, 4 problemes per full) |
 
-S'hi arriba des de l'enllaç «Versió per imprimir» de dalt de la pàgina del joc. La pàgina té un botó per
+S'hi arriba des de l'enllaç «Obtenir fitxes PDF» de dalt de la pàgina del joc. La pàgina té un botó per
 imprimir-la o desar-la com a PDF des del navegador. El PDF del repositori el fa
 `node tools/genera-pdf.js <puzzle>` (amb Chromium, p. ex. `expressions-bessones` o `on-es-la-xifra`); si es canvien els problemes o els estils
 d'impressió, s'ha de tornar a fer.
@@ -164,12 +227,17 @@ tools/extreu-rectangles.py     ← llegeix les figures del PDF i escriu js/talla
 tools/extreu-creuat.py         ← llegeix els quadres del PDF i escriu js/creuat-multiples/problemes.js
 tools/extreu-xifra.py          ← llegeix les sumes del PDF i escriu js/on-es-la-xifra/problemes.js
 tools/extreu-kazu.py           ← llegeix els quadres del PDF i escriu js/busca-el-nombre/problemes.js
+tools/extreu-triangle.py       ← llegeix les quadrícules de punts del PDF i escriu js/busca-el-triangle/problemes.js
+tools/extreu-escala.py         ← llegeix els cercles i les fileres del PDF i escriu js/escala-nombres/problemes.js
+tools/extreu-figura.py         ← llegeix les quadrícules de punts del PDF i escriu js/busca-la-figura/problemes.js
+tools/extreu-zeros.py          ← llegeix les igualtats del PDF i escriu js/afegeix-zeros/problemes.js
+tools/extreu-diposits.py       ← llegeix els dipòsits i els totals del PDF i escriu js/diposits-aigua/problemes.js
 tools/genera-pdf.js            ← fa el PDF per imprimir d'un puzzle (imprimir/<puzzle>.html → .pdf)
 imprimir/<puzzle>.html, .pdf   ← versió per imprimir i el seu PDF
 css/imprimir.css               ← estils comuns de les versions per imprimir (+ css/imprimir-<puzzle>.css)
 js/imprimir.js                 ← fulls de problemes, capçalera i peu (+ js/<puzzle>/imprimir.js)
 docs/<puzzle>.md               ← traducció de les instruccions i notes
-docs/traduccions.md            ← traducció de les instruccions dels puzzles pendents
+docs/traduccions.md            ← criteris de traducció i índex dels fitxers de cada puzzle
 src/                           ← PDF originals
 ```
 
@@ -183,6 +251,11 @@ node tests/talla-rectangles.test.js
 node tests/creuat-multiples.test.js
 node tests/on-es-la-xifra.test.js
 node tests/busca-el-nombre.test.js
+node tests/busca-el-triangle.test.js
+node tests/escala-nombres.test.js
+node tests/busca-la-figura.test.js
+node tests/afegeix-zeros.test.js
+node tests/diposits-aigua.test.js
 ```
 
 GitHub els executa sols a cada pull request i a cada canvi a `main` (pestanya **Actions**).
