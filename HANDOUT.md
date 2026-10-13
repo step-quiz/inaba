@@ -57,10 +57,14 @@ architecture · 6 Conventions · 7 Interaction patterns · 8 The 12 finished puz
     under the title row (font 1.1em, link to `http://www.inabapuzzle.com/`); (2) the footer `footer.peu-llicencia`
     («Puzzle original: © Naoki Inaba, publicat amb el seu permís · Adaptació al català … © 2026 David Arso Civil …»).
     There is NO separate `<p class="credits">` line and NO CC badge. Copy both from any existing page.
-    `index.html`: h1 «Puzzles de Naoki Inaba»; each card shows only title + Japanese name + a big › button
-    (`.desplega`, `js/portada.js`) that unfolds the Catalan description; the whole card is a link (stretched
-    `a.puzzle-link`) except that button; one grey box with a black left edge holds «Sobre l'autor» and «Area Maze»
-    (Spanish edition: *Rompecabezas lógicos de áreas. Menseki meiro para niños*, Editorial Hispano Europea, 2016).
+    `index.html`: h1 «Puzzles de Naoki Inaba» in pure black; each card is an `<a class="puzzle …">` showing only the
+    title, the Japanese name and the problem count — the Catalan description is kept in the source
+    (`<span class="desc" hidden>`, `display: none`) but NOT shown (the user tried an unfold arrow and dropped it).
+    Row gaps inside a card: 7.2 px / 12 px (user asked −20 %). Card colours are assigned so that cards at
+    distance ≤ 3 in the list differ clearly (ΔE ≥ 60): they no longer equal each game page's theme colour — keep
+    that rule if you add or reorder cards. One grey box with a black left edge holds «Sobre l'autor: Naoki Inaba»
+    and «Area Maze» (Spanish edition: *Rompecabezas lógicos de áreas. Menseki meiro para niños*,
+    Editorial Hispano Europea, 2016); web links use the classic blue `#0000ee`.
   - Laberint d'angles: keep **S/G** letters; angle arcs **visible while playing**; never say the path
     «gira» (turn angle); the number is the angle **formed by the two segments**; 180° = flat angle, drawn
     as a semicircle.
