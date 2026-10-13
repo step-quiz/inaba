@@ -1,9 +1,23 @@
 # inaba
 
-Puzzles matemàtics de **Naoki Inaba** (稲葉直貴), de domini públic, traduïts al català i fets interactius.
+Puzzles matemàtics de **Naoki Inaba** (稲葉直貴), traduïts al català i fets interactius.
 Són pàgines web estàtiques, sense res a instal·lar: HTML, CSS i JavaScript «vainilla».
 
-Els PDF originals (en japonès) són a [`src/`](src/): `*_q.pdf` són els enunciats i `*_a.pdf`, les solucions.
+## Crèdits i permís
+
+Tots els puzzles són obra de **Naoki Inaba** (© Naoki Inaba), que els publica al seu lloc web original,
+<http://www.inabapuzzle.com/> (en japonès). Aquesta versió en català es publica **amb el seu permís**, concedit amb
+la condició de **fer constar clarament que n'és l'autor original**. Per això cada pàgina (portada, puzzles i fitxes
+per imprimir) en cita l'autoria a la capçalera i al peu. **No són de domini públic ni porten cap llicència lliure.**
+
+La traducció, la versió web i les fitxes per imprimir són una adaptació de **David Arso Civil**
+(© 2026, Departament de Matemàtiques, INS Miquel Tarradell).
+
+El llibre d'Inaba *Area Maze* (面積迷路, *Menseki Meiro*), amb Ryôichi Murakami, també s'ha publicat en castellà:
+*Rompecabezas lógicos de áreas. Menseki meiro para niños* (Editorial Hispano Europea, 2016).
+
+Els PDF originals en japonès (`*_q.pdf` enunciats, `*_a.pdf` solucions) **no són al repositori**: la carpeta `src/`
+és només a l'ordinador de qui manté el projecte (està a `.gitignore`) i la fan servir els scripts de `tools/`.
 
 ## Puzzles
 
@@ -22,7 +36,7 @@ Els PDF originals (en japonès) són a [`src/`](src/): `*_q.pdf` són els enunci
 | Afegeix zeros | ゼロゼロ式 (`zero`) | [`afegeix-zeros.html`](afegeix-zeros.html) | 49 |
 | Dipòsits d'aigua | 水そうと水 (`mizu`) | [`diposits-aigua.html`](diposits-aigua.html) | 42 |
 
-Ja hi són tots els puzzles de `src/`.
+Ja hi són els 12 puzzles.
 La traducció de les instruccions de cada puzzle i les notes sobre els problemes són a [`docs/`](docs/).
 Els criteris de traducció són a [`docs/traduccions.md`](docs/traduccions.md).
 
@@ -235,10 +249,10 @@ tools/extreu-diposits.py       ← llegeix els dipòsits i els totals del PDF i 
 tools/genera-pdf.js            ← fa el PDF per imprimir d'un puzzle (imprimir/<puzzle>.html → .pdf)
 imprimir/<puzzle>.html, .pdf   ← versió per imprimir i el seu PDF
 css/imprimir.css               ← estils comuns de les versions per imprimir (+ css/imprimir-<puzzle>.css)
-js/imprimir.js                 ← fulls de problemes, capçalera i peu (+ js/<puzzle>/imprimir.js)
+js/imprimir.js                 ← fulls de problemes i capçalera, amb el crèdit de l'autor (+ js/<puzzle>/imprimir.js)
 docs/<puzzle>.md               ← traducció de les instruccions i notes
 docs/traduccions.md            ← criteris de traducció i índex dels fitxers de cada puzzle
-src/                           ← PDF originals
+src/                           ← PDF originals (només en local, a .gitignore; no es publiquen)
 ```
 
 ## Tests

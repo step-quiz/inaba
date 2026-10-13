@@ -3,8 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Puzzles matemàtics de Naoki Inaba, traduïts al català i fets interactius.">
-    <title>Puzzles matemàtics</title>
+    <meta name="description" content="Puzzles matemàtics de Naoki Inaba (稲葉直貴), traduïts al català i fets interactius, publicats amb el permís de l'autor.">
+    <meta name="author" content="Naoki Inaba">
+    <title>Puzzles matemàtics de Naoki Inaba</title>
     <link rel="icon" href="icon.png">
     <link rel="stylesheet" href="css/comu.css">
     <style>
@@ -182,6 +183,40 @@
             border-color: #047857;
             box-shadow: 0 8px 20px rgba(4, 120, 87, 0.15);
         }
+        .subtitol .enllac-autor {
+            color: var(--primary-dark);
+            font-weight: 700;
+        }
+        .nota {
+            width: 100%;
+            max-width: 760px;
+            margin-top: 16px;
+            padding: 14px 18px;
+            background: white;
+            border: 1px solid var(--border-color);
+            border-left: 5px solid var(--primary);
+            border-radius: 8px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+            font-size: 0.95em;
+            line-height: 1.5;
+        }
+        .nota h2 {
+            margin: 0 0 6px 0;
+            font-size: 1.05em;
+            text-transform: none;
+            letter-spacing: 0;
+            color: var(--primary-dark);
+        }
+        .nota p {
+            margin: 0;
+        }
+        .nota a {
+            color: var(--primary-dark);
+            font-weight: 600;
+        }
+        .nota .jp {
+            color: var(--text-muted);
+        }
         h2 {
             width: 100%;
             max-width: 760px;
@@ -200,7 +235,7 @@
         </a>
         <h1>Puzzles matemàtics</h1>
     </div>
-    <p class="subtitol">Els puzzles originals creats per Naoki Inaba, ara en català</p>
+    <p class="subtitol">Els puzzles originals de <a class="enllac-autor" href="http://www.inabapuzzle.com/" target="_blank" rel="noopener">Naoki Inaba</a> (稲葉直貴), ara en català i interactius</p>
 
     <div class="llista">
         <a class="puzzle" href="enllac-multiples.html">
@@ -277,14 +312,28 @@
         </a>
     </div>
 
-    <p class="credits">Puzzles originals de Naoki Inaba</p>
+    <section class="nota" aria-labelledby="sobre-autor">
+        <h2 id="sobre-autor">Sobre l'autor</h2>
+        <p>
+            Tots els puzzles d'aquesta web són obra de <strong>Naoki Inaba</strong> <span class="jp">(稲葉直貴)</span>, que els
+            publica al seu lloc web original, <a href="http://www.inabapuzzle.com/" target="_blank" rel="noopener">inabapuzzle.com</a> (en japonès).
+            Aquesta versió en català, interactiva i imprimible es publica <strong>amb el seu permís</strong>. Moltes gràcies, Naoki!
+        </p>
+    </section>
+
+    <section class="nota" aria-labelledby="area-maze">
+        <h2 id="area-maze">Area Maze <span class="jp">(面積迷路, Menseki Meiro)</span></h2>
+        <p>
+            El llibre <em>Area Maze</em> de Naoki Inaba i Ryôichi Murakami també s'ha publicat en castellà:
+            <em>Rompecabezas lógicos de áreas. Menseki meiro para niños</em> (Editorial Hispano Europea, 2016).
+        </p>
+    </section>
+
+    <p class="credits">Puzzles originals de <a href="http://www.inabapuzzle.com/" target="_blank" rel="noopener">Naoki Inaba</a> · inabapuzzle.com · publicats amb el seu permís</p>
     <footer class="peu-llicencia">
-        <a rel="license" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.ca">
-            <img alt="Llicència CC BY-NC-SA" src="https://licensebuttons.net/l/by-nc-sa/4.0/88x31.png">
-        </a>
         <span>
+            Puzzles originals: © <strong>Naoki Inaba</strong> · Adaptació al català (traducció, versió web i fitxes):
             © 2026 <strong>David Arso Civil</strong> · Departament de Matemàtiques, INS Miquel Tarradell.
-            Contingut: <a rel="license" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.ca">CC BY-NC-SA 4.0</a> · Codi: <a href="https://opensource.org/license/mit">MIT</a>.
         </span>
     </footer>
 

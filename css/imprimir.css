@@ -94,12 +94,13 @@ body {
     }
 }
 
-/* ---- Capçalera i peu de cada full ---- */
+/* ---- Capçalera de cada full (títol, «Problemes 1–6» i crèdits de l'autor) ---- */
 .cap {
     display: flex;
+    flex-wrap: wrap;
     align-items: baseline;
     justify-content: space-between;
-    gap: 6mm;
+    gap: 1.5mm 6mm;
     padding-bottom: 3mm;
     border-bottom: 0.6mm solid var(--tinta);
     margin-bottom: 6mm;
@@ -125,13 +126,19 @@ body {
     font-weight: 700;
     color: var(--gris);
 }
-.peu {
-    margin-top: auto;
-    padding-top: 2.5mm;
-    border-top: 0.2mm solid var(--gris);
+.cap .credits {
+    flex-basis: 100%;
+    margin: 0;
     font-size: 7.5pt;
+    line-height: 1.35;
     color: var(--gris);
-    text-align: center;
+}
+.cap .credits span {
+    display: block;
+}
+/* Al full d'instruccions, que va molt just d'espai, la capçalera ocupa una mica menys */
+.mida-instr .cap {
+    margin-bottom: 4mm;
 }
 
 /* ---- Instruccions (full 1) ---- */

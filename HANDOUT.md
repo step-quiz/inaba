@@ -1,7 +1,11 @@
 # HANDOUT — handover for a cold-start Claude
 
-You are continuing a project for a secondary-school math teacher: the public-domain math puzzles of
-**Naoki Inaba** (Japanese PDFs in `src/`) turned into material **in Catalan**. Read this file fully before
+You are continuing a project for a secondary-school math teacher: the math puzzles of
+**Naoki Inaba** (Japanese PDFs in `src/`, local only and git-ignored) turned into material **in Catalan**,
+published **with the author's permission, on the condition that he is clearly credited as the original author**.
+They are NOT public domain and carry NO free licence (no CC badge, no MIT line): © Naoki Inaba for the puzzles,
+© David Arso Civil only for the adaptation (translation, web version, printable sheets). Never put a licence
+over the puzzles and never remove or hide the credit. Read this file fully before
 touching anything: it encodes every decision already agreed with the user, the architecture, the data
 pipeline, the testing method and the traps already found.
 
@@ -48,8 +52,13 @@ architecture · 6 Conventions · 7 Interaction patterns · 8 The 12 finished puz
     (background, text and border) on hover. Do not grow it back.
   - Every puzzle has a print version (Part B); its game page shows a discreet link «Obtenir fitxes PDF»
     (printer icon) at the right end of `header.capcalera` (copy the `<a class="per-imprimir">` from any page).
-  - Footer: `<p class="credits">Puzzle original de Naoki Inaba</p>` + the CC BY-NC-SA licence bar
-    (`footer.peu-llicencia`, copied from `operacions/index.html`). Copy it from any existing page.
+  - Author credit, **twice** on every game page: (1) in `header.capcalera`, a line
+    `<p class="autor-cap">Puzzle original de <a …>Naoki Inaba</a> (稲葉直貴) · <span lang="ja">JP name</span></p>`
+    under the title row; (2) in the footer, `<p class="credits">` («publicat amb el seu permís», link to
+    `http://www.inabapuzzle.com/`) + `footer.peu-llicencia` («Puzzle original: © Naoki Inaba · Adaptació al català …
+    © 2026 David Arso Civil …»). No CC badge. Copy both from any existing page. `index.html` also has the blocks
+    «Sobre l'autor» and «Area Maze» (Spanish edition: *Rompecabezas lógicos de áreas. Menseki meiro para niños*,
+    Editorial Hispano Europea, 2016).
   - Laberint d'angles: keep **S/G** letters; angle arcs **visible while playing**; never say the path
     «gira» (turn angle); the number is the angle **formed by the two segments**; 180° = flat angle, drawn
     as a semicircle.
@@ -124,7 +133,7 @@ tools/extreu-rectangles.py    PDF → js/talla-rectangles/problemes.js + tests/t
 tools/extreu-creuat.py        PDF → js/creuat-multiples/problemes.js + tests/creuat-multiples-solucions.json
 docs/<puzzle>.md              JA↔CA translation table + translation notes + problem notes + PDF errata
 docs/traduccions.md           translation criteria + index of the 12 docs/<slug>.md (all sections moved out)
-src/*_q.pdf, src/*_a.pdf      original problems / answers (8 pages q: p1 = instructions; 7 pages a)
+src/*_q.pdf, src/*_a.pdf      original problems / answers (8 pages q: p1 = instructions; 7 pages a). LOCAL ONLY: in .gitignore, not published
 .github/workflows/tests.yml   CI: runs every tests/*.test.js step (add one step per new puzzle)
 .prettierrc.json              same config as operacions (4 spaces, single quotes, width 120)
 imprimir/<slug>.html, .pdf    Task B: ready-to-print page and the PDF generated from it (§13)
@@ -511,8 +520,7 @@ Reference implementation: Expressions bessones (`imprimir/expressions-bessones.h
 
 - `css/imprimir.css` (shared): `@page { size: A4; margin: 0 }`; `.pagina` = one sheet, exactly 210 × 297 mm,
   padding 10 mm top, 6 mm sides, 8 mm bottom, flex column, `overflow: hidden`, `break-after: page`; grey body
-  background on screen only. Classes: `.cap` (h1 + `.jp` Japanese name + `.quins`), `.peu` (footer, pushed
-  down with `margin-top: auto`), page 1 blocks `.regles`, `.fila` + `figure`/`figcaption`, `.caixa`,
+  background on screen only. Classes: `.cap` (h1 + `.jp` Japanese name + `.quins` + `.credits` author lines; there is NO footer any more), page 1 blocks `.regles`, `.fila` + `figure`/`figcaption`, `.caixa`,
   `.caixa.retolador` (thick border), `.veredicte`; problem pages `.regla-full`, `.problemes` (grid
   `1fr 1fr` × 3 rows, gap 4 mm × 3 mm → **97.5 mm per column**), `.problema`, `.num-problema` (black pill).
   `.barra` is screen-only: its `@media print { display: none }` must come **after** the `.barra` rule
@@ -520,7 +528,7 @@ Reference implementation: Expressions bessones (`imprimir/expressions-bessones.h
 - `js/imprimir.js` (`window.Imprimir`):
   - `problemes({ total, perFull, regla, dibuixa })` appends one `section.pagina[data-quins="Problemes a–b"]`
     per group: `p.regla-full` (HTML) + `.problemes` with `figure.problema` = `.num-problema` + `dibuixa(i)`.
-  - `capsIPeus({ titol, jp })` adds header and footer (credits + licence) to every `.pagina[data-quins]`;
+  - `capsIPeus({ titol, jp })` adds the header, **including the credit lines** («Puzzle original: © Naoki Inaba …» / «Adaptació al català: © 2026 David Arso Civil …»), to every `.pagina[data-quins]`; there is no footer;
     the blank page has no `data-quins`, so it stays empty.
   - wires `[data-imprimeix]` buttons to `window.print()`.
 - `imprimir/<slug>.html`: `<head>` loads `../css/imprimir.css`, `../css/imprimir-<slug>.css`,

@@ -2,19 +2,21 @@
  * ============================================================================
  * FITXER: js/imprimir.js
  * ROL: Munta els fulls A4 de les versions per imprimir (imprimir/<puzzle>.html):
- *      els fulls de problemes (6 per full), la capçalera i el peu de cada full,
- *      i el botó «Imprimeix» de la barra de dalt.
+ *      els fulls de problemes (6 per full), la capçalera de cada full (amb el crèdit
+ *      de l'autor, Naoki Inaba) i el botó «Imprimeix» de la barra de dalt.
  * ARQUITECTURA: El full d'instruccions s'escriu a mà a l'HTML. Aquest fitxer
- *   hi afegeix al darrere els fulls de problemes, i després posa capçalera i peu
+ *   hi afegeix al darrere els fulls de problemes, i després posa la capçalera
  *   a tots els fulls que porten data-quins (els fulls en blanc no en porten).
+ *   Els fulls no tenen peu: el crèdit de l'autor i l'adaptació van a la capçalera.
  *   Cada puzzle li passa una funció que dibuixa el problema i-èsim.
  * DEPENDÈNCIES: Cap. El fa servir tools/genera-pdf.js a través de l'HTML.
  * ============================================================================
  */
 window.Imprimir = (() => {
-    const PEU =
-        'Puzzle original de Naoki Inaba · © 2026 David Arso Civil · Departament de Matemàtiques, ' +
-        'INS Miquel Tarradell · Contingut: CC BY-NC-SA 4.0';
+    // Crèdits de la capçalera: el puzzle és de Naoki Inaba; la traducció i les fitxes, de l'adaptador
+    const CREDIT_AUTOR = 'Puzzle original: © Naoki Inaba (inabapuzzle.com), publicat amb el seu permís';
+    const CREDIT_ADAPTACIO =
+        'Adaptació al català: © 2026 David Arso Civil · Departament de Matemàtiques, INS Miquel Tarradell';
 
     function element(etiqueta, classe, text) {
         const el = document.createElement(etiqueta);
@@ -52,15 +54,16 @@ window.Imprimir = (() => {
         }
     }
 
-    // Posa la capçalera (títol i «Problemes 1–6») i el peu als fulls amb data-quins
+    // Posa la capçalera (títol, «Problemes 1–6» i els crèdits) als fulls amb data-quins
     function capsIPeus({ titol, jp }) {
         document.querySelectorAll('.pagina[data-quins]').forEach(full => {
             const cap = element('header', 'cap');
             const h1 = element('h1', '', titol);
             if (jp) h1.appendChild(element('span', 'jp', jp));
-            cap.append(h1, element('span', 'quins', full.dataset.quins));
+            const credits = element('p', 'credits');
+            credits.append(element('span', '', CREDIT_AUTOR), element('span', '', CREDIT_ADAPTACIO));
+            cap.append(h1, element('span', 'quins', full.dataset.quins), credits);
             full.prepend(cap);
-            full.appendChild(element('footer', 'peu', PEU));
         });
     }
 
