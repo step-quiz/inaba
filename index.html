@@ -69,138 +69,127 @@
         .puzzle {
             transition: transform 0.15s, box-shadow 0.15s;
         }
-        /* Cada casella, d'un color diferent del de les veïnes (al costat, a sobre i a sota) */
-        .puzzle.enllac-multiples {
-            border-top-color: #7c2d12;
-        }
-        .puzzle.enllac-multiples strong,
-        .puzzle.enllac-multiples .progres {
-            color: #4c1b0b;
-        }
-        .puzzle.enllac-multiples:hover {
-            border-color: #7c2d12;
-            box-shadow: 0 8px 20px rgba(124, 45, 18, 0.15);
-        }
+        /* Cada puzzle, amb el color del seu tema */
         .puzzle.laberint {
-            border-top-color: #1e3a8a;
+            border-top-color: #0369a1;
         }
         .puzzle.laberint strong,
         .puzzle.laberint .progres {
-            color: #122355;
+            color: #0c4a6e;
         }
-        .puzzle.laberint:hover {
-            border-color: #1e3a8a;
-            box-shadow: 0 8px 20px rgba(30, 58, 138, 0.15);
+        a.puzzle.laberint:hover {
+            border-color: #0369a1;
+            box-shadow: 0 8px 20px rgba(3, 105, 161, 0.15);
         }
         .puzzle.bessones {
-            border-top-color: #047857;
+            border-top-color: #b45309;
         }
         .puzzle.bessones strong,
         .puzzle.bessones .progres {
-            color: #024a35;
+            color: #78350f;
         }
-        .puzzle.bessones:hover {
-            border-color: #047857;
-            box-shadow: 0 8px 20px rgba(4, 120, 87, 0.15);
+        a.puzzle.bessones:hover {
+            border-color: #b45309;
+            box-shadow: 0 8px 20px rgba(180, 83, 9, 0.15);
         }
         .puzzle.rectangles {
-            border-top-color: #9333ea;
+            border-top-color: #6d28d9;
         }
         .puzzle.rectangles strong,
         .puzzle.rectangles .progres {
-            color: #5b1f91;
+            color: #4c1d95;
         }
-        .puzzle.rectangles:hover {
-            border-color: #9333ea;
-            box-shadow: 0 8px 20px rgba(147, 51, 234, 0.15);
+        a.puzzle.rectangles:hover {
+            border-color: #6d28d9;
+            box-shadow: 0 8px 20px rgba(109, 40, 217, 0.15);
         }
         .puzzle.creuat-multiples {
-            border-top-color: #a16207;
+            border-top-color: #0f766e;
         }
         .puzzle.creuat-multiples strong,
         .puzzle.creuat-multiples .progres {
-            color: #633c04;
+            color: #134e4a;
         }
-        .puzzle.creuat-multiples:hover {
-            border-color: #a16207;
-            box-shadow: 0 8px 20px rgba(161, 98, 7, 0.15);
+        a.puzzle.creuat-multiples:hover {
+            border-color: #0f766e;
+            box-shadow: 0 8px 20px rgba(15, 118, 110, 0.15);
         }
         .puzzle.on-es-la-xifra {
-            border-top-color: #be185d;
+            border-top-color: #a21caf;
         }
         .puzzle.on-es-la-xifra strong,
         .puzzle.on-es-la-xifra .progres {
-            color: #750e39;
+            color: #701a75;
         }
-        .puzzle.on-es-la-xifra:hover {
-            border-color: #be185d;
-            box-shadow: 0 8px 20px rgba(190, 24, 93, 0.15);
+        a.puzzle.on-es-la-xifra:hover {
+            border-color: #a21caf;
+            box-shadow: 0 8px 20px rgba(162, 28, 175, 0.15);
         }
         .puzzle.busca-el-nombre {
-            border-top-color: #475569;
+            border-top-color: #c2410c;
         }
         .puzzle.busca-el-nombre strong,
         .puzzle.busca-el-nombre .progres {
-            color: #2c3441;
+            color: #7c2d12;
         }
-        .puzzle.busca-el-nombre:hover {
-            border-color: #475569;
-            box-shadow: 0 8px 20px rgba(71, 85, 105, 0.15);
-        }
-        .puzzle.busca-el-triangle {
-            border-top-color: #1d4ed8;
-        }
-        .puzzle.busca-el-triangle strong,
-        .puzzle.busca-el-triangle .progres {
-            color: #113085;
-        }
-        .puzzle.busca-el-triangle:hover {
-            border-color: #1d4ed8;
-            box-shadow: 0 8px 20px rgba(29, 78, 216, 0.15);
-        }
-        .puzzle.escala-nombres {
-            border-top-color: #4d7c0f;
-        }
-        .puzzle.escala-nombres strong,
-        .puzzle.escala-nombres .progres {
-            color: #2f4c09;
-        }
-        .puzzle.escala-nombres:hover {
-            border-color: #4d7c0f;
-            box-shadow: 0 8px 20px rgba(77, 124, 15, 0.15);
-        }
-        .puzzle.busca-la-figura {
-            border-top-color: #c2410c;
-        }
-        .puzzle.busca-la-figura strong,
-        .puzzle.busca-la-figura .progres {
-            color: #782807;
-        }
-        .puzzle.busca-la-figura:hover {
+        a.puzzle.busca-el-nombre:hover {
             border-color: #c2410c;
             box-shadow: 0 8px 20px rgba(194, 65, 12, 0.15);
         }
+        .puzzle.busca-el-triangle {
+            border-top-color: #be185d;
+        }
+        .puzzle.busca-el-triangle strong,
+        .puzzle.busca-el-triangle .progres {
+            color: #831843;
+        }
+        a.puzzle.busca-el-triangle:hover {
+            border-color: #be185d;
+            box-shadow: 0 8px 20px rgba(190, 24, 93, 0.15);
+        }
+        .puzzle.escala-nombres {
+            border-top-color: #0e7490;
+        }
+        .puzzle.escala-nombres strong,
+        .puzzle.escala-nombres .progres {
+            color: #164e63;
+        }
+        a.puzzle.escala-nombres:hover {
+            border-color: #0e7490;
+            box-shadow: 0 8px 20px rgba(14, 116, 144, 0.15);
+        }
+        .puzzle.busca-la-figura {
+            border-top-color: #9333ea;
+        }
+        .puzzle.busca-la-figura strong,
+        .puzzle.busca-la-figura .progres {
+            color: #581c87;
+        }
+        a.puzzle.busca-la-figura:hover {
+            border-color: #9333ea;
+            box-shadow: 0 8px 20px rgba(147, 51, 234, 0.15);
+        }
         .puzzle.afegeix-zeros {
-            border-top-color: #0891b2;
+            border-top-color: #1d4ed8;
         }
         .puzzle.afegeix-zeros strong,
         .puzzle.afegeix-zeros .progres {
-            color: #04596e;
+            color: #1e3a8a;
         }
-        .puzzle.afegeix-zeros:hover {
-            border-color: #0891b2;
-            box-shadow: 0 8px 20px rgba(8, 145, 178, 0.15);
+        a.puzzle.afegeix-zeros:hover {
+            border-color: #1d4ed8;
+            box-shadow: 0 8px 20px rgba(29, 78, 216, 0.15);
         }
         .puzzle.diposits-aigua {
-            border-top-color: #86198f;
+            border-top-color: #047857;
         }
         .puzzle.diposits-aigua strong,
         .puzzle.diposits-aigua .progres {
-            color: #530f58;
+            color: #064e3b;
         }
-        .puzzle.diposits-aigua:hover {
-            border-color: #86198f;
-            box-shadow: 0 8px 20px rgba(134, 25, 143, 0.15);
+        a.puzzle.diposits-aigua:hover {
+            border-color: #047857;
+            box-shadow: 0 8px 20px rgba(4, 120, 87, 0.15);
         }
         .nota {
             width: 100%;
@@ -258,53 +247,17 @@
     <p class="subtitol">Els puzzles originals de <a class="enllac-autor" href="http://www.inabapuzzle.com/" target="_blank" rel="noopener">Naoki Inaba</a> (稲葉直貴), ara en català i interactius</p>
 
     <div class="llista">
-        <a class="puzzle enllac-multiples" href="enllac-multiples.html">
-            <strong>Enllaç de múltiples</strong>
-            <span class="jp">倍数リンク</span>
-            <span class="desc" hidden>Col·loca les targetes perquè cada fletxa porti a un múltiple.</span>
-            <span class="progres" id="progres-enllac">42 problemes</span>
-        </a>
-        <a class="puzzle laberint" href="laberint-angles.html">
-            <strong>Laberint d'angles</strong>
-            <span class="jp">角度メイズ</span>
-            <span class="desc" hidden>Ves de la S a la G: a cada cercle amb número, el camí hi ha de formar l'angle que hi diu.</span>
-            <span class="progres" id="progres-laberint">38 problemes</span>
-        </a>
-        <a class="puzzle bessones" href="expressions-bessones.html">
-            <strong>Expressions bessones</strong>
-            <span class="jp">双子式</span>
-            <span class="desc" hidden>Posa els mateixos signes a dues targetes perquè totes dues igualtats siguin correctes.</span>
-            <span class="progres" id="progres-bessones">42 problemes</span>
-        </a>
-        <a class="puzzle rectangles" href="talla-rectangles.html">
-            <strong>Talla en rectangles</strong>
-            <span class="jp">四角カット</span>
-            <span class="desc" hidden>Talla la figura en rectangles que tinguin el nombre de quadrets indicat.</span>
-            <span class="progres" id="progres-rectangles">42 problemes</span>
-        </a>
-        <a class="puzzle creuat-multiples" href="creuat-multiples.html">
-            <strong>Creuat de múltiples</strong>
-            <span class="jp">倍数クロス</span>
-            <span class="desc" hidden>Escriu xifres a les caselles blanques perquè cada nombre que es veu des d'un triangle sigui múltiple del seu número.</span>
-            <span class="progres" id="progres-creuat">42 problemes</span>
-        </a>
-        <a class="puzzle on-es-la-xifra" href="on-es-la-xifra.html">
-            <strong>On és la xifra?</strong>
-            <span class="jp">どこかな算</span>
-            <span class="desc" hidden>Escriu una xifra a cada casella perquè la suma sigui correcta i cada número de fora sigui a la seva fila o columna.</span>
-            <span class="progres" id="progres-xifra">42 problemes</span>
-        </a>
         <a class="puzzle busca-el-nombre" href="busca-el-nombre.html">
             <strong>Busca el nombre</strong>
             <span class="jp">かずさがし</span>
             <span class="desc" hidden>Posa el quadrat on hi ha el nombre de pomes o mandarines que et demanen.</span>
             <span class="progres" id="progres-nombre">42 problemes</span>
         </a>
-        <a class="puzzle busca-el-triangle" href="busca-el-triangle.html">
-            <strong>Busca el triangle</strong>
-            <span class="jp">三角探し</span>
-            <span class="desc" hidden>Tria tres punts de la quadrícula que facin un triangle amb l'àrea que et demanen.</span>
-            <span class="progres" id="progres-triangle">42 problemes</span>
+        <a class="puzzle afegeix-zeros" href="afegeix-zeros.html">
+            <strong>Afegeix zeros</strong>
+            <span class="jp">ゼロゼロ式</span>
+            <span class="desc" hidden>Afegeix zeros a les targetes (3 → 30 → 300) perquè la suma sigui correcta.</span>
+            <span class="progres" id="progres-zeros">49 problemes</span>
         </a>
         <a class="puzzle escala-nombres" href="escala-nombres.html">
             <strong>L'escala de nombres</strong>
@@ -318,11 +271,47 @@
             <span class="desc" hidden>Tria els vèrtexs d'una quadrícula de punts per fer un quadrat, un rombe, un trapezi, un triangle isòsceles…</span>
             <span class="progres" id="progres-figura">42 problemes</span>
         </a>
-        <a class="puzzle afegeix-zeros" href="afegeix-zeros.html">
-            <strong>Afegeix zeros</strong>
-            <span class="jp">ゼロゼロ式</span>
-            <span class="desc" hidden>Afegeix zeros a les targetes (3 → 30 → 300) perquè la suma sigui correcta.</span>
-            <span class="progres" id="progres-zeros">49 problemes</span>
+        <a class="puzzle busca-el-triangle" href="busca-el-triangle.html">
+            <strong>Busca el triangle</strong>
+            <span class="jp">三角探し</span>
+            <span class="desc" hidden>Tria tres punts de la quadrícula que facin un triangle amb l'àrea que et demanen.</span>
+            <span class="progres" id="progres-triangle">42 problemes</span>
+        </a>
+        <a class="puzzle" href="enllac-multiples.html">
+            <strong>Enllaç de múltiples</strong>
+            <span class="jp">倍数リンク</span>
+            <span class="desc" hidden>Col·loca les targetes perquè cada fletxa porti a un múltiple.</span>
+            <span class="progres" id="progres-enllac">42 problemes</span>
+        </a>
+        <a class="puzzle creuat-multiples" href="creuat-multiples.html">
+            <strong>Creuat de múltiples</strong>
+            <span class="jp">倍数クロス</span>
+            <span class="desc" hidden>Escriu xifres a les caselles blanques perquè cada nombre que es veu des d'un triangle sigui múltiple del seu número.</span>
+            <span class="progres" id="progres-creuat">42 problemes</span>
+        </a>
+        <a class="puzzle bessones" href="expressions-bessones.html">
+            <strong>Expressions bessones</strong>
+            <span class="jp">双子式</span>
+            <span class="desc" hidden>Posa els mateixos signes a dues targetes perquè totes dues igualtats siguin correctes.</span>
+            <span class="progres" id="progres-bessones">42 problemes</span>
+        </a>
+        <a class="puzzle on-es-la-xifra" href="on-es-la-xifra.html">
+            <strong>On és la xifra?</strong>
+            <span class="jp">どこかな算</span>
+            <span class="desc" hidden>Escriu una xifra a cada casella perquè la suma sigui correcta i cada número de fora sigui a la seva fila o columna.</span>
+            <span class="progres" id="progres-xifra">42 problemes</span>
+        </a>
+        <a class="puzzle laberint" href="laberint-angles.html">
+            <strong>Laberint d'angles</strong>
+            <span class="jp">角度メイズ</span>
+            <span class="desc" hidden>Ves de la S a la G: a cada cercle amb número, el camí hi ha de formar l'angle que hi diu.</span>
+            <span class="progres" id="progres-laberint">38 problemes</span>
+        </a>
+        <a class="puzzle rectangles" href="talla-rectangles.html">
+            <strong>Talla en rectangles</strong>
+            <span class="jp">四角カット</span>
+            <span class="desc" hidden>Talla la figura en rectangles que tinguin el nombre de quadrets indicat.</span>
+            <span class="progres" id="progres-rectangles">42 problemes</span>
         </a>
         <a class="puzzle diposits-aigua" href="diposits-aigua.html">
             <strong>Dipòsits d'aigua</strong>

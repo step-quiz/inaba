@@ -60,9 +60,12 @@ architecture · 6 Conventions · 7 Interaction patterns · 8 The 12 finished puz
     `index.html`: h1 «Puzzles de Naoki Inaba» in pure black; each card is an `<a class="puzzle …">` showing only the
     title, the Japanese name and the problem count — the Catalan description is kept in the source
     (`<span class="desc" hidden>`, `display: none`) but NOT shown (the user tried an unfold arrow and dropped it).
-    Row gaps inside a card: 7.2 px / 12 px (user asked −20 %). Card colours are assigned so that cards at
-    distance ≤ 3 in the list differ clearly (ΔE ≥ 60): they no longer equal each game page's theme colour — keep
-    that rule if you add or reorder cards. One grey box with a black left edge holds «Sobre l'autor: Naoki Inaba»
+    Row gaps inside a card: 7.2 px / 12 px (user asked −20 %). Each card keeps the ORIGINAL theme colour of its
+    puzzle (do not recolour). The 12 cards are ordered from simple to complicated, nudged only as much as needed so
+    that no two consecutive cards (nor two in the same grid column) look alike: busca-el-nombre, afegeix-zeros,
+    escala-nombres, busca-la-figura, busca-el-triangle, enllac-multiples, creuat-multiples, expressions-bessones,
+    on-es-la-xifra, laberint-angles, talla-rectangles, diposits-aigua. If you add or move a card, keep that
+    colour rule (the palette has four blues and three purples, so check neighbours). One grey box with a black left edge holds «Sobre l'autor: Naoki Inaba»
     and «Area Maze» (Spanish edition: *Rompecabezas lógicos de áreas. Menseki meiro para niños*,
     Editorial Hispano Europea, 2016); web links use the classic blue `#0000ee`.
   - Laberint d'angles: keep **S/G** letters; angle arcs **visible while playing**; never say the path
