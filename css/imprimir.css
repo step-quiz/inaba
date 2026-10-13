@@ -129,7 +129,7 @@ body {
 .cap .credits {
     flex-basis: 100%;
     margin: 0;
-    font-size: 7.5pt;
+    font-size: 9.75pt;
     line-height: 1.35;
     color: var(--gris);
 }
@@ -138,7 +138,7 @@ body {
 }
 /* Al full d'instruccions, que va molt just d'espai, la capçalera ocupa una mica menys */
 .mida-instr .cap {
-    margin-bottom: 4mm;
+    margin-bottom: 2.5mm;
 }
 
 /* ---- Instruccions (full 1) ---- */

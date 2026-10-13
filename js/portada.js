@@ -3,6 +3,7 @@
  * FITXER: js/portada.js
  * ROL: A la portada (index.html), mostra quants problemes de cada puzzle ha
  *      resolt qui juga en aquest navegador. Si no hi ha localStorage, no fa res.
+ *      També fa que la fletxa de cada casella desplegui la descripció en català.
  * ============================================================================
  */
 (() => {
@@ -30,3 +31,14 @@
         }
     });
 })();
+
+// Fletxa de cada casella: desplega o plega la descripció en català
+document.querySelectorAll('.desplega').forEach(boto => {
+    boto.addEventListener('click', () => {
+        const desc = document.getElementById(boto.getAttribute('aria-controls'));
+        const obert = boto.getAttribute('aria-expanded') === 'true';
+        boto.setAttribute('aria-expanded', String(!obert));
+        boto.title = obert ? 'Mostra la descripció' : 'Amaga la descripció';
+        desc.hidden = obert;
+    });
+});

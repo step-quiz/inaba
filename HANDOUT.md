@@ -54,11 +54,13 @@ architecture · 6 Conventions · 7 Interaction patterns · 8 The 12 finished puz
     (printer icon) at the right end of `header.capcalera` (copy the `<a class="per-imprimir">` from any page).
   - Author credit, **twice** on every game page: (1) in `header.capcalera`, a line
     `<p class="autor-cap">Puzzle original de <a …>Naoki Inaba</a> (稲葉直貴) · <span lang="ja">JP name</span></p>`
-    under the title row; (2) in the footer, `<p class="credits">` («publicat amb el seu permís», link to
-    `http://www.inabapuzzle.com/`) + `footer.peu-llicencia` («Puzzle original: © Naoki Inaba · Adaptació al català …
-    © 2026 David Arso Civil …»). No CC badge. Copy both from any existing page. `index.html` also has the blocks
-    «Sobre l'autor» and «Area Maze» (Spanish edition: *Rompecabezas lógicos de áreas. Menseki meiro para niños*,
-    Editorial Hispano Europea, 2016).
+    under the title row (font 1.1em, link to `http://www.inabapuzzle.com/`); (2) the footer `footer.peu-llicencia`
+    («Puzzle original: © Naoki Inaba, publicat amb el seu permís · Adaptació al català … © 2026 David Arso Civil …»).
+    There is NO separate `<p class="credits">` line and NO CC badge. Copy both from any existing page.
+    `index.html`: h1 «Puzzles de Naoki Inaba»; each card shows only title + Japanese name + a big › button
+    (`.desplega`, `js/portada.js`) that unfolds the Catalan description; the whole card is a link (stretched
+    `a.puzzle-link`) except that button; one grey box with a black left edge holds «Sobre l'autor» and «Area Maze»
+    (Spanish edition: *Rompecabezas lógicos de áreas. Menseki meiro para niños*, Editorial Hispano Europea, 2016).
   - Laberint d'angles: keep **S/G** letters; angle arcs **visible while playing**; never say the path
     «gira» (turn angle); the number is the angle **formed by the two segments**; 180° = flat angle, drawn
     as a semicircle.
