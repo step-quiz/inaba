@@ -17,7 +17,7 @@ permissions:
 jobs:
   tests:
     runs-on: ubuntu-latest
-    timeout-minutes: 5
+    timeout-minutes: 10
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
@@ -35,3 +35,15 @@ jobs:
         run: node tests/creuat-multiples.test.js
       - name: On és la xifra?
         run: node tests/on-es-la-xifra.test.js
+      - name: Busca el nombre
+        run: node tests/busca-el-nombre.test.js
+      - name: Busca el triangle
+        run: node tests/busca-el-triangle.test.js
+      - name: L'escala de nombres
+        run: node tests/escala-nombres.test.js
+      - name: Busca la figura
+        run: node tests/busca-la-figura.test.js
+      - name: Afegeix zeros
+        run: node tests/afegeix-zeros.test.js
+      - name: Dipòsits d'aigua
+        run: node tests/diposits-aigua.test.js
