@@ -80,7 +80,7 @@ architecture · 6 Conventions · 7 Interaction patterns · 8 The 12 finished puz
 
 ## 2. Environment facts
 
-- Repos: `arsocivil/inaba` (this one, the product) and `step-quiz/operacions` (their other site, **read-only
+- Repos: `step-quiz/inaba` (this one, the product; formerly `arsocivil/inaba`) and `step-quiz/operacions` (their other site, **read-only
   reference** for look & feel: `prioritat.html`, `vocabulari.html`, `css/shared.css`, `css/tokens.css`).
 - Deploy: **Cloudflare Pages** builds every push. Production = `main`. Branch previews:
   `https://<branch-name-with-dashes>.inaba-2uz.pages.dev/` (e.g. `claude-sharp-tesla-ayy1yw.inaba-2uz…`).

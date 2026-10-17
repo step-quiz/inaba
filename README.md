@@ -235,7 +235,10 @@ js/<puzzle>/
     motor.js                   ← comprovar i resoldre (sense DOM)
     tauler.js                  ← dibuixa el tauler
     <puzzle>.js                ← controlador: arrossegar, clicar, teclat
-tests/<puzzle>.test.js         ← cada problema té una sola solució, i és la del PDF
+tests/<puzzle>.test.js         ← cada problema té solució i la del PDF és vàlida (única llevat d'uns pocs casos)
+tests/<puzzle>-solucions.json  ← solucions del PDF per als tests (no n'hi ha per a tots els puzzles)
+.github/workflows/tests.yml    ← executa els tests a GitHub
+.github/workflows/unzip-upload.yml ← descomprimeix els ZIP pujats a _uploads/
 tools/extreu-laberint.py       ← llegeix els laberints del PDF i escriu js/laberint-angles/problemes.js
 tools/extreu-rectangles.py     ← llegeix les figures del PDF i escriu js/talla-rectangles/problemes.js
 tools/extreu-creuat.py         ← llegeix els quadres del PDF i escriu js/creuat-multiples/problemes.js
@@ -272,4 +275,5 @@ node tests/afegeix-zeros.test.js
 node tests/diposits-aigua.test.js
 ```
 
-GitHub els executa sols a cada pull request i a cada canvi a `main` (pestanya **Actions**).
+GitHub els executa sols a cada pull request i a cada canvi a `main` (pestanya **Actions**). Uns pocs problemes
+admeten més d'una solució i el test ho accepta (Expressions bessones 17, Busca el triangle 26, Busca la figura 17 i 19).
