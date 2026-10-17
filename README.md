@@ -275,5 +275,7 @@ node tests/afegeix-zeros.test.js
 node tests/diposits-aigua.test.js
 ```
 
-GitHub els executa sols a cada pull request i a cada canvi a `main` (pestanya **Actions**). Uns pocs problemes
+GitHub n'executa sols **només els sis primers** (fins a `on-es-la-xifra`) a cada pull request i a cada canvi a
+`main` (pestanya **Actions**): els altres sis no són a `.github/workflows/tests.yml` i s'han de llançar a mà (o
+afegir-los al workflow des de la web de GitHub). Uns pocs problemes
 admeten més d'una solució i el test ho accepta (Expressions bessones 17, Busca el triangle 26, Busca la figura 17 i 19).
