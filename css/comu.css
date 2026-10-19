@@ -730,20 +730,27 @@ h1 {
     .accions {
         padding: 8px 16px 10px 16px;
     }
-    .peu-llicencia {
-        margin-top: 8px;
-    }
 }
 
 /* ---- Peu ---- */
-/* Peu amb el © de l'autor i el de l'adaptació, com la barra de la portada de step-quiz.net. No és fix: va
-   just després del contingut (perquè la pàgina sencera càpiga a la pantalla). */
+/* Peu amb el © de l'autor i el de l'adaptació, com la barra de la portada de step-quiz.net.
+   És fix a la part de baix de la finestra: sempre es veu. L'alçada real la mesura js/comu.js i la deixa a
+   --peu-alt, perquè el cos de la pàgina reservi aquest espai i el peu no tapi res (si no hi ha JS,
+   el valor de reserva de sota és prou ample). */
+body {
+    padding-bottom: calc(var(--peu-alt, 56px) + 8px);
+}
 .peu-llicencia {
-    align-self: stretch;
-    margin: 16px -16px -28px -16px;
-    padding: 6px 16px;
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 50;
+    margin: 0;
+    padding: 6px 16px calc(6px + env(safe-area-inset-bottom, 0px)) 16px;
     background-color: #f8f9fa;
     border-top: 1px solid #ccc;
+    box-shadow: 0 -2px 8px rgba(0, 0, 0, 0.06);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -752,6 +759,15 @@ h1 {
     text-align: center;
     font-size: 0.85em;
     color: #333;
+}
+@media print {
+    .peu-llicencia {
+        position: static;
+        box-shadow: none;
+    }
+    body {
+        padding-bottom: 28px;
+    }
 }
 .peu-llicencia a {
     color: #333;
