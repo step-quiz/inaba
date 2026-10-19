@@ -10,7 +10,7 @@ ARQUITECTURA: Cada puzzle té el seu CSS (css/<puzzle>.css), que es carrega
 :root {
     /* Text */
     --text-main: #1e293b;
-    --text-muted: #64748b;
+    --text-muted: #475569;
 
     /* Fons i vores */
     --bg-color: #f8fafc;
