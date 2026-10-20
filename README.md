@@ -40,6 +40,14 @@ Ja hi són els 12 puzzles.
 La traducció de les instruccions de cada puzzle i les notes sobre els problemes són a [`docs/`](docs/).
 Els criteris de traducció són a [`docs/traduccions.md`](docs/traduccions.md).
 
+## La portada: joc dinàmic o PDF
+
+A la portada hi ha un interruptor (tipus Apple) amb dues opcions:
+
+- **Joc dinàmic** (per defecte): cada targeta obre el puzzle interactiu i mostra «42 problemes» o «Resolts: n / 42».
+- **Imprimir PDF**: les mateixes targetes obren el PDF de `imprimir/` (en una pestanya nova), llest per descarregar o
+  imprimir, i mostren «Imprimir en PDF». Si s'obre `index.html#imprimir`, la portada ja surt en aquest mode.
+
 ## Com es juga a l'Enllaç de múltiples
 
 Tres maneres de fer el mateix, i es poden barrejar:
@@ -229,7 +237,7 @@ laberint-angles.html
 css/comu.css                   ← estils comuns a tots els puzzles
 css/<puzzle>.css               ← estils de cada puzzle
 js/comu.js                     ← progrés, capçalera (‹ Escull… ›) i missatges, comuns a tots els puzzles
-js/portada.js                  ← progrés a la portada
+js/portada.js                  ← progrés a la portada i interruptor Joc dinàmic ⇄ Imprimir PDF
 js/<puzzle>/
     problemes.js               ← els problemes (dades)
     motor.js                   ← comprovar i resoldre (sense DOM)

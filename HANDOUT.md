@@ -60,6 +60,11 @@ architecture · 6 Conventions · 7 Interaction patterns · 8 The 12 finished puz
     `index.html`: h1 «Puzzles de Naoki Inaba» in pure black; each card is an `<a class="puzzle …">` showing only the
     title, the Japanese name and the problem count — the Catalan description is kept in the source
     (`<span class="desc" hidden>`, `display: none`) but NOT shown (the user tried an unfold arrow and dropped it).
+    **Mode switch** (`button#selector-mode`, `role="switch"`, Apple-style; hover = grey background + thick black border):
+    default is «Joc dinàmic» (cards link to `<slug>.html`, counter «42 problemes» / «Resolts: n / N»). In «Imprimir PDF»
+    the same 12 cards link to `imprimir/<slug>.pdf` (new tab) and the counter reads «Imprimir en PDF». The logic is in
+    `js/portada.js` (hrefs derived from each card's `href`, so a new puzzle needs no extra wiring); `index.html#imprimir`
+    opens directly in PDF mode. The mode is NOT stored in localStorage: every visit starts in interactive mode.
     Row gaps inside a card: 7.2 px / 12 px (user asked −20 %). Each card keeps the ORIGINAL theme colour of its
     puzzle (do not recolour). The 12 cards are ordered from simple to complicated, nudged only as much as needed so
     that no two consecutive cards (nor two in the same grid column) look alike: busca-el-nombre, afegeix-zeros,
@@ -130,7 +135,7 @@ css/comu.css                  everything shared (tokens, layout, header, buttons
                               messages, dialog, footer, keyframes, ≤480px rules)
 css/<puzzle>.css              theme colours (--primary…) + puzzle-specific styles
 js/comu.js                    window.Comu: progress, header/nav + «Escull…» dialog, messages, anima()
-js/portada.js                 home: «Resolts: n / N» per puzzle from localStorage
+js/portada.js                 home: «Resolts: n / N» per puzzle from localStorage + the «Joc dinàmic ⇄ Imprimir PDF» switch
 js/<puzzle>/problemes.js      data (window.PROBLEMES_<X>), prettier-ignore compact tables
 js/<puzzle>/motor.js          pure logic, no DOM (window.Motor<X>): check + brute-force solver
 js/<puzzle>/tauler.js         rendering (window.Tauler<X>): crea(...) + estatic(...) for instructions

@@ -1,9 +1,16 @@
 /**
  * ============================================================================
  * FITXER: js/portada.js
- * ROL: A la portada (index.html), mostra quants problemes de cada puzzle ha
- *      resolt qui juga en aquest navegador. Si no hi ha localStorage, no fa res.
- *      També fa que la fletxa de cada casella desplegui la descripció en català.
+ * ROL: A la portada (index.html):
+ *      1. Mostra quants problemes de cada puzzle ha resolt qui juga en aquest
+ *         navegador (si no hi ha localStorage, es queda el text de l'HTML).
+ *      2. Interruptor «Joc dinàmic ⇄ Imprimir PDF»:
+ *         - Joc dinàmic (per defecte): cada targeta va al puzzle interactiu i
+ *           mostra «42 problemes» o «Resolts: n / 42».
+ *         - Imprimir PDF: les mateixes targetes porten al PDF de la carpeta
+ *           imprimir/ (<puzzle>.pdf) i mostren «Imprimir en PDF».
+ *         La URL amb #imprimir obre la portada ja en mode PDF (per compartir-la).
+ *      3. Fa que la fletxa de cada casella desplegui la descripció en català.
  * ============================================================================
  */
 (() => {
@@ -21,15 +28,63 @@
         { clau: 'inaba.afegeix-zeros', el: 'progres-zeros', total: 49 },
         { clau: 'inaba.diposits-aigua', el: 'progres-diposits', total: 42 },
     ];
-    PUZZLES.forEach(({ clau, el, total }) => {
+
+    // Text de progrés de cada targeta en mode «Joc dinàmic»
+    PUZZLES.forEach(p => {
+        const el = document.getElementById(p.el);
+        if (!el) return;
+        p.textJoc = el.textContent; // «42 problemes», si no hi ha res desat
         try {
-            const d = JSON.parse(localStorage.getItem(clau));
+            const d = JSON.parse(localStorage.getItem(p.clau));
             const n = d && Array.isArray(d.resolts) ? d.resolts.length : 0;
-            if (n > 0) document.getElementById(el).textContent = `Resolts: ${n} / ${total}`;
+            if (n > 0) p.textJoc = `Resolts: ${n} / ${p.total}`;
         } catch (e) {
             /* sense localStorage: es queda el text de l'HTML */
         }
     });
+
+    const llista = document.querySelector('.llista');
+    const interruptor = document.getElementById('selector-mode');
+    const targetes = Array.from(document.querySelectorAll('.llista a.puzzle'));
+
+    // L'enllaç del joc és el de l'HTML (p. ex. «busca-el-nombre.html»); el del PDF, «imprimir/busca-el-nombre.pdf»
+    targetes.forEach(a => {
+        const hrefJoc = a.getAttribute('href');
+        a.dataset.hrefJoc = hrefJoc;
+        a.dataset.hrefPdf = 'imprimir/' + hrefJoc.replace(/\.html$/, '.pdf');
+    });
+
+    function aplicaMode(pdf) {
+        interruptor.setAttribute('aria-checked', String(pdf));
+        llista.classList.toggle('mode-pdf', pdf);
+        targetes.forEach(a => {
+            a.setAttribute('href', pdf ? a.dataset.hrefPdf : a.dataset.hrefJoc);
+            if (pdf) {
+                a.target = '_blank';
+                a.rel = 'noopener';
+            } else {
+                a.removeAttribute('target');
+                a.removeAttribute('rel');
+            }
+        });
+        PUZZLES.forEach(p => {
+            const el = document.getElementById(p.el);
+            if (el) el.textContent = pdf ? 'Imprimir en PDF' : p.textJoc;
+        });
+        // La URL recorda el mode (sense afegir entrades a l'historial)
+        try {
+            history.replaceState(null, '', pdf ? '#imprimir' : location.pathname + location.search);
+        } catch (e) {
+            /* per exemple, en obrir el fitxer amb doble clic en alguns navegadors */
+        }
+    }
+
+    interruptor.addEventListener('click', () => {
+        aplicaMode(interruptor.getAttribute('aria-checked') !== 'true');
+    });
+
+    // Per defecte, el joc dinàmic; només #imprimir obre el mode PDF
+    aplicaMode(location.hash === '#imprimir');
 })();
 
 // Fletxa de cada casella: desplega o plega la descripció en català
